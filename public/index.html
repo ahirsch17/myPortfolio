@@ -297,11 +297,11 @@
                 obstacles.push(newObs);
                 
                 // Spawn coin in the new obstacle's gap (only sometimes)
-                if (Math.random() > 0.5) {
+                if (Math.random() > 0.4) {
                     const gapCenter = newObs.topHeight + newObs.gap / 2;
                     const safeY = gapCenter + (Math.random() - 0.5) * (newObs.gap - 40);
                     gameCoins.push({
-                        x: canvas.width - 100, // Spawn coin with the pipe, visible from the start
+                        x: canvas.width + 100, // Spawn coin ahead of the obstacle on the right
                         y: safeY,
                         radius: 12,
                         collected: false,
@@ -426,10 +426,16 @@
             document.getElementById('highScore').textContent = highScore;
             document.getElementById('coins').textContent = coins;
             
-            // Check for Pacman unlock at score 30 (silently unlock, no popup)
-            if (score >= 30) {
+            // Check for Pacman unlock at high score 30 or higher
+            if (parseInt(highScore) >= 30) {
                 if (!localStorage.getItem('pacmanUnlocked')) {
                     localStorage.setItem('pacmanUnlocked', 'true');
+                    // Hide the lock overlay
+                    const pacmanGame = document.getElementById('pacmanGame');
+                    if (pacmanGame) {
+                        const overlay = pacmanGame.querySelector('.lock-overlay');
+                        if (overlay) overlay.style.display = 'none';
+                    }
                 }
             }
         }
@@ -464,7 +470,18 @@
             });
         }
         
-        // Initialize game visibility
+        // Initialize game visibility and check Pacman unlock status
+        function checkPacmanUnlock() {
+            const pacmanUnlocked = localStorage.getItem('pacmanUnlocked') === 'true';
+            const pacmanGame = document.getElementById('pacmanGame');
+            if (pacmanGame) {
+                const overlay = pacmanGame.querySelector('.lock-overlay');
+                if (overlay) {
+                    overlay.style.display = pacmanUnlocked ? 'none' : 'flex';
+                }
+            }
+        }
+        
         gameContainers.forEach((container, index) => {
             if (index === 0) {
                 container.style.display = 'block';
@@ -472,6 +489,8 @@
                 container.style.display = 'none';
             }
         });
+        
+        checkPacmanUnlock();
 
         function updateButtons() {
             document.getElementById('pauseBtn').textContent = gameState === 'paused' ? 'Resume' : 'Pause';
