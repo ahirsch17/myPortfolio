@@ -302,22 +302,35 @@
                 }
             }
 
-            // Create coins randomly in safe gap areas
+            // Create coins randomly in safe areas (not in pipes)
             coinTimer++;
-            if (coinTimer > 200 / upgrades.speed && Math.random() > 0.7 && obstacles.length > 0) {
-                // Get the most recent obstacle to place coin in its gap
-                const lastObs = obstacles[obstacles.length - 1];
-                const gapCenter = lastObs.topHeight + lastObs.gap / 2;
-                const safeY = gapCenter + (Math.random() - 0.5) * (lastObs.gap - 40);
+            if (coinTimer > 250 / upgrades.speed && Math.random() > 0.6) {
+                // Generate a safe Y position that's not in any obstacle's pipe area
+                let safeY = Math.random() * (canvas.height - 50) + 25; // Between 25 and 375
+                let isInPipe = false;
                 
-                gameCoins.push({
-                    x: canvas.width + 200, // Spawn coins after obstacles
-                    y: safeY,
-                    radius: 12,
-                    collected: false,
-                    rotation: 0
-                });
-                coinTimer = 0;
+                // Check if this Y position overlaps with any obstacle's pipe
+                for (const obs of obstacles) {
+                    const topPipeBottom = obs.topHeight;
+                    const bottomPipeTop = obs.topHeight + obs.gap;
+                    
+                    if (safeY < topPipeBottom || safeY > bottomPipeTop) {
+                        isInPipe = true;
+                        break;
+                    }
+                }
+                
+                // Only spawn coin if it's not in a pipe, or if there are no obstacles
+                if (!isInPipe || obstacles.length === 0) {
+                    gameCoins.push({
+                        x: canvas.width + 50,
+                        y: safeY,
+                        radius: 12,
+                        collected: false,
+                        rotation: 0
+                    });
+                    coinTimer = 0;
+                }
             }
 
             // Update and draw coins
