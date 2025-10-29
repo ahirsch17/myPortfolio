@@ -32,7 +32,7 @@
                         <div class="showcase-content">
                             <div class="project-icon-large">📚</div>
                             <h2>SamePath</h2>
-                            <p class="project-subtitle">Student Collaboration Platform</p>
+                            <p class="project-description">A comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules to automatically suggest study partners based on shared classes and availability.</p>
                             <div class="showcase-buttons">
                                 <button class="btn-screenshots" onclick="openImageCarousel('samepath')">View Screenshots</button>
                                 <a href="https://github.com/ahirsch17/SamePath" target="_blank" class="btn-github">View on GitHub</a>
@@ -43,10 +43,10 @@
                     <!-- RealEstateHirsch Project -->
                     <div class="project-showcase-card" data-project="realestatehirsch">
                         <div class="showcase-background realestatehirsch-bg"></div>
-                        <div class="showcase-content">
+                        <div class="showcase-content reversed">
                             <div class="project-icon-large">🏠</div>
                             <h2>RealEstateHirsch</h2>
-                            <p class="project-subtitle">Professional Real Estate Website</p>
+                            <p class="project-description">A modern, responsive real estate website showcasing property listings with virtual tours, high-quality photography, and an integrated scheduling system. Built for real estate professionals to manage property displays and client appointments efficiently.</p>
                             <div class="showcase-buttons">
                                 <a href="https://hirsch-leasing.onrender.com/" target="_blank" class="btn-live">Visit Live Site</a>
                                 <a href="https://github.com/ahirsch17/hirsch-properties" target="_blank" class="btn-github">View on GitHub</a>
@@ -58,11 +58,10 @@
                     <div class="project-showcase-card" data-project="sportspredictor">
                         <div class="showcase-background sportspredictor-bg"></div>
                         <div class="showcase-content">
-                            <div class="project-icon-large">⚽</div>
+                            <div class="project-icon-large">🏈</div>
                             <h2>SportsPredictor</h2>
-                            <p class="project-subtitle">ML-Powered Sports Analytics</p>
+                            <p class="project-description">An advanced sports prediction system using machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. Factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
                             <div class="showcase-buttons">
-                                <button class="btn-explore" onclick="openModal('sportspredictor')">Explore Project</button>
                                 <button class="btn-screenshots" onclick="openImageCarousel('sportspredictor')">View Screenshots</button>
                                 <button class="btn-screenshots" onclick="openMatchupReport()">View Matchup Report</button>
                                 <a href="https://github.com/ahirsch17/sportsPredictor" target="_blank" class="btn-github">View on GitHub</a>
@@ -406,22 +405,34 @@
             color: white;
         }
 
+        .showcase-content.reversed {
+            flex-direction: column-reverse;
+        }
+
         .project-icon-large {
             font-size: 5rem;
             margin-bottom: 1.5rem;
             animation: float 3s ease-in-out infinite;
         }
 
-        .project-showcase-card h2 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        .showcase-content.reversed .project-icon-large {
+            margin-bottom: 0;
+            margin-top: 1.5rem;
         }
 
-        .project-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
+        .project-showcase-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .project-description {
+            font-size: 1rem;
+            margin-bottom: 2rem;
             opacity: 0.95;
+            line-height: 1.6;
+            max-width: 90%;
         }
 
         .showcase-buttons {
