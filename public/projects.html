@@ -63,6 +63,8 @@
                             <p class="project-subtitle">ML-Powered Sports Analytics</p>
                             <div class="showcase-buttons">
                                 <button class="btn-explore" onclick="openModal('sportspredictor')">Explore Project</button>
+                                <button class="btn-screenshots" onclick="openImageCarousel('sportspredictor')">View Screenshots</button>
+                                <button class="btn-screenshots" onclick="openMatchupReport()">View Matchup Report</button>
                                 <a href="https://github.com/ahirsch17/sportsPredictor" target="_blank" class="btn-github">View on GitHub</a>
                             </div>
                         </div>
@@ -229,6 +231,14 @@
             'Images/SamePath/3 - I_m Returning.png'
         ];
 
+        const sportspredictorImages = [
+            'Images/sportsPredictor/BatchPredict.jpg',
+            'Images/sportsPredictor/injuryExtract.jpg',
+            'Images/sportsPredictor/injuryExtractData.jpg',
+            'Images/sportsPredictor/updateData.jpg',
+            'Images/sportsPredictor/updateDataData.jpg'
+        ];
+
         let currentImageIndex = 0;
         let currentImageSet = [];
 
@@ -239,6 +249,63 @@
                 updateCarousel();
                 document.getElementById('imageCarouselModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
+            } else if (project === 'sportspredictor') {
+                currentImageSet = sportspredictorImages;
+                currentImageIndex = 0;
+                updateCarousel();
+                document.getElementById('imageCarouselModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        async function openMatchupReport() {
+            try {
+                const response = await fetch('Images/sportsPredictor/DetailedMatchupReport.txt');
+                const text = await response.text();
+                
+                // Create modal for text display
+                const modal = document.createElement('div');
+                modal.className = 'modal active';
+                modal.style.display = 'flex';
+                modal.onclick = function(event) {
+                    if (event.target === modal) {
+                        modal.remove();
+                        document.body.style.overflow = 'auto';
+                    }
+                };
+
+                const content = document.createElement('div');
+                content.className = 'matchup-report-container';
+                content.onclick = function(event) {
+                    event.stopPropagation();
+                };
+
+                const header = document.createElement('div');
+                header.innerHTML = `
+                    <h2>Detailed Matchup Report</h2>
+                    <span class="close" onclick="this.closest('.modal').remove(); document.body.style.overflow = 'auto';">&times;</span>
+                `;
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                header.style.marginBottom = '1.5rem';
+
+                const textContent = document.createElement('pre');
+                textContent.textContent = text;
+                textContent.style.whiteSpace = 'pre-wrap';
+                textContent.style.fontFamily = 'Courier New, monospace';
+                textContent.style.fontSize = '0.9rem';
+                textContent.style.lineHeight = '1.6';
+                textContent.style.overflow = 'auto';
+                textContent.style.maxHeight = '70vh';
+
+                content.appendChild(header);
+                content.appendChild(textContent);
+                modal.appendChild(content);
+                document.body.appendChild(modal);
+                document.body.style.overflow = 'hidden';
+            } catch (error) {
+                alert('Could not load matchup report: ' + error.message);
             }
         }
 
@@ -623,6 +690,21 @@
             color: #64748b;
             font-size: 1rem;
             font-weight: 600;
+        }
+
+        /* Matchup Report Container */
+        .matchup-report-container {
+            background-color: #fff;
+            max-width: 80vw;
+            max-height: 90vh;
+            border-radius: 15px;
+            padding: 2rem;
+            overflow: auto;
+        }
+
+        .matchup-report-container h2 {
+            color: #1e293b;
+            margin: 0;
         }
 
         @media (max-width: 768px) {

@@ -1,0 +1,97 @@
+$ python ml_predictor.py
+====================================================================================================
+NFL ML Predictor - XGBoost with Calibrated Probabilities
+====================================================================================================
+
+Loading NFL game data...
+Loaded 32 teams
+Loading injury data...
+Injury data loaded for 32 teams
+
+Building training dataset from historical matchups...
+Created 118 training samples from historical games
+Features: 76
+Home wins: 67 (56.8%)
+Away wins: 51 (43.2%)
+
+Training XGBoost model...
+
+====================================================================================================
+MODEL PERFORMANCE
+====================================================================================================
+Training set: 94 games
+Test set: 24 games
+Accuracy: 41.7%
+Log Loss: 1.305 (lower is better)
+Brier Score: 0.433 (lower is better, perfect = 0.0)
+Cross-Validation Accuracy: 67.9% (+/- 22.1%)
+
+Top 15 Most Important Features:
+  win_rate_diff                            0.1462
+  qb_composite_diff                        0.0571
+  location_matchup                         0.0395
+  qb_ypa_diff                              0.0376
+  away_on_road_winrate                     0.0322
+  ypp_diff                                 0.0295
+  close_game_diff                          0.0262
+  off_epa_diff                             0.0260
+  home_3rd_vs_away_3rd_d                   0.0207
+  qb_td_int_ratio_diff                     0.0195
+  away_off_vs_home_def_ypp                 0.0178
+  away_pyth_diff                           0.0177
+  away_rush_vs_home_rush_d                 0.0166
+  points_scored_diff                       0.0162
+  home_field_advantage                     0.0158
+
+Calibrating probabilities...
+After Calibration:
+  Log Loss: 1.087 (improved: +0.219)
+  Brier Score: 0.372 (improved: +0.061)
+
+====================================================================================================
+MAKE A PREDICTION
+====================================================================================================
+
+Enter team names (use full names as they appear in nflData.txt)
+Enter HOME team: Cincinnati Bengals
+Enter AWAY team: Chicago Bears
+
+====================================================================================================
+MACHINE LEARNING PREDICTION: Cincinnati Bengals vs Chicago Bears
+====================================================================================================
+
+Cincinnati Bengals (Home):
+  Record: 4-6 (40.0%)
+  Offensive Style: PASS HEAVY
+  Points: 23.3/game (allowed: 31.4)
+  Recent Form: 2-1 last 3
+
+Chicago Bears (Away):
+  Record: 6-3 (66.7%)
+  Offensive Style: PASS HEAVY
+  Points: 24.2/game (allowed: 24.3)
+  Recent Form: 2-1 last 3
+
+====================================================================================================
+Key Matchup Advantages:
+====================================================================================================
+  avg win margin diff: +7.114 (favors Chicago Bears)
+  points allowed diff: +7.080 (favors Chicago Bears)
+  recent scoring diff: +2.333 (favors Chicago Bears)
+  sack diff: +1.675 (favors Cincinnati Bengals)
+  recent turnover margin diff: +1.667 (favors Cincinnati Bengals)
+  qb ypa diff: +1.437 (favors Chicago Bears)
+  qb rating diff: +1.416 (favors Cincinnati Bengals)
+  qb td int ratio diff: +1.343 (favors Cincinnati Bengals)
+
+====================================================================================================
+FINAL PREDICTION
+====================================================================================================
+
+Cincinnati Bengals Win Probability: 74.4%
+Chicago Bears Win Probability: 25.6%
+
+PREDICTION: Cincinnati Bengals wins
+Confidence: 74.4%
+Strength: STRONG favorite
+====================================================================================================
