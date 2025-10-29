@@ -65,23 +65,27 @@
         <!-- Game Section -->
         <section class="game-section">
             <div class="container">
-                <div class="game-container">
-                    <div class="game-stats">
-                        <div class="stat">
-                            <span class="stat-label">Score</span>
-                            <span class="stat-value" id="score">0</span>
+                <div class="minigames-carousel">
+                    <button class="carousel-arrow left" onclick="changeGame(-1)">❮</button>
+                    
+                    <div class="game-container" id="shipdodgeGame">
+                        <h2 class="game-title">Ship Dodge</h2>
+                        <div class="game-stats">
+                            <div class="stat">
+                                <span class="stat-label">Score</span>
+                                <span class="stat-value" id="score">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">High Score</span>
+                                <span class="stat-value" id="highScore">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Coins</span>
+                                <span class="stat-value" id="coins">0</span>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <span class="stat-label">High Score</span>
-                            <span class="stat-value" id="highScore">0</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-label">Coins</span>
-                            <span class="stat-value" id="coins">0</span>
-                        </div>
-                    </div>
 
-                    <canvas id="gameCanvas"></canvas>
+                        <canvas id="gameCanvas"></canvas>
 
                     <div class="game-controls">
                         <button class="control-btn" onclick="startGame()" id="startBtn">Start Game</button>
@@ -110,15 +114,27 @@
                         </div>
                     </div>
 
-                    <div class="customize-section" id="customizeSection" style="display: none;">
-                        <h3>Customize Ship</h3>
-                        <div class="customize-grid">
-                            <div class="customize-item" style="max-width: 200px; margin: 0 auto;">
-                                <label for="shipColor">Ship Color:</label>
-                                <input type="color" id="shipColor" value="#ffffff" onchange="changeShipColor(this.value)">
+                        <div class="customize-section" id="customizeSection" style="display: none;">
+                            <h3>Customize Ship</h3>
+                            <div class="customize-grid">
+                                <div class="customize-item" style="max-width: 200px; margin: 0 auto;">
+                                    <label for="shipColor">Ship Color:</label>
+                                    <input type="color" id="shipColor" value="#ffffff" onchange="changeShipColor(this.value)">
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Pacman Game (Locked) -->
+                    <div class="game-container locked" id="pacmanGame">
+                        <h2 class="game-title">Pacman</h2>
+                        <div class="lock-overlay">
+                            <div class="lock-icon">🔒</div>
+                            <p>Unlock this game by achieving a score of 30 or higher in Ship Dodge!</p>
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-arrow right" onclick="changeGame(1)">❯</button>
                 </div>
             </div>
         </section>
@@ -423,14 +439,52 @@
             document.getElementById('highScore').textContent = highScore;
             document.getElementById('coins').textContent = coins;
             
-            // Check for Pacman unlock at score 30
+            // Check for Pacman unlock at score 30 (silently unlock, no popup)
             if (score >= 30) {
                 if (!localStorage.getItem('pacmanUnlocked')) {
                     localStorage.setItem('pacmanUnlocked', 'true');
-                    alert('🎉 Congratulations! You unlocked Pacman! (Coming soon)');
                 }
             }
         }
+
+        // Game carousel navigation
+        let currentGameIndex = 0;
+        const gameContainers = document.querySelectorAll('.game-container');
+        
+        function changeGame(direction) {
+            currentGameIndex += direction;
+            if (currentGameIndex < 0) currentGameIndex = gameContainers.length - 1;
+            if (currentGameIndex >= gameContainers.length) currentGameIndex = 0;
+            
+            // Check if Pacman is unlocked
+            const pacmanUnlocked = localStorage.getItem('pacmanUnlocked') === 'true';
+            if (currentGameIndex === 1 && !pacmanUnlocked) {
+                // Skip over locked games
+                if (direction === 1) {
+                    currentGameIndex = 0;
+                } else {
+                    currentGameIndex = 0;
+                }
+            }
+            
+            // Update visibility
+            gameContainers.forEach((container, index) => {
+                if (index === currentGameIndex) {
+                    container.style.display = 'block';
+                } else {
+                    container.style.display = 'none';
+                }
+            });
+        }
+        
+        // Initialize game visibility
+        gameContainers.forEach((container, index) => {
+            if (index === 0) {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        });
 
         function updateButtons() {
             document.getElementById('pauseBtn').textContent = gameState === 'paused' ? 'Resume' : 'Pause';
@@ -537,13 +591,86 @@
             margin-bottom: 3rem;
         }
 
+        .minigames-carousel {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-arrow:hover {
+            background: #5568d3;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow.left {
+            left: -70px;
+        }
+
+        .carousel-arrow.right {
+            right: -70px;
+        }
+
         .game-container {
             background: white;
             border-radius: 20px;
             padding: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 700px;
-            margin: 0 auto;
+            position: relative;
+        }
+
+        .game-title {
+            text-align: center;
+            color: #1e293b;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-container.locked {
+            opacity: 0.6;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            z-index: 100;
+        }
+
+        .lock-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .lock-overlay p {
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 0 2rem;
         }
 
         .game-stats {
@@ -741,6 +868,24 @@
 
             .upgrades-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-arrow.left {
+                left: -50px;
+            }
+
+            .carousel-arrow.right {
+                right: -50px;
+            }
+
+            .minigames-carousel {
+                margin: 0 3rem;
             }
         }
     </style>
