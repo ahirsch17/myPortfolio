@@ -102,19 +102,20 @@
                                 <span class="upgrade-price">💰 15</span>
                                 <button class="upgrade-btn" onclick="buyUpgrade('points')" id="pointsBtn">Buy</button>
                             </div>
+                            <div class="upgrade-item">
+                                <span class="upgrade-name">Ship Customizer</span>
+                                <span class="upgrade-price">💰 10</span>
+                                <button class="upgrade-btn" onclick="buyUpgrade('customize')" id="customizeBtn">Buy</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="customize-section">
-                        <h3>Customize Colors</h3>
+                    <div class="customize-section" id="customizeSection" style="display: none;">
+                        <h3>Customize Ship</h3>
                         <div class="customize-grid">
-                            <div class="customize-item">
+                            <div class="customize-item" style="max-width: 200px; margin: 0 auto;">
                                 <label for="shipColor">Ship Color:</label>
                                 <input type="color" id="shipColor" value="#ffffff" onchange="changeShipColor(this.value)">
-                            </div>
-                            <div class="customize-item">
-                                <label for="pipeColor">Pipe Color:</label>
-                                <input type="color" id="pipeColor" value="#5a5a5a" onchange="changePipeColor(this.value)">
                             </div>
                         </div>
                     </div>
@@ -151,7 +152,7 @@
 
         // Customization colors
         let shipColor = localStorage.getItem('shipColor') || '#ffffff';
-        let pipeColor = localStorage.getItem('pipeColor') || '#5a5a5a';
+        let hasCustomizer = localStorage.getItem('hasCustomizer') === 'true';
 
         // Player
         const player = {
@@ -176,19 +177,17 @@
             document.getElementById('coins').textContent = coins;
             updateButtons();
             
-            // Load saved colors
+            // Load saved colors and check if customizer is unlocked
             document.getElementById('shipColor').value = shipColor;
-            document.getElementById('pipeColor').value = pipeColor;
+            if (hasCustomizer) {
+                document.getElementById('customizeSection').style.display = 'block';
+                document.getElementById('customizeBtn').textContent = 'Owned';
+            }
         }
 
         function changeShipColor(color) {
             shipColor = color;
             localStorage.setItem('shipColor', shipColor);
-        }
-
-        function changePipeColor(color) {
-            pipeColor = color;
-            localStorage.setItem('pipeColor', pipeColor);
         }
 
         function startGame() {
@@ -288,7 +287,7 @@
                 obs.x -= 3 * upgrades.speed;
 
                 // Draw top obstacle
-                ctx.fillStyle = pipeColor;
+                ctx.fillStyle = '#5a5a5a';
                 ctx.fillRect(obs.x, 0, 40, obs.topHeight);
                 // Draw bottom obstacle
                 ctx.fillRect(obs.x, obs.topHeight + obs.gap, 40, canvas.height);
@@ -313,35 +312,34 @@
                 }
             }
 
-            // Create coins randomly in safe areas (not in pipes)
+            // Create coins randomly in safe areas (only in gaps between pipes)
             coinTimer++;
             if (coinTimer > 250 / upgrades.speed && Math.random() > 0.6) {
-                // Generate a safe Y position that's not in any obstacle's pipe area
-                let safeY = Math.random() * (canvas.height - 50) + 25; // Between 25 and 375
-                let isInPipe = false;
-                
-                // Check if this Y position overlaps with any obstacle's pipe
-                for (const obs of obstacles) {
-                    const topPipeBottom = obs.topHeight;
-                    const bottomPipeTop = obs.topHeight + obs.gap;
+                if (obstacles.length > 0) {
+                    // Get a random obstacle and place coin in its gap
+                    const randomObs = obstacles[Math.floor(Math.random() * obstacles.length)];
+                    const gapCenter = randomObs.topHeight + randomObs.gap / 2;
+                    const safeY = gapCenter + (Math.random() - 0.5) * (randomObs.gap - 30); // Leave margins
                     
-                    if (safeY < topPipeBottom || safeY > bottomPipeTop) {
-                        isInPipe = true;
-                        break;
-                    }
-                }
-                
-                // Only spawn coin if it's not in a pipe, or if there are no obstacles
-                if (!isInPipe || obstacles.length === 0) {
+                    // Place coin slightly behind the obstacle so it's not blocked
                     gameCoins.push({
-                        x: canvas.width + 50,
+                        x: randomObs.x + 60,
                         y: safeY,
                         radius: 12,
                         collected: false,
                         rotation: 0
                     });
-                    coinTimer = 0;
+                } else {
+                    // No obstacles yet, spawn in middle of screen
+                    gameCoins.push({
+                        x: canvas.width + 50,
+                        y: canvas.height / 2,
+                        radius: 12,
+                        collected: false,
+                        rotation: 0
+                    });
                 }
+                coinTimer = 0;
             }
 
             // Update and draw coins
@@ -424,6 +422,14 @@
             document.getElementById('score').textContent = score;
             document.getElementById('highScore').textContent = highScore;
             document.getElementById('coins').textContent = coins;
+            
+            // Check for Pacman unlock at score 30
+            if (score >= 30) {
+                if (!localStorage.getItem('pacmanUnlocked')) {
+                    localStorage.setItem('pacmanUnlocked', 'true');
+                    alert('🎉 Congratulations! You unlocked Pacman! (Coming soon)');
+                }
+            }
         }
 
         function updateButtons() {
@@ -433,10 +439,18 @@
         }
 
         function buyUpgrade(type) {
-            const prices = { speed: 5, points: 15 };
+            const prices = { speed: 5, points: 15, customize: 10 };
             const price = prices[type];
 
-            if (coins >= price && upgrades[type] === 1) {
+            if (type === 'customize' && coins >= price && !hasCustomizer) {
+                coins -= price;
+                hasCustomizer = true;
+                localStorage.setItem('hasCustomizer', 'true');
+                localStorage.setItem('coins', coins);
+                document.getElementById('customizeSection').style.display = 'block';
+                document.getElementById('customizeBtn').textContent = 'Owned';
+                updateScore();
+            } else if (coins >= price && upgrades[type] === 1) {
                 coins -= price;
                 upgrades[type] = 1.5;
                 updateScore();
