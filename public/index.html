@@ -12,7 +12,6 @@
         <div class="nav-container">
             <a href="/" class="logo">
                 <img src="Images/Logo.png" alt="Alexis Hirsch" class="logo-img">
-                <span class="logo-text">Alexis</span>
             </a>
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
@@ -95,17 +94,17 @@
                         <div class="upgrades-grid">
                             <div class="upgrade-item">
                                 <span class="upgrade-name">Speed Boost</span>
-                                <span class="upgrade-price">💰 50</span>
+                                <span class="upgrade-price">💰 5</span>
                                 <button class="upgrade-btn" onclick="buyUpgrade('speed')" id="speedBtn">Buy</button>
                             </div>
                             <div class="upgrade-item">
                                 <span class="upgrade-name">Bigger Ship</span>
-                                <span class="upgrade-price">💰 100</span>
+                                <span class="upgrade-price">💰 10</span>
                                 <button class="upgrade-btn" onclick="buyUpgrade('size')" id="sizeBtn">Buy</button>
                             </div>
                             <div class="upgrade-item">
                                 <span class="upgrade-name">Double Points</span>
-                                <span class="upgrade-price">💰 200</span>
+                                <span class="upgrade-price">💰 15</span>
                                 <button class="upgrade-btn" onclick="buyUpgrade('points')" id="pointsBtn">Buy</button>
                             </div>
                         </div>
@@ -275,12 +274,17 @@
                 }
             }
 
-            // Create coins randomly
+            // Create coins randomly in safe gap areas
             coinTimer++;
-            if (coinTimer > 180 / upgrades.speed && Math.random() > 0.7) {
+            if (coinTimer > 200 / upgrades.speed && Math.random() > 0.7 && obstacles.length > 0) {
+                // Get the most recent obstacle to place coin in its gap
+                const lastObs = obstacles[obstacles.length - 1];
+                const gapCenter = lastObs.topHeight + lastObs.gap / 2;
+                const safeY = gapCenter + (Math.random() - 0.5) * (lastObs.gap - 40);
+                
                 gameCoins.push({
-                    x: canvas.width,
-                    y: Math.random() * (canvas.height - 100) + 50,
+                    x: canvas.width + 200, // Spawn coins after obstacles
+                    y: safeY,
                     radius: 12,
                     collected: false,
                     rotation: 0
@@ -378,7 +382,7 @@
         }
 
         function buyUpgrade(type) {
-            const prices = { speed: 50, size: 100, points: 200 };
+            const prices = { speed: 5, size: 10, points: 15 };
             const price = prices[type];
 
             if (coins >= price && upgrades[type] === 1) {
