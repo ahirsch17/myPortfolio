@@ -12,7 +12,6 @@
             <a href="/" class="logo">Alexis</a>
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
                 <li><a href="/projects">Projects</a></li>
             </ul>
         </div>
@@ -59,19 +58,56 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section class="skills">
+        <!-- Game Section -->
+        <section class="game-section">
             <div class="container">
-                <h2 class="section-title">Technologies</h2>
-                <div class="skills-grid">
-                    <div class="skill-item">React Native</div>
-                    <div class="skill-item">JavaScript</div>
-                    <div class="skill-item">Python</div>
-                    <div class="skill-item">HTML/CSS</div>
-                    <div class="skill-item">Flask</div>
-                    <div class="skill-item">Express.js</div>
-                    <div class="skill-item">Machine Learning</div>
-                    <div class="skill-item">MongoDB</div>
+                <h2 class="section-title">Play My Game</h2>
+                <p class="game-subtitle">A little demo of what I can build - enjoy!</p>
+                
+                <div class="game-container">
+                    <div class="game-stats">
+                        <div class="stat">
+                            <span class="stat-label">Score</span>
+                            <span class="stat-value" id="score">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">High Score</span>
+                            <span class="stat-value" id="highScore">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Coins</span>
+                            <span class="stat-value" id="coins">0</span>
+                        </div>
+                    </div>
+
+                    <canvas id="gameCanvas"></canvas>
+
+                    <div class="game-controls">
+                        <button class="control-btn" onclick="startGame()" id="startBtn">Start Game</button>
+                        <button class="control-btn" onclick="pauseGame()" id="pauseBtn">Pause</button>
+                        <button class="control-btn" onclick="resetGame()" id="resetBtn">Reset</button>
+                    </div>
+
+                    <div class="upgrade-shop">
+                        <h3>Upgrades Shop</h3>
+                        <div class="upgrades-grid">
+                            <div class="upgrade-item">
+                                <span class="upgrade-name">Speed Boost</span>
+                                <span class="upgrade-price">💰 50</span>
+                                <button class="upgrade-btn" onclick="buyUpgrade('speed')" id="speedBtn">Buy</button>
+                            </div>
+                            <div class="upgrade-item">
+                                <span class="upgrade-name">Bigger Ship</span>
+                                <span class="upgrade-price">💰 100</span>
+                                <button class="upgrade-btn" onclick="buyUpgrade('size')" id="sizeBtn">Buy</button>
+                            </div>
+                            <div class="upgrade-item">
+                                <span class="upgrade-name">Double Points</span>
+                                <span class="upgrade-price">💰 200</span>
+                                <button class="upgrade-btn" onclick="buyUpgrade('points')" id="pointsBtn">Buy</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -82,6 +118,468 @@
             <p>&copy; 2025 Alexis Hirsch. Built with passion for web development.</p>
         </div>
     </footer>
+
+    <script>
+        // Game variables
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 600;
+        canvas.height = 400;
+
+        let gameState = 'waiting'; // waiting, playing, paused, gameover
+        let score = 0;
+        let highScore = localStorage.getItem('highScore') || 0;
+        let coins = parseInt(localStorage.getItem('coins')) || 0;
+        
+        // Player upgrades
+        let upgrades = {
+            speed: 1,
+            size: 1,
+            points: 1
+        };
+
+        // Player
+        const player = {
+            x: 100,
+            y: canvas.height / 2,
+            radius: 10 * upgrades.size,
+            velocity: 0,
+            gravity: 0.5,
+            jump: -8
+        };
+
+        // Obstacles
+        const obstacles = [];
+        let obstacleTimer = 0;
+
+        function init() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('highScore').textContent = highScore;
+            document.getElementById('coins').textContent = coins;
+            updateButtons();
+        }
+
+        function startGame() {
+            if (gameState === 'playing') return;
+            gameState = 'playing';
+            score = 0;
+            obstacles.length = 0;
+            player.y = canvas.height / 2;
+            player.velocity = 0;
+            updateScore();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function pauseGame() {
+            if (gameState === 'playing') {
+                gameState = 'paused';
+                updateButtons();
+            } else if (gameState === 'paused') {
+                gameState = 'playing';
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        function resetGame() {
+            gameState = 'waiting';
+            score = 0;
+            obstacles.length = 0;
+            player.y = canvas.height / 2;
+            player.velocity = 0;
+            updateScore();
+            updateButtons();
+        }
+
+        function gameLoop() {
+            if (gameState !== 'playing') return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw background gradient
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Update player
+            player.velocity += player.gravity;
+            player.y += player.velocity * upgrades.speed;
+
+            // Keep player in bounds
+            if (player.y + player.radius > canvas.height) {
+                player.y = canvas.height - player.radius;
+                gameOver();
+            }
+            if (player.y - player.radius < 0) {
+                player.y = player.radius;
+                player.velocity = 0;
+            }
+
+            // Draw player (ship)
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y - player.radius);
+            ctx.lineTo(player.x + player.radius * 2, player.y);
+            ctx.lineTo(player.x, player.y + player.radius);
+            ctx.lineTo(player.x - player.radius, player.y);
+            ctx.closePath();
+            ctx.fill();
+
+            // Create obstacles
+            obstacleTimer++;
+            if (obstacleTimer > 120 / upgrades.speed) {
+                obstacles.push({
+                    x: canvas.width,
+                    gap: 150,
+                    topHeight: Math.random() * (canvas.height - 200) + 50,
+                    passed: false
+                });
+                obstacleTimer = 0;
+            }
+
+            // Update and draw obstacles
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                const obs = obstacles[i];
+                obs.x -= 3 * upgrades.speed;
+
+                // Draw top obstacle
+                ctx.fillRect(obs.x, 0, 40, obs.topHeight);
+                // Draw bottom obstacle
+                ctx.fillRect(obs.x, obs.topHeight + obs.gap, 40, canvas.height);
+
+                // Check collision
+                if (player.x + player.radius > obs.x && player.x - player.radius < obs.x + 40) {
+                    if (player.y - player.radius < obs.topHeight || player.y + player.radius > obs.topHeight + obs.gap) {
+                        gameOver();
+                    }
+                }
+
+                // Score and coins
+                if (!obs.passed && obs.x + 40 < player.x) {
+                    obs.passed = true;
+                    score += 1 * upgrades.points;
+                    if (score % 5 === 0) {
+                        coins++;
+                    }
+                    updateScore();
+                }
+
+                // Remove off-screen obstacles
+                if (obs.x + 40 < 0) {
+                    obstacles.splice(i, 1);
+                }
+            }
+
+            // Draw clouds
+            drawCloud(canvas.width / 2, 50);
+            drawCloud(canvas.width / 3, 80);
+            drawCloud(canvas.width * 0.7, 120);
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function drawCloud(x, y) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, Math.PI * 2);
+            ctx.arc(x + 25, y, 30, 0, Math.PI * 2);
+            ctx.arc(x + 50, y, 20, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function gameOver() {
+            gameState = 'gameover';
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('highScore', highScore);
+            }
+            localStorage.setItem('coins', coins);
+            updateScore();
+            updateButtons();
+            drawGameOver();
+        }
+
+        function drawGameOver() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 36px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - 40);
+            ctx.font = '24px sans-serif';
+            ctx.fillText('Click to restart', canvas.width / 2, canvas.height / 2 + 20);
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('highScore').textContent = highScore;
+            document.getElementById('coins').textContent = coins;
+        }
+
+        function updateButtons() {
+            document.getElementById('pauseBtn').textContent = gameState === 'paused' ? 'Resume' : 'Pause';
+            document.getElementById('speedBtn').textContent = upgrades.speed > 1 ? 'Owned' : 'Buy';
+            document.getElementById('sizeBtn').textContent = upgrades.size > 1 ? 'Owned' : 'Buy';
+            document.getElementById('pointsBtn').textContent = upgrades.points > 1 ? 'Owned' : 'Buy';
+        }
+
+        function buyUpgrade(type) {
+            const prices = { speed: 50, size: 100, points: 200 };
+            const price = prices[type];
+
+            if (coins >= price && upgrades[type] === 1) {
+                coins -= price;
+                upgrades[type] = 1.5;
+                player.radius = 10 * upgrades.size;
+                player.jump = -8 * upgrades.size;
+                updateScore();
+                updateButtons();
+                localStorage.setItem('coins', coins);
+            }
+        }
+
+        // Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                e.preventDefault();
+                e.stopPropagation();
+                if (gameState === 'waiting' || gameState === 'gameover') {
+                    startGame();
+                } else if (gameState === 'playing') {
+                    player.velocity = player.jump;
+                } else if (gameState === 'paused') {
+                    pauseGame();
+                }
+            }
+        });
+
+        canvas.addEventListener('click', () => {
+            if (gameState === 'waiting' || gameState === 'gameover') {
+                startGame();
+            } else if (gameState === 'playing') {
+                player.velocity = player.jump;
+            } else if (gameState === 'paused') {
+                pauseGame();
+            }
+        });
+
+        // Draw waiting screen
+        function drawWaiting() {
+            if (gameState !== 'waiting') return;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.font = 'bold 32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Click or Press Space!', canvas.width / 2, canvas.height / 2);
+
+            // Draw player
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.moveTo(player.x, player.y - player.radius);
+            ctx.lineTo(player.x + player.radius * 2, player.y);
+            ctx.lineTo(player.x, player.y + player.radius);
+            ctx.lineTo(player.x - player.radius, player.y);
+            ctx.closePath();
+            ctx.fill();
+
+            drawCloud(canvas.width / 2, 50);
+            drawCloud(canvas.width / 3, 80);
+            drawCloud(canvas.width * 0.7, 120);
+
+            requestAnimationFrame(drawWaiting);
+        }
+
+        init();
+        drawWaiting();
+    </script>
+
+    <style>
+        /* Game Section */
+        .game-section {
+            padding: 4rem 0;
+            background: #f8fafc;
+        }
+
+        .game-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        #gameCanvas {
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto 1.5rem;
+            background: #f8fafc;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #gameCanvas:focus {
+            outline: none;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .upgrade-shop {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .upgrade-shop h3 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .upgrades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .upgrade-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+        }
+
+        .upgrade-name {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .upgrade-price {
+            display: block;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upgrade-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .upgrade-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 1.5rem;
+                margin: 0 1rem;
+            }
+
+            .game-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            #gameCanvas {
+                width: 100%;
+                height: auto;
+            }
+
+            .game-controls {
+                flex-wrap: wrap;
+            }
+
+            .upgrades-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </body>
 </html>
 

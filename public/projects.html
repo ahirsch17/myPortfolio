@@ -3,138 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Alexi Portfolio</title>
+    <title>Projects - Alexis Hirsch Portfolio</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="/" class="logo">Alexi</a>
+            <a href="/" class="logo">Alexis</a>
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
                 <li><a href="/projects">Projects</a></li>
             </ul>
         </div>
     </nav>
 
     <main>
-        <section class="featured-projects">
+        <section class="featured-projects" style="padding: 4rem 0;">
             <div class="container">
                 <h2 class="section-title">My Projects</h2>
+                <p style="text-align: center; color: #64748b; margin-bottom: 3rem;">Click on any project to learn more</p>
                 
-                <!-- SamePath Project Detail -->
-                <div class="project-detail" id="samepath">
-                    <div class="detail-header">
-                        <div class="detail-icon">📚</div>
-                        <div>
-                            <h2>SamePath</h2>
-                            <p class="detail-subtitle">Student Collaboration Platform</p>
+                <div class="projects-grid" style="margin-top: 3rem;">
+                    <!-- SamePath Project Card -->
+                    <div class="project-card" onclick="openModal('samepath')">
+                        <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="project-icon">📚</div>
+                        </div>
+                        <div class="project-content">
+                            <h3>SamePath</h3>
+                            <p>Student collaboration platform connecting classmates for group projects and study sessions.</p>
+                            <div class="project-tags">
+                                <span class="tag">React Native</span>
+                                <span class="tag">Python</span>
+                                <span class="tag">Flask</span>
+                            </div>
+                            <div class="project-link">Learn More →</div>
                         </div>
                     </div>
-                    <div class="detail-content">
-                        <p>SamePath is a comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules (including Virginia Tech) to automatically suggest study partners based on shared classes and availability.</p>
-                        
-                        <h3>Key Features:</h3>
-                        <ul class="feature-list">
-                            <li>Class schedule integration with CRN lookup</li>
-                            <li>Automatic study partner matching</li>
-                            <li>Group chat functionality for teams</li>
-                            <li>Free time discovery and coordination</li>
-                            <li>Friends list management</li>
-                            <li>User preferences and notifications</li>
-                        </ul>
 
-                        <h3>Technologies Used:</h3>
-                        <div class="project-tags">
-                            <span class="tag">React Native</span>
-                            <span class="tag">TypeScript</span>
-                            <span class="tag">Python Flask</span>
-                            <span class="tag">MongoDB</span>
-                            <span class="tag">Express.js</span>
-                            <span class="tag">REST API</span>
+                    <!-- RealEstateHirsch Project Card -->
+                    <div class="project-card" onclick="openModal('realestatehirsch')">
+                        <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="project-icon">🏠</div>
                         </div>
-
-                        <div class="detail-links">
-                            <a href="#" class="btn btn-primary">View Live Demo</a>
-                            <a href="https://github.com/yourusername/SamePath" class="btn btn-secondary">View on GitHub</a>
+                        <div class="project-content">
+                            <h3>RealEstateHirsch</h3>
+                            <p>Professional real estate website with property listings, virtual tours, and scheduling.</p>
+                            <div class="project-tags">
+                                <span class="tag">HTML/CSS</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">Express</span>
+                            </div>
+                            <div class="project-link">Learn More →</div>
                         </div>
                     </div>
-                </div>
 
-                <!-- RealEstateHirsch Project Detail -->
-                <div class="project-detail" id="realestatehirsch">
-                    <div class="detail-header">
-                        <div class="detail-icon">🏠</div>
-                        <div>
-                            <h2>RealEstateHirsch</h2>
-                            <p class="detail-subtitle">Professional Real Estate Website</p>
+                    <!-- SportsPredictor Project Card -->
+                    <div class="project-card" onclick="openModal('sportspredictor')">
+                        <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="project-icon">⚽</div>
                         </div>
-                    </div>
-                    <div class="detail-content">
-                        <p>A modern, responsive real estate website showcasing property listings with virtual tours, high-quality photography, and an integrated scheduling system. Built for real estate professionals to manage property displays and client appointments efficiently.</p>
-                        
-                        <h3>Key Features:</h3>
-                        <ul class="feature-list">
-                            <li>Interactive property listings with photo galleries</li>
-                            <li>Virtual tour integration</li>
-                            <li>Appointment scheduling system</li>
-                            <li>Team member profiles</li>
-                            <li>Contact forms and inquiry management</li>
-                            <li>Mobile-responsive design</li>
-                        </ul>
-
-                        <h3>Technologies Used:</h3>
-                        <div class="project-tags">
-                            <span class="tag">HTML5</span>
-                            <span class="tag">CSS3</span>
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Express.js</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">Responsive Design</span>
-                        </div>
-
-                        <div class="detail-links">
-                            <a href="https://realestatehirsch.onrender.com" class="btn btn-primary" target="_blank">View Live Site</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SportsPredictor Project Detail -->
-                <div class="project-detail" id="sportspredictor">
-                    <div class="detail-header">
-                        <div class="detail-icon">⚽</div>
-                        <div>
-                            <h2>SportsPredictor</h2>
-                            <p class="detail-subtitle">ML-Powered Sports Analytics</p>
-                        </div>
-                    </div>
-                    <div class="detail-content">
-                        <p>An advanced sports prediction system that uses machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. The system factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
-                        
-                        <h3>Key Features:</h3>
-                        <ul class="feature-list">
-                            <li>Machine learning-based predictions for multiple sports</li>
-                            <li>Real-time injury tracking and impact analysis</li>
-                            <li>Weather condition integration for outdoor sports</li>
-                            <li>Automated data scraping and processing</li>
-                            <li>Park factors and pitcher statistics (MLB)</li>
-                            <li>Batch prediction generation</li>
-                        </ul>
-
-                        <h3>Technologies Used:</h3>
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Machine Learning</span>
-                            <span class="tag">Web Scraping</span>
-                            <span class="tag">Pandas</span>
-                            <span class="tag">NumPy</span>
-                            <span class="tag">scikit-learn</span>
-                        </div>
-
-                        <div class="detail-links">
-                            <a href="#" class="btn btn-primary">View Predictions</a>
-                            <a href="https://github.com/yourusername/SportsPredictor" class="btn btn-secondary">View on GitHub</a>
+                        <div class="project-content">
+                            <h3>SportsPredictor</h3>
+                            <p>Machine learning-powered sports predictions for NFL, MLB, and CFB games.</p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">Machine Learning</span>
+                                <span class="tag">Web Scraping</span>
+                            </div>
+                            <div class="project-link">Learn More →</div>
                         </div>
                     </div>
                 </div>
@@ -142,22 +79,202 @@
         </section>
     </main>
 
+    <!-- Modal for SamePath -->
+    <div id="modal-samepath" class="modal" onclick="closeModal(event, 'samepath')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal(event, 'samepath')">&times;</span>
+            <div class="modal-header">
+                <div class="modal-icon">📚</div>
+                <div>
+                    <h2>SamePath</h2>
+                    <p class="modal-subtitle">Student Collaboration Platform</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">SamePath is a comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules (including Virginia Tech) to automatically suggest study partners based on shared classes and availability.</p>
+                
+                <h3>Key Features:</h3>
+                <ul class="feature-list">
+                    <li>Class schedule integration with CRN lookup</li>
+                    <li>Automatic study partner matching based on shared classes</li>
+                    <li>Group chat functionality for teams</li>
+                    <li>Free time discovery and coordination</li>
+                    <li>Friends list management</li>
+                    <li>User preferences and notifications</li>
+                    <li>Contact matching and acceptance flow</li>
+                </ul>
+
+                <h3>Technologies Used:</h3>
+                <div class="project-tags" style="margin-bottom: 2rem;">
+                    <span class="tag">React Native</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Python Flask</span>
+                    <span class="tag">MongoDB</span>
+                    <span class="tag">Express.js</span>
+                    <span class="tag">REST API</span>
+                </div>
+
+                <div class="modal-links">
+                    <a href="https://github.com/ahirsch17/SamePath" target="_blank" class="btn btn-primary">View on GitHub</a>
+                    <a href="Images/SamePath.png" target="_blank" class="btn btn-secondary">View Screenshots</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for RealEstateHirsch -->
+    <div id="modal-realestatehirsch" class="modal" onclick="closeModal(event, 'realestatehirsch')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal(event, 'realestatehirsch')">&times;</span>
+            <div class="modal-header">
+                <div class="modal-icon">🏠</div>
+                <div>
+                    <h2>RealEstateHirsch</h2>
+                    <p class="modal-subtitle">Professional Real Estate Website</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">A modern, responsive real estate website showcasing property listings with virtual tours, high-quality photography, and an integrated scheduling system. Built for real estate professionals to manage property displays and client appointments efficiently.</p>
+                
+                <h3>Key Features:</h3>
+                <ul class="feature-list">
+                    <li>Interactive property listings with photo galleries</li>
+                    <li>Virtual tour integration</li>
+                    <li>Appointment scheduling system with booking management</li>
+                    <li>Team member profiles with contact information</li>
+                    <li>Contact forms and inquiry management</li>
+                    <li>Mobile-responsive design</li>
+                    <li>Professional UI with smooth animations</li>
+                </ul>
+
+                <h3>Technologies Used:</h3>
+                <div class="project-tags" style="margin-bottom: 2rem;">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Express.js</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Responsive Design</span>
+                </div>
+
+                <div class="modal-links">
+                    <a href="https://realestatehirsch.onrender.com" target="_blank" class="btn btn-primary">View Live Site</a>
+                    <a href="https://github.com/ahirsch17/hirsch-properties" target="_blank" class="btn btn-secondary">View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for SportsPredictor -->
+    <div id="modal-sportspredictor" class="modal" onclick="closeModal(event, 'sportspredictor')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeModal(event, 'sportspredictor')">&times;</span>
+            <div class="modal-header">
+                <div class="modal-icon">⚽</div>
+                <div>
+                    <h2>SportsPredictor</h2>
+                    <p class="modal-subtitle">ML-Powered Sports Analytics</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">An advanced sports prediction system that uses machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. The system factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
+                
+                <h3>Key Features:</h3>
+                <ul class="feature-list">
+                    <li>Machine learning-based predictions for multiple sports</li>
+                    <li>Real-time injury tracking and impact analysis</li>
+                    <li>Weather condition integration for outdoor sports</li>
+                    <li>Automated data scraping and processing</li>
+                    <li>Park factors and pitcher statistics (MLB)</li>
+                    <li>Batch prediction generation for weekly games</li>
+                    <li>Historical data analysis and trending</li>
+                </ul>
+
+                <h3>Technologies Used:</h3>
+                <div class="project-tags" style="margin-bottom: 2rem;">
+                    <span class="tag">Python</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Web Scraping</span>
+                    <span class="tag">Pandas</span>
+                    <span class="tag">NumPy</span>
+                    <span class="tag">scikit-learn</span>
+                </div>
+
+                <div class="modal-links">
+                    <a href="https://github.com/ahirsch17/sportsPredictor" target="_blank" class="btn btn-primary">View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
-            <p>&copy; 2025 Alexi. Built with passion for web development.</p>
+            <p>&copy; 2025 Alexis Hirsch. Built with passion for web development.</p>
         </div>
     </footer>
 
     <style>
-        .project-detail {
-            background: white;
-            border-radius: 12px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .project-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .detail-header {
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal-header {
             display: flex;
             align-items: center;
             gap: 2rem;
@@ -166,27 +283,34 @@
             border-bottom: 2px solid #e5e7eb;
         }
 
-        .detail-icon {
+        .modal-icon {
             font-size: 4rem;
         }
 
-        .detail-header h2 {
+        .modal-header h2 {
             font-size: 2.5rem;
             color: #1e293b;
-            margin-bottom: 0.5rem;
+            margin: 0;
         }
 
-        .detail-subtitle {
+        .modal-subtitle {
             color: #64748b;
             font-size: 1.2rem;
+            margin: 0.5rem 0 0 0;
         }
 
-        .detail-content {
+        .modal-body {
             color: #475569;
             line-height: 1.8;
         }
 
-        .detail-content h3 {
+        .modal-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #475569;
+        }
+
+        .modal-body h3 {
             margin-top: 2rem;
             margin-bottom: 1rem;
             color: #1e293b;
@@ -212,28 +336,76 @@
             font-weight: bold;
         }
 
-        .detail-links {
-            margin-top: 2rem;
+        .modal-links {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         @media (max-width: 768px) {
-            .project-detail {
+            .modal-content {
                 padding: 1.5rem;
+                margin: 1rem;
             }
 
-            .detail-header {
+            .modal-header {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .detail-header h2 {
+            .modal-header h2 {
                 font-size: 2rem;
+            }
+
+            .modal-icon {
+                font-size: 3rem;
             }
         }
     </style>
+
+    <script>
+        function openModal(projectName) {
+            const modal = document.getElementById('modal-' + projectName);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event, projectName) {
+            const modal = document.getElementById('modal-' + projectName);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
-
