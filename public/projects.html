@@ -31,11 +31,13 @@
                         <div class="showcase-background samepath-bg"></div>
                         <div class="showcase-content">
                             <div class="project-icon-large">📚</div>
-                            <h2>SamePath</h2>
-                            <p class="project-description">A comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules to automatically suggest study partners based on shared classes and availability.</p>
-                            <div class="showcase-buttons">
-                                <button class="btn-screenshots" onclick="openImageCarousel('samepath')">View Screenshots</button>
-                                <a href="https://github.com/ahirsch17/SamePath" target="_blank" class="btn-github">View on GitHub</a>
+                            <div class="project-text-content">
+                                <h2>SamePath</h2>
+                                <p class="project-description">A comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules to automatically suggest study partners based on shared classes and availability.</p>
+                                <div class="showcase-buttons">
+                                    <button class="btn-screenshots" onclick="openImageCarousel('samepath')">View Screenshots</button>
+                                    <a href="https://github.com/ahirsch17/SamePath" target="_blank" class="btn-github">View on GitHub</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -43,14 +45,16 @@
                     <!-- RealEstateHirsch Project -->
                     <div class="project-showcase-card" data-project="realestatehirsch">
                         <div class="showcase-background realestatehirsch-bg"></div>
-                        <div class="showcase-content reversed">
-                            <div class="project-icon-large">🏠</div>
-                            <h2>RealEstateHirsch</h2>
-                            <p class="project-description">A modern, responsive real estate website showcasing property listings with virtual tours, high-quality photography, and an integrated scheduling system. Built for real estate professionals to manage property displays and client appointments efficiently.</p>
-                            <div class="showcase-buttons">
-                                <a href="https://hirsch-leasing.onrender.com/" target="_blank" class="btn-live">Visit Live Site</a>
-                                <a href="https://github.com/ahirsch17/hirsch-properties" target="_blank" class="btn-github">View on GitHub</a>
+                        <div class="showcase-content layout-right">
+                            <div class="project-text-content">
+                                <h2>RealEstateHirsch</h2>
+                                <p class="project-description">A modern, responsive real estate website showcasing property listings with virtual tours, high-quality photography, and an integrated scheduling system. Built for real estate professionals to manage property displays and client appointments efficiently.</p>
+                                <div class="showcase-buttons">
+                                    <a href="https://hirsch-leasing.onrender.com/" target="_blank" class="btn-live">Visit Live Site</a>
+                                    <a href="https://github.com/ahirsch17/hirsch-properties" target="_blank" class="btn-github">View on GitHub</a>
+                                </div>
                             </div>
+                            <div class="project-icon-large">🏠</div>
                         </div>
                     </div>
 
@@ -59,12 +63,14 @@
                         <div class="showcase-background sportspredictor-bg"></div>
                         <div class="showcase-content">
                             <div class="project-icon-large">🏈</div>
-                            <h2>SportsPredictor</h2>
-                            <p class="project-description">An advanced sports prediction system using machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. Factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
-                            <div class="showcase-buttons">
-                                <button class="btn-screenshots" onclick="openImageCarousel('sportspredictor')">View Screenshots</button>
-                                <button class="btn-screenshots" onclick="openMatchupReport()">View Matchup Report</button>
-                                <a href="https://github.com/ahirsch17/sportsPredictor" target="_blank" class="btn-github">View on GitHub</a>
+                            <div class="project-text-content">
+                                <h2>SportsPredictor</h2>
+                                <p class="project-description">An advanced sports prediction system using machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. Factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
+                                <div class="showcase-buttons">
+                                    <button class="btn-screenshots" onclick="openImageCarousel('sportspredictor')">View Screenshots</button>
+                                    <button class="btn-screenshots" onclick="openMatchupReport()">View Matchup Report</button>
+                                    <a href="https://github.com/ahirsch17/sportsPredictor" target="_blank" class="btn-github">View on GitHub</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -397,49 +403,60 @@
             z-index: 2;
             height: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            flex-direction: row;
             align-items: center;
-            text-align: center;
+            justify-content: space-between;
             padding: 3rem;
             color: white;
+            gap: 3rem;
         }
 
-        .showcase-content.reversed {
-            flex-direction: column-reverse;
+        .showcase-content.layout-right {
+            flex-direction: row-reverse;
         }
 
         .project-icon-large {
             font-size: 5rem;
-            margin-bottom: 1.5rem;
             animation: float 3s ease-in-out infinite;
+            flex-shrink: 0;
         }
 
-        .showcase-content.reversed .project-icon-large {
-            margin-bottom: 0;
-            margin-top: 1.5rem;
+        .project-text-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .showcase-content.layout-right .project-text-content {
+            text-align: right;
         }
 
         .project-showcase-card h2 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             font-weight: bold;
+            margin: 0;
         }
 
         .project-description {
             font-size: 1rem;
-            margin-bottom: 2rem;
             opacity: 0.95;
             line-height: 1.6;
-            max-width: 90%;
+            margin: 0;
         }
 
         .showcase-buttons {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
+            margin-top: 0.5rem;
+        }
+
+        .showcase-content.layout-right .showcase-buttons {
+            justify-content: flex-end;
         }
 
         .showcase-buttons button,
@@ -734,19 +751,39 @@
             }
 
             .project-showcase-card {
-                height: 350px;
+                height: auto;
+                min-height: 350px;
+            }
+
+            .showcase-content {
+                flex-direction: column !important;
+                gap: 2rem;
+            }
+
+            .showcase-content.layout-right {
+                flex-direction: column !important;
+            }
+
+            .project-text-content {
+                text-align: center !important;
+            }
+
+            .showcase-buttons {
+                justify-content: center !important;
             }
 
             .project-icon-large {
-                font-size: 3.5rem;
+                font-size: 4rem;
             }
 
             .project-showcase-card h2 {
-                font-size: 2.2rem;
+                font-size: 2rem;
+                text-align: center;
             }
 
-            .project-subtitle {
-                font-size: 1.1rem;
+            .project-description {
+                font-size: 0.9rem;
+                text-align: center;
             }
 
             .showcase-buttons button,
