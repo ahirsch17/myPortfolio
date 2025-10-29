@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Alexi Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Alexi</a>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/projects">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="featured-projects">
+            <div class="container">
+                <h2 class="section-title">My Projects</h2>
+                
+                <!-- SamePath Project Detail -->
+                <div class="project-detail" id="samepath">
+                    <div class="detail-header">
+                        <div class="detail-icon">📚</div>
+                        <div>
+                            <h2>SamePath</h2>
+                            <p class="detail-subtitle">Student Collaboration Platform</p>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p>SamePath is a comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules (including Virginia Tech) to automatically suggest study partners based on shared classes and availability.</p>
+                        
+                        <h3>Key Features:</h3>
+                        <ul class="feature-list">
+                            <li>Class schedule integration with CRN lookup</li>
+                            <li>Automatic study partner matching</li>
+                            <li>Group chat functionality for teams</li>
+                            <li>Free time discovery and coordination</li>
+                            <li>Friends list management</li>
+                            <li>User preferences and notifications</li>
+                        </ul>
+
+                        <h3>Technologies Used:</h3>
+                        <div class="project-tags">
+                            <span class="tag">React Native</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Python Flask</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Express.js</span>
+                            <span class="tag">REST API</span>
+                        </div>
+
+                        <div class="detail-links">
+                            <a href="#" class="btn btn-primary">View Live Demo</a>
+                            <a href="https://github.com/yourusername/SamePath" class="btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RealEstateHirsch Project Detail -->
+                <div class="project-detail" id="realestatehirsch">
+                    <div class="detail-header">
+                        <div class="detail-icon">🏠</div>
+                        <div>
+                            <h2>RealEstateHirsch</h2>
+                            <p class="detail-subtitle">Professional Real Estate Website</p>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p>A modern, responsive real estate website showcasing property listings with virtual tours, high-quality photography, and an integrated scheduling system. Built for real estate professionals to manage property displays and client appointments efficiently.</p>
+                        
+                        <h3>Key Features:</h3>
+                        <ul class="feature-list">
+                            <li>Interactive property listings with photo galleries</li>
+                            <li>Virtual tour integration</li>
+                            <li>Appointment scheduling system</li>
+                            <li>Team member profiles</li>
+                            <li>Contact forms and inquiry management</li>
+                            <li>Mobile-responsive design</li>
+                        </ul>
+
+                        <h3>Technologies Used:</h3>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Express.js</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Responsive Design</span>
+                        </div>
+
+                        <div class="detail-links">
+                            <a href="https://realestatehirsch.onrender.com" class="btn btn-primary" target="_blank">View Live Site</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SportsPredictor Project Detail -->
+                <div class="project-detail" id="sportspredictor">
+                    <div class="detail-header">
+                        <div class="detail-icon">⚽</div>
+                        <div>
+                            <h2>SportsPredictor</h2>
+                            <p class="detail-subtitle">ML-Powered Sports Analytics</p>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p>An advanced sports prediction system that uses machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. The system factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
+                        
+                        <h3>Key Features:</h3>
+                        <ul class="feature-list">
+                            <li>Machine learning-based predictions for multiple sports</li>
+                            <li>Real-time injury tracking and impact analysis</li>
+                            <li>Weather condition integration for outdoor sports</li>
+                            <li>Automated data scraping and processing</li>
+                            <li>Park factors and pitcher statistics (MLB)</li>
+                            <li>Batch prediction generation</li>
+                        </ul>
+
+                        <h3>Technologies Used:</h3>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Web Scraping</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">NumPy</span>
+                            <span class="tag">scikit-learn</span>
+                        </div>
+
+                        <div class="detail-links">
+                            <a href="#" class="btn btn-primary">View Predictions</a>
+                            <a href="https://github.com/yourusername/SportsPredictor" class="btn btn-secondary">View on GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alexi. Built with passion for web development.</p>
+        </div>
+    </footer>
+
+    <style>
+        .project-detail {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .detail-icon {
+            font-size: 4rem;
+        }
+
+        .detail-header h2 {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-subtitle {
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        .detail-content {
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .detail-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+            font-size: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .detail-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .project-detail {
+                padding: 1.5rem;
+            }
+
+            .detail-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .detail-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</body>
+</html>
+

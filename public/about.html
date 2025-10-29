@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Alexi Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Alexi</a>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/projects">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="about-hero">
+            <div class="container">
+                <div class="about-content">
+                    <h1 class="section-title">About Me</h1>
+                    <div class="about-grid">
+                        <div class="about-text">
+                            <p class="lead">I'm a full-stack developer passionate about creating meaningful digital experiences and solving complex problems through code.</p>
+                            
+                            <p>My journey in web development started with a curiosity about how modern applications work. I've since built my expertise across the full technology stack, from designing intuitive user interfaces to implementing robust backend systems.</p>
+                            
+                            <p>I specialize in building scalable web applications using modern technologies like React Native for mobile development, Python for backend services, and various machine learning frameworks for data-driven solutions.</p>
+
+                            <h2>What I Do</h2>
+                            <ul class="about-features">
+                                <li>Build responsive and user-friendly web applications</li>
+                                <li>Develop mobile apps with React Native</li>
+                                <li>Create RESTful APIs and backend services</li>
+                                <li>Implement machine learning solutions</li>
+                                <li>Design intuitive user experiences</li>
+                            </ul>
+
+                            <h2>Experience & Education</h2>
+                            <p>I'm constantly learning and experimenting with new technologies. My projects range from student collaboration platforms to sports analytics systems, each representing a unique challenge and learning opportunity.</p>
+                        </div>
+                        
+                        <div class="about-stats">
+                            <div class="stat-card">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">Projects</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">Full Stack</div>
+                                <div class="stat-label">Developer</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">∞</div>
+                                <div class="stat-label">Curious</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alexi. Built with passion for web development.</p>
+        </div>
+    </footer>
+
+    <style>
+        .about-hero {
+            padding: 4rem 0;
+        }
+
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-top: 2rem;
+        }
+
+        .lead {
+            font-size: 1.3rem;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .about-text {
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text h2 {
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+            font-size: 1.8rem;
+        }
+
+        .about-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-features li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .about-features li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .about-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lead {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</body>
+</html>
+
