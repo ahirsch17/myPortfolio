@@ -288,12 +288,27 @@
             // Create obstacles
             obstacleTimer++;
             if (obstacleTimer > 120 / upgrades.speed) {
-                obstacles.push({
+                const newObs = {
                     x: canvas.width,
                     gap: 150,
                     topHeight: Math.random() * (canvas.height - 200) + 50,
                     passed: false
-                });
+                };
+                obstacles.push(newObs);
+                
+                // Spawn coin in the new obstacle's gap (only sometimes)
+                if (Math.random() > 0.5) {
+                    const gapCenter = newObs.topHeight + newObs.gap / 2;
+                    const safeY = gapCenter + (Math.random() - 0.5) * (newObs.gap - 40);
+                    gameCoins.push({
+                        x: canvas.width - 100, // Spawn coin with the pipe, visible from the start
+                        y: safeY,
+                        radius: 12,
+                        collected: false,
+                        rotation: 0
+                    });
+                }
+                
                 obstacleTimer = 0;
             }
 
@@ -328,35 +343,7 @@
                 }
             }
 
-            // Create coins randomly in safe areas (only in gaps between pipes)
-            coinTimer++;
-            if (coinTimer > 250 / upgrades.speed && Math.random() > 0.6) {
-                if (obstacles.length > 0) {
-                    // Get a random obstacle and place coin in its gap
-                    const randomObs = obstacles[Math.floor(Math.random() * obstacles.length)];
-                    const gapCenter = randomObs.topHeight + randomObs.gap / 2;
-                    const safeY = gapCenter + (Math.random() - 0.5) * (randomObs.gap - 30); // Leave margins
-                    
-                    // Place coin slightly behind the obstacle so it's not blocked
-                    gameCoins.push({
-                        x: randomObs.x + 60,
-                        y: safeY,
-                        radius: 12,
-                        collected: false,
-                        rotation: 0
-                    });
-                } else {
-                    // No obstacles yet, spawn in middle of screen
-                    gameCoins.push({
-                        x: canvas.width + 50,
-                        y: canvas.height / 2,
-                        radius: 12,
-                        collected: false,
-                        rotation: 0
-                    });
-                }
-                coinTimer = 0;
-            }
+            // Old coin spawning logic removed - coins now spawn with obstacles
 
             // Update and draw coins
             for (let i = gameCoins.length - 1; i >= 0; i--) {
