@@ -61,9 +61,6 @@
         <!-- Game Section -->
         <section class="game-section">
             <div class="container">
-                <h2 class="section-title">Play My Game</h2>
-                <p class="game-subtitle">A little demo of what I can build - enjoy!</p>
-                
                 <div class="game-container">
                     <div class="game-stats">
                         <div class="stat">
@@ -151,7 +148,9 @@
 
         // Obstacles
         const obstacles = [];
+        const gameCoins = [];
         let obstacleTimer = 0;
+        let coinTimer = 0;
 
         function init() {
             document.getElementById('score').textContent = score;
@@ -165,6 +164,7 @@
             gameState = 'playing';
             score = 0;
             obstacles.length = 0;
+            gameCoins.length = 0;
             player.y = canvas.height / 2;
             player.velocity = 0;
             updateScore();
@@ -185,6 +185,7 @@
             gameState = 'waiting';
             score = 0;
             obstacles.length = 0;
+            gameCoins.length = 0;
             player.y = canvas.height / 2;
             player.velocity = 0;
             updateScore();
@@ -256,19 +257,65 @@
                     }
                 }
 
-                // Score and coins
+                // Score
                 if (!obs.passed && obs.x + 40 < player.x) {
                     obs.passed = true;
                     score += 1 * upgrades.points;
-                    if (score % 5 === 0) {
-                        coins++;
-                    }
                     updateScore();
                 }
 
                 // Remove off-screen obstacles
                 if (obs.x + 40 < 0) {
                     obstacles.splice(i, 1);
+                }
+            }
+
+            // Create coins randomly
+            coinTimer++;
+            if (coinTimer > 180 / upgrades.speed && Math.random() > 0.7) {
+                gameCoins.push({
+                    x: canvas.width,
+                    y: Math.random() * (canvas.height - 100) + 50,
+                    radius: 12,
+                    collected: false,
+                    rotation: 0
+                });
+                coinTimer = 0;
+            }
+
+            // Update and draw coins
+            for (let i = gameCoins.length - 1; i >= 0; i--) {
+                const coin = gameCoins[i];
+                coin.x -= 3 * upgrades.speed;
+                coin.rotation += 0.1;
+
+                // Draw coin
+                ctx.save();
+                ctx.translate(coin.x, coin.y);
+                ctx.rotate(coin.rotation);
+                ctx.fillStyle = '#FFD700';
+                ctx.beginPath();
+                ctx.arc(0, 0, coin.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#FFA500';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.restore();
+
+                // Check collection
+                const dx = coin.x - player.x;
+                const dy = coin.y - player.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < coin.radius + player.radius && !coin.collected) {
+                    coin.collected = true;
+                    coins++;
+                    updateScore();
+                }
+
+                // Remove collected or off-screen coins
+                if (coin.collected || coin.x + coin.radius < 0) {
+                    gameCoins.splice(i, 1);
                 }
             }
 
