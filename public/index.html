@@ -160,7 +160,8 @@
             radius: 10 * upgrades.size,
             velocity: 0,
             gravity: 0.5,
-            jump: -8
+            jump: -8,
+            airTime: 0 // Track how long player has been in the air before applying gravity
         };
 
         // Obstacles
@@ -235,18 +236,28 @@
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Update player
-            player.velocity += player.gravity;
+            // Update player with air time delay
+            if (player.velocity <= 0) {
+                // Player is moving up or stationary
+                player.velocity += player.gravity;
+                player.airTime = 0;
+            } else {
+                // Player is moving down - delay before applying more gravity
+                player.airTime++;
+                if (player.airTime > 5) { // 5 frames of air time before falling faster
+                    player.velocity += player.gravity;
+                }
+            }
             player.y += player.velocity * upgrades.speed;
 
-            // Keep player in bounds
+            // Keep player in bounds - die on both top and bottom
             if (player.y + player.radius > canvas.height) {
                 player.y = canvas.height - player.radius;
                 gameOver();
             }
             if (player.y - player.radius < 0) {
-                player.y = player.radius;
-                player.velocity = 0;
+                player.y = 0 + player.radius;
+                gameOver();
             }
 
             // Draw player (ship)
@@ -443,6 +454,7 @@
                     startGame();
                 } else if (gameState === 'playing') {
                     player.velocity = player.jump;
+                    player.airTime = 0;
                 } else if (gameState === 'paused') {
                     pauseGame();
                 }
@@ -454,6 +466,7 @@
                 startGame();
             } else if (gameState === 'playing') {
                 player.velocity = player.jump;
+                player.airTime = 0;
             } else if (gameState === 'paused') {
                 pauseGame();
             }
