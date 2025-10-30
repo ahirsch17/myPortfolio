@@ -636,7 +636,11 @@
         };
 
         const gdObstacles = [];
+        const gdPlatforms = [];
+        const gdBouncePads = [];
         let gdSpawnTimer = 0;
+        let gdPlatformSpawnTimer = 0;
+        let gdBounceSpawnTimer = 0;
 
         function startGD() {
             if (gdState === 'playing') return;
@@ -690,6 +694,7 @@
 
             // Player physics
             gdPlayer.vy += gdWorld.gravity;
+            const prevY = gdPlayer.y;
             gdPlayer.y += gdPlayer.vy;
             if (gdPlayer.y + gdPlayer.size >= gdWorld.groundY) {
                 gdPlayer.y = gdWorld.groundY - gdPlayer.size;
@@ -708,6 +713,23 @@
                 gdSpawnTimer = 0;
             }
 
+            // Spawn platforms periodically
+            gdPlatformSpawnTimer++;
+            if (gdPlatformSpawnTimer > 180) {
+                const pWidth = 80 + Math.random() * 80;
+                const pHeight = 12;
+                const top = gdWorld.groundY - (80 + Math.random() * 120);
+                gdPlatforms.push({ x: gdCanvas.width + 40, y: top, width: pWidth, height: pHeight });
+                gdPlatformSpawnTimer = 0;
+            }
+
+            // Spawn bounce pads periodically on ground
+            gdBounceSpawnTimer++;
+            if (gdBounceSpawnTimer > 150) {
+                gdBouncePads.push({ x: gdCanvas.width + 20, y: gdWorld.groundY - 8, width: 30, height: 8, power: 16 });
+                gdBounceSpawnTimer = 0;
+            }
+
             // Update obstacles
             for (let i = gdObstacles.length - 1; i >= 0; i--) {
                 const ob = gdObstacles[i];
@@ -721,6 +743,19 @@
                 gdCtx.lineTo(ob.x + ob.width, gdWorld.groundY);
                 gdCtx.closePath();
                 gdCtx.fill();
+
+                // Decorative edge spikes on the triangle face
+                gdCtx.strokeStyle = '#d4ac0d';
+                gdCtx.lineWidth = 2;
+                const teeth = Math.max(3, Math.floor(ob.width / 8));
+                for (let t = 0; t < teeth; t++) {
+                    const bx = ob.x + (t / teeth) * ob.width;
+                    const by = gdWorld.groundY - (Math.abs((t - teeth / 2) / (teeth / 2))) * ob.height;
+                    gdCtx.beginPath();
+                    gdCtx.moveTo(bx, by);
+                    gdCtx.lineTo(bx + 4, by - 6);
+                    gdCtx.stroke();
+                }
 
                 // Collision
                 const px = gdPlayer.x, py = gdPlayer.y, ps = gdPlayer.size;
@@ -737,6 +772,71 @@
                 }
 
                 if (ob.x + ob.width < 0) gdObstacles.splice(i, 1);
+            }
+
+            // Update platforms
+            for (let i = gdPlatforms.length - 1; i >= 0; i--) {
+                const p = gdPlatforms[i];
+                p.x -= gdWorld.speed;
+
+                // Draw platform
+                gdCtx.fillStyle = '#16a085';
+                gdCtx.fillRect(p.x, p.y, p.width, p.height);
+                // Little top spikes for flair
+                gdCtx.fillStyle = '#1abc9c';
+                const spikesCount = Math.max(2, Math.floor(p.width / 14));
+                for (let s = 0; s < spikesCount; s++) {
+                    const sx = p.x + s * (p.width / spikesCount);
+                    gdCtx.beginPath();
+                    gdCtx.moveTo(sx, p.y);
+                    gdCtx.lineTo(sx + (p.width / spikesCount) / 2, p.y - 6);
+                    gdCtx.lineTo(sx + (p.width / spikesCount), p.y);
+                    gdCtx.closePath();
+                    gdCtx.fill();
+                }
+
+                // Landing collision (from above)
+                const playerBottom = gdPlayer.y + gdPlayer.size;
+                const prevBottom = prevY + gdPlayer.size;
+                const platformTop = p.y;
+                const overlapsX = (gdPlayer.x + gdPlayer.size > p.x) && (gdPlayer.x < p.x + p.width);
+                if (overlapsX && prevBottom <= platformTop && playerBottom >= platformTop) {
+                    gdPlayer.y = platformTop - gdPlayer.size;
+                    gdPlayer.vy = 0;
+                    gdPlayer.canJump = true;
+                }
+
+                if (p.x + p.width < 0) gdPlatforms.splice(i, 1);
+            }
+
+            // Update bounce pads
+            for (let i = gdBouncePads.length - 1; i >= 0; i--) {
+                const b = gdBouncePads[i];
+                b.x -= gdWorld.speed;
+                // Draw bounce pad
+                gdCtx.fillStyle = '#9b59b6';
+                gdCtx.fillRect(b.x, b.y, b.width, b.height);
+                // Arrow chevron
+                gdCtx.fillStyle = '#e67e22';
+                gdCtx.beginPath();
+                gdCtx.moveTo(b.x + 4, b.y);
+                gdCtx.lineTo(b.x + b.width / 2, b.y - 10);
+                gdCtx.lineTo(b.x + b.width - 4, b.y);
+                gdCtx.closePath();
+                gdCtx.fill();
+
+                // Trigger bounce when player overlaps from above
+                const overlapsX = (gdPlayer.x + gdPlayer.size > b.x) && (gdPlayer.x < b.x + b.width);
+                const playerBottom = gdPlayer.y + gdPlayer.size;
+                const prevBottom = prevY + gdPlayer.size;
+                const padTop = b.y;
+                if (overlapsX && prevBottom <= padTop && playerBottom >= padTop) {
+                    gdPlayer.y = padTop - gdPlayer.size;
+                    gdPlayer.vy = -b.power;
+                    gdPlayer.canJump = false;
+                }
+
+                if (b.x + b.width < 0) gdBouncePads.splice(i, 1);
             }
 
             requestAnimationFrame(gdLoop);
