@@ -76,4 +76,3 @@ myPortfolio/
 - Implement dark mode
 - Add more interactive animations
 
-
