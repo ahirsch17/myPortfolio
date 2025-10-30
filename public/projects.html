@@ -303,15 +303,19 @@
             video.style.borderRadius = '10px';
             video.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
             
-            // Load video - tries multiple common filenames and formats
+            // Load video - tries multiple common filenames and formats (.mov first since user has .mov file)
             const videoPaths = [
-                'Images/SamePath/screen-recording.mp4',
-                'Images/SamePath/screenrecording.mp4',
                 'Images/SamePath/screen-recording.mov',
                 'Images/SamePath/screenrecording.mov',
+                'Images/SamePath/screen-recording.mp4',
+                'Images/SamePath/screenrecording.mp4',
+                'Images/SamePath/SamePath.mov',
+                'Images/SamePath/samepath.mov',
                 'Images/SamePath/SamePath.mp4',
                 'Images/SamePath/samepath.mp4',
+                'Images/SamePath/video.mov',
                 'Images/SamePath/video.mp4',
+                'Images/SamePath/demo.mov',
                 'Images/SamePath/demo.mp4'
             ];
             
