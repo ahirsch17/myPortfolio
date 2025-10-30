@@ -249,11 +249,8 @@
 
         function openImageCarousel(project) {
             if (project === 'samepath') {
-                currentImageSet = samepathImages;
-                currentImageIndex = 0;
-                updateCarousel();
-                document.getElementById('imageCarouselModal').classList.add('active');
-                document.body.style.overflow = 'hidden';
+                // Show video player for SamePath instead of image carousel
+                openSamePathVideo();
             } else if (project === 'sportspredictor') {
                 currentImageSet = sportspredictorImages;
                 currentImageIndex = 0;
@@ -261,6 +258,91 @@
                 document.getElementById('imageCarouselModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
+        }
+
+        function openSamePathVideo() {
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.style.display = 'flex';
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            };
+
+            const content = document.createElement('div');
+            content.className = 'carousel-container';
+            content.style.background = '#fff';
+            content.onclick = function(event) {
+                event.stopPropagation();
+            };
+
+            const header = document.createElement('div');
+            header.innerHTML = `
+                <h2 style="margin: 0; color: #1e293b;">SamePath Demo</h2>
+                <span class="close" onclick="this.closest('.modal').remove(); document.body.style.overflow = 'auto';">&times;</span>
+            `;
+            header.style.display = 'flex';
+            header.style.justifyContent = 'space-between';
+            header.style.alignItems = 'center';
+            header.style.marginBottom = '1.5rem';
+            header.style.padding = '0 2rem';
+            header.style.paddingTop = '2rem';
+
+            const videoContainer = document.createElement('div');
+            videoContainer.style.display = 'flex';
+            videoContainer.style.justifyContent = 'center';
+            videoContainer.style.padding = '2rem';
+            
+            const video = document.createElement('video');
+            video.controls = true;
+            video.autoplay = false;
+            video.style.width = '100%';
+            video.style.maxWidth = '800px';
+            video.style.borderRadius = '10px';
+            video.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            
+            // Load video - tries multiple common filenames and formats
+            const videoPaths = [
+                'Images/SamePath/screen-recording.mp4',
+                'Images/SamePath/screenrecording.mp4',
+                'Images/SamePath/screen-recording.mov',
+                'Images/SamePath/screenrecording.mov',
+                'Images/SamePath/SamePath.mp4',
+                'Images/SamePath/samepath.mp4',
+                'Images/SamePath/video.mp4',
+                'Images/SamePath/demo.mp4'
+            ];
+            
+            // Try to load video with error handling
+            let currentIndex = 0;
+            function tryNextVideo() {
+                if (currentIndex >= videoPaths.length) {
+                    const errorMsg = document.createElement('p');
+                    errorMsg.textContent = 'Video file not found. Please ensure the screen recording is in Images/SamePath/';
+                    errorMsg.style.padding = '2rem';
+                    errorMsg.style.color = '#666';
+                    videoContainer.innerHTML = '';
+                    videoContainer.appendChild(errorMsg);
+                    return;
+                }
+                video.src = videoPaths[currentIndex];
+                video.onerror = function() {
+                    currentIndex++;
+                    tryNextVideo();
+                };
+                video.load();
+            }
+            tryNextVideo();
+            
+            videoContainer.appendChild(video);
+
+            content.appendChild(header);
+            content.appendChild(videoContainer);
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
         }
 
         async function openMatchupReport() {
