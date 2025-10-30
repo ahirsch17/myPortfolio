@@ -799,6 +799,30 @@
         } else {
             initGDGame();
         }
+
+        // Global keyboard navigation: Arrow keys
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const isGD = currentGameIndex === 1;
+                // If playing GD, use right arrow as an alternate jump
+                if (isGD && gdState === 'playing') {
+                    e.preventDefault();
+                    gdJump();
+                    return;
+                }
+                // Switch games only when not actively playing a game
+                if (gameState !== 'playing' && gdState !== 'playing') {
+                    e.preventDefault();
+                    changeGame(1);
+                }
+            }
+            if (e.key === 'ArrowLeft') {
+                if (gameState !== 'playing' && gdState !== 'playing') {
+                    e.preventDefault();
+                    changeGame(-1);
+                }
+            }
+        });
     </script>
 
     <style>
