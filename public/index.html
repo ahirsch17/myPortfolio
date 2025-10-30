@@ -492,6 +492,10 @@
         
         // Initialize game visibility and check GD unlock status
         function checkGDUnlock() {
+            // Unlock by default if not set so the game is playable immediately
+            if (localStorage.getItem('gdUnlocked') === null) {
+                localStorage.setItem('gdUnlocked', 'true');
+            }
             const gdUnlocked = localStorage.getItem('gdUnlocked') === 'true';
             const gdGame = document.getElementById('gdGame');
             if (gdGame) {
@@ -501,9 +505,11 @@
                     if (gdUnlocked) {
                         overlay.style.display = 'none';
                         gameContent.style.display = 'block';
+                        gdGame.classList.remove('locked');
                     } else {
                         overlay.style.display = 'flex';
                         gameContent.style.display = 'none';
+                        gdGame.classList.add('locked');
                     }
                 }
             }
