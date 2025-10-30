@@ -67,6 +67,7 @@
                                 <h2>SportsPredictor</h2>
                                 <p class="project-description">An advanced sports prediction system using machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. Factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
                                 <div class="showcase-buttons">
+                                    <button class="btn-explore" onclick="openModal('sportspredictor')">Open</button>
                                     <button class="btn-screenshots" onclick="openImageCarousel('sportspredictor')">View Screenshots</button>
                                     <button class="btn-screenshots" onclick="openMatchupReport()">View Matchup Report</button>
                                     <a href="https://github.com/ahirsch17/sportsPredictor" target="_blank" class="btn-github">View on GitHub</a>
@@ -179,29 +180,53 @@
                 </div>
             </div>
             <div class="modal-body">
-                <p class="modal-description">An advanced sports prediction system that uses machine learning algorithms to forecast game outcomes for NFL, MLB, and College Football. The system factors in team statistics, player injuries, weather conditions, and historical performance data to generate accurate predictions.</p>
-                
-                <h3>Key Features:</h3>
-                <ul class="feature-list">
-                    <li>Machine learning-based predictions for multiple sports</li>
-                    <li>Real-time injury tracking and impact analysis</li>
-                    <li>Weather condition integration for outdoor sports</li>
-                    <li>Automated data scraping and processing</li>
-                    <li>Park factors and pitcher statistics (MLB)</li>
-                    <li>Batch prediction generation for weekly games</li>
-                    <li>Historical data analysis and trending</li>
-                </ul>
-
-                <h3>Technologies Used:</h3>
-                <div class="project-tags" style="margin-bottom: 2rem;">
+                <p class="modal-description">Run an NFL detailed matchup prediction or a weekly batch right from this portfolio.</p>
+                <div class="project-tags" style="margin-bottom: 1rem;">
                     <span class="tag">Python</span>
-                    <span class="tag">Machine Learning</span>
-                    <span class="tag">Web Scraping</span>
-                    <span class="tag">Pandas</span>
-                    <span class="tag">NumPy</span>
+                    <span class="tag">Express.js</span>
                     <span class="tag">scikit-learn</span>
                 </div>
 
+                <div style="display:grid; gap:1.25rem;">
+                    <div class="card" style="padding:1rem; border-radius:12px;">
+                        <h3 style="margin:0 0 .5rem 0;">Run NFL Detailed Matchup</h3>
+                        <div style="display:grid; gap:.75rem;">
+                            <div style="display:grid; gap:.25rem;">
+                                <label>Home Team</label>
+                                <input id="sp_homeTeam" class="input" placeholder="e.g., Cincinnati Bengals">
+                            </div>
+                            <div style="display:grid; gap:.25rem;">
+                                <label>Away Team</label>
+                                <input id="sp_awayTeam" class="input" placeholder="e.g., Chicago Bears">
+                            </div>
+                            <label style="display:flex; align-items:center; gap:.5rem;">
+                                <input id="sp_neutral" type="checkbox"> Neutral site
+                            </label>
+                            <div style="display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;">
+                                <button class="btn" onclick="runMatchupFromModal()">Predict</button>
+                                <button class="btn" onclick="openMatchupReport()">View Sample Report</button>
+                            </div>
+                            <pre id="sp_matchupOutput" style="margin:0; white-space:pre-wrap; font-family:Courier New, monospace; font-size:.9rem; line-height:1.5; background:#0b1220; color:#e5e7eb; padding:1rem; border-radius:10px; min-height:100px; overflow:auto;"></pre>
+                        </div>
+                    </div>
+
+                    <div class="card" style="padding:1rem; border-radius:12px;">
+                        <h3 style="margin:0 0 .5rem 0;">Run NFL Weekly Batch</h3>
+                        <div style="display:flex; gap:.5rem; flex-wrap:wrap; align-items:center;">
+                            <input id="sp_week" type="number" min="1" max="18" class="input" placeholder="Week (1-18)" style="max-width:140px;">
+                            <select id="sp_season" class="input" style="max-width:160px;">
+                                <option value="regular">regular</option>
+                                <option value="preseason">preseason</option>
+                            </select>
+                            <button class="btn" onclick="runBatchFromModal()">Run Batch</button>
+                            <label class="btn" for="sp_uploadBatch">Upload predictions_week_X.txt</label>
+                            <input id="sp_uploadBatch" type="file" accept=".txt" style="display:none">
+                            <span id="sp_batchFileName" style="color:#64748b"></span>
+                        </div>
+                        <div id="sp_batchList" style="margin-top:1rem; display:grid; gap:.75rem"></div>
+                        <pre id="sp_batchOutput" style="margin-top:1rem; white-space:pre-wrap; font-family:Courier New, monospace; font-size:.9rem; line-height:1.5; background:#0b1220; color:#e5e7eb; padding:1rem; border-radius:10px; min-height:100px; overflow:auto;"></pre>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -816,6 +841,100 @@
                 });
             }
         });
+
+        // SportsPredictor handlers in modal
+        async function runMatchupFromModal() {
+            const homeTeam = document.getElementById('sp_homeTeam').value.trim();
+            const awayTeam = document.getElementById('sp_awayTeam').value.trim();
+            const neutral = document.getElementById('sp_neutral').checked;
+            const out = document.getElementById('sp_matchupOutput');
+            if (!homeTeam || !awayTeam) {
+                out.textContent = 'Please enter both Home and Away teams.';
+                return;
+            }
+            out.textContent = 'Running prediction...';
+            try {
+                const res = await fetch('/api/sports/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ league: 'NFL', homeTeam, awayTeam, neutral })
+                });
+                const text = await res.text();
+                if (!res.ok) throw new Error(text);
+                out.textContent = text;
+            } catch (e) {
+                out.textContent = 'Prediction failed or backend unavailable. ' + (e?.message || '');
+            }
+        }
+
+        async function runBatchFromModal() {
+            const w = parseInt((document.getElementById('sp_week').value || '').trim());
+            const s = (document.getElementById('sp_season').value || 'regular').trim();
+            const out = document.getElementById('sp_batchOutput');
+            if (!Number.isFinite(w) || w < 1 || w > 18) {
+                out.textContent = 'Enter a valid week (1-18).';
+                return;
+            }
+            out.textContent = 'Running weekly batch...';
+            try {
+                const res = await fetch(`/api/sports/nfl/batch?week=${w}&season=${encodeURIComponent(s)}`);
+                const text = await res.text();
+                if (!res.ok) throw new Error(text);
+                out.textContent = text;
+            } catch (e) {
+                out.textContent = 'Batch failed or backend unavailable. ' + (e?.message || '');
+            }
+        }
+
+        // Upload viewer for predictions_week_X.txt inside modal
+        const spUpload = document.getElementById('sp_uploadBatch');
+        const spFileName = document.getElementById('sp_batchFileName');
+        const spBatchList = document.getElementById('sp_batchList');
+        spUpload && spUpload.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            spFileName.textContent = 'Uploaded: ' + file.name;
+            const reader = new FileReader();
+            reader.onload = () => {
+                const text = String(reader.result);
+                const games = parseBatchSP(text);
+                renderBatchSP(games);
+            };
+            reader.readAsText(file);
+        });
+
+        function parseBatchSP(text){
+            const lines = text.split(/\r?\n/);
+            const games = [];
+            let current = null;
+            for(const line of lines){
+                if(/^Game\s+\d+:/i.test(line)){
+                    if(current) games.push(current);
+                    current = { meta: line.trim(), details: [] };
+                } else if(line.trim()){
+                    current && current.details.push(line.trim());
+                }
+            }
+            if(current) games.push(current);
+            return games;
+        }
+        function renderBatchSP(games){
+            spBatchList.innerHTML = '';
+            if(!games.length){
+                spBatchList.innerHTML = '<p style="color:#94a3b8">No games parsed. Ensure you used predictions_week_X.txt.</p>';
+                return;
+            }
+            for(const g of games){
+                const card = document.createElement('div');
+                card.style.background = '#0b1220';
+                card.style.border = '1px solid #1f2937';
+                card.style.borderRadius = '12px';
+                card.style.padding = '1rem';
+                card.innerHTML = `<div style="font-weight:700; color:#e2e8f0; margin-bottom:.5rem;">${g.meta}</div>` +
+                                 `<div style="color:#cbd5e1; white-space:pre-wrap;">${g.details.join('\n')}</div>`;
+                spBatchList.appendChild(card);
+            }
+        }
     </script>
 </body>
 </html>
