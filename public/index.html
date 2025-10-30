@@ -873,31 +873,55 @@
             gdCtx.fillText('Press Space/Click/Arrow to restart', gdCanvas.width / 2, gdCanvas.height / 2 + 20);
         }
 
-        // Controls for GD
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowRight') {
-                e.preventDefault();
-                if (gdState === 'gameover') {
-                    startGD();
-                } else {
-                    gdJump();
+        // Controls for GD - only active when GD game is visible
+        function setupGDControls() {
+            function handleGDKey(e) {
+                // Only handle if GD is the current game
+                if (currentGameIndex !== 1) return;
+                if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowRight') {
+                    e.preventDefault();
+                    if (gdState === 'gameover') {
+                        startGD();
+                    } else if (gdState === 'waiting') {
+                        startGD();
+                    } else {
+                        gdJump();
+                    }
                 }
             }
-        });
-        document.addEventListener('click', () => {
-            if (gdState === 'gameover') {
-                startGD();
-            } else {
-                gdJump();
+            
+            function handleGDClick(e) {
+                // Only handle if clicking on GD canvas or its container
+                const gdGame = document.getElementById('gdGame');
+                if (currentGameIndex !== 1 || !gdGame) return;
+                if (gdGame.contains(e.target) || e.target === gdCanvas) {
+                    if (gdState === 'gameover') {
+                        startGD();
+                    } else if (gdState === 'waiting') {
+                        startGD();
+                    } else {
+                        gdJump();
+                    }
+                }
             }
-        });
+            
+            document.addEventListener('keydown', handleGDKey);
+            document.addEventListener('click', handleGDClick);
+        }
+        setupGDControls();
 
         function initGDGame() {
             gdCanvas = document.getElementById('gdCanvas');
-            if (!gdCanvas) return;
+            if (!gdCanvas) {
+                // Retry if canvas isn't ready yet
+                setTimeout(initGDGame, 100);
+                return;
+            }
             gdCtx = gdCanvas.getContext('2d');
+            if (!gdCtx) return;
             updateGDScore();
             drawGDWaiting();
+            
         }
 
         if (document.readyState === 'loading') {
@@ -905,6 +929,34 @@
         } else {
             initGDGame();
         }
+        
+        // Reinitialize and redraw when switching to Geometry Dash game
+        function checkGDGameVisible() {
+            const gdGame = document.getElementById('gdGame');
+            if (!gdGame) return;
+            
+            const isVisible = gdGame.style.display !== 'none' && currentGameIndex === 1;
+            
+            if (isVisible) {
+                // Initialize if not already
+                if (!gdCanvas || !gdCtx) {
+                    initGDGame();
+                }
+                // Redraw waiting screen if in waiting state
+                if (gdState === 'waiting' && gdCanvas && gdCtx) {
+                    drawGDWaiting();
+                }
+            }
+        }
+        
+        // Check periodically and when switching games
+        const originalChangeGame = changeGame;
+        changeGame = function(direction) {
+            originalChangeGame(direction);
+            checkGDGameVisible();
+        };
+        
+        setInterval(checkGDGameVisible, 500);
 
         // Global keyboard navigation: Arrow keys
         document.addEventListener('keydown', (e) => {

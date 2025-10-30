@@ -315,26 +315,45 @@
                 'Images/SamePath/demo.mp4'
             ];
             
-            // Try to load video with error handling
-            let currentIndex = 0;
-            function tryNextVideo() {
-                if (currentIndex >= videoPaths.length) {
-                    const errorMsg = document.createElement('p');
-                    errorMsg.textContent = 'Video file not found. Please ensure the screen recording is in Images/SamePath/';
-                    errorMsg.style.padding = '2rem';
-                    errorMsg.style.color = '#666';
-                    videoContainer.innerHTML = '';
-                    videoContainer.appendChild(errorMsg);
-                    return;
+            // Try to load video - attempt to fetch and find any video file in directory
+            async function loadVideo() {
+                let loaded = false;
+                
+                // Try each path
+                for (const path of videoPaths) {
+                    try {
+                        const response = await fetch(path, { method: 'HEAD' });
+                        if (response.ok) {
+                            video.src = path;
+                            video.load();
+                            loaded = true;
+                            break;
+                        }
+                    } catch (e) {
+                        // Try next
+                    }
                 }
-                video.src = videoPaths[currentIndex];
+                
+                // If none found, set up error handler
                 video.onerror = function() {
-                    currentIndex++;
-                    tryNextVideo();
+                    if (!loaded) {
+                        const errorMsg = document.createElement('p');
+                        errorMsg.textContent = 'Video file not found. Please ensure your screen recording is named "screen-recording.mp4" (or similar) and placed in Images/SamePath/';
+                        errorMsg.style.padding = '2rem';
+                        errorMsg.style.color = '#666';
+                        errorMsg.style.textAlign = 'center';
+                        videoContainer.innerHTML = '';
+                        videoContainer.appendChild(errorMsg);
+                    }
                 };
-                video.load();
+                
+                if (!loaded) {
+                    // Try the first path anyway
+                    video.src = videoPaths[0];
+                    video.load();
+                }
             }
-            tryNextVideo();
+            loadVideo();
             
             videoContainer.appendChild(video);
 
