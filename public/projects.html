@@ -35,7 +35,7 @@
                                 <h2>SamePath</h2>
                                 <p class="project-description">A comprehensive mobile application designed to help students connect with classmates, form study groups, and collaborate on academic projects. The platform integrates with university class schedules to automatically suggest study partners based on shared classes and availability.</p>
                                 <div class="showcase-buttons">
-                                    <button class="btn-screenshots" onclick="openImageCarousel('samepath')">View Screenshots</button>
+                                    <button class="btn-screenshots" onclick="openImageCarousel('samepath')">Video Demo</button>
                                     <a href="https://github.com/ahirsch17/SamePath" target="_blank" class="btn-github">View on GitHub</a>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
 
                 <div class="modal-links">
                     <a href="https://github.com/ahirsch17/SamePath" target="_blank" class="btn btn-primary">View on GitHub</a>
-                    <button class="btn btn-secondary" onclick="openImageCarousel('samepath')">View Screenshots</button>
+                    <button class="btn btn-secondary" onclick="openImageCarousel('samepath')">Video Demo</button>
                 </div>
             </div>
         </div>
@@ -293,15 +293,20 @@
             const videoContainer = document.createElement('div');
             videoContainer.style.display = 'flex';
             videoContainer.style.justifyContent = 'center';
+            videoContainer.style.alignItems = 'center';
             videoContainer.style.padding = '2rem';
+            videoContainer.style.overflow = 'auto';
             
             const video = document.createElement('video');
             video.controls = true;
             video.autoplay = false;
-            video.style.width = '100%';
-            video.style.maxWidth = '800px';
+            video.style.maxWidth = '90vw';
+            video.style.maxHeight = '80vh';
+            video.style.width = 'auto';
+            video.style.height = 'auto';
             video.style.borderRadius = '10px';
             video.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            video.style.objectFit = 'contain';
             
             // Load video - tries multiple common filenames and formats (.mov first since user has .mov file)
             const videoPaths = [
