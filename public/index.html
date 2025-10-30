@@ -87,11 +87,7 @@
 
                         <canvas id="gameCanvas"></canvas>
 
-                    <div class="game-controls">
-                        <button class="control-btn" onclick="startGame()" id="startBtn">Start Game</button>
-                        <button class="control-btn" onclick="pauseGame()" id="pauseBtn">Pause</button>
-                        <button class="control-btn" onclick="resetGame()" id="resetBtn">Reset</button>
-                    </div>
+                    <!-- Controls removed; use Space/Click to start or restart -->
 
                     <div class="upgrade-shop">
                         <h3>Upgrades Shop</h3>
@@ -146,12 +142,8 @@
 
                             <canvas id="gdCanvas" width="600" height="400"></canvas>
 
-                            <div class="game-controls">
-                                <button class="control-btn" onclick="startGD()" id="gdStartBtn">Start Game</button>
-                                <button class="control-btn" onclick="pauseGD()" id="gdPauseBtn">Pause</button>
-                                <button class="control-btn" onclick="resetGD()" id="gdResetBtn">Reset</button>
-                            </div>
-                            <p style="text-align: center; color: #64748b; margin-top: 1rem; font-size: 0.9rem;">Press Space/Click to jump</p>
+                            <!-- Controls removed; use Space/Click/Arrow to start or restart -->
+                            <p style="text-align: center; color: #64748b; margin-top: 1rem; font-size: 0.9rem;">Press Space/Click/Arrow to jump</p>
                         </div>
                     </div>
                     
@@ -439,7 +431,7 @@
             ctx.textAlign = 'center';
             ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - 40);
             ctx.font = '24px sans-serif';
-            ctx.fillText('Click to restart', canvas.width / 2, canvas.height / 2 + 20);
+            ctx.fillText('Press Space or Click to restart', canvas.width / 2, canvas.height / 2 + 20);
         }
 
         function updateScore() {
@@ -878,18 +870,26 @@
             gdCtx.textAlign = 'center';
             gdCtx.fillText('Game Over!', gdCanvas.width / 2, gdCanvas.height / 2 - 40);
             gdCtx.font = '24px sans-serif';
-            gdCtx.fillText('Click Reset to play again', gdCanvas.width / 2, gdCanvas.height / 2 + 20);
+            gdCtx.fillText('Press Space/Click/Arrow to restart', gdCanvas.width / 2, gdCanvas.height / 2 + 20);
         }
 
         // Controls for GD
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' || e.code === 'ArrowUp') {
+            if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowRight') {
                 e.preventDefault();
-                gdJump();
+                if (gdState === 'gameover') {
+                    startGD();
+                } else {
+                    gdJump();
+                }
             }
         });
         document.addEventListener('click', () => {
-            gdJump();
+            if (gdState === 'gameover') {
+                startGD();
+            } else {
+                gdJump();
+            }
         });
 
         function initGDGame() {
