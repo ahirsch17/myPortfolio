@@ -25,6 +25,8 @@
     --hero-blur: blur(48px);
     --transition-speed: 0.35s;
     --transition-style: cubic-bezier(0.22, 1, 0.36, 1);
+    --ink-primary: #0f172a;
+    --ink-secondary: rgba(15, 23, 42, 0.72);
 }
 
 *,
@@ -80,6 +82,11 @@ section {
 .section-header p {
     color: var(--text-secondary);
     font-size: 1.1rem;
+}
+
+.focus-areas .section-header h2,
+.focus-areas .section-header p {
+    color: var(--ink-primary);
 }
 
 .motion-section {
@@ -523,7 +530,7 @@ body.page-transitioning {
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgba(15, 23, 42, 0.62);
 }
 
 .hero-preview-label.gradient {
@@ -833,8 +840,8 @@ body.page-transitioning {
 .scroll-item {
     padding: 1rem 1.1rem;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.82);
-    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.86);
+    color: var(--ink-primary);
     border: 1px solid rgba(148, 163, 184, 0.16);
     box-shadow: 0 14px 25px rgba(15, 23, 42, 0.08);
     transform-origin: center;
@@ -848,7 +855,7 @@ body.page-transitioning {
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: rgba(15, 23, 42, 0.55);
     margin-bottom: 0.35rem;
 }
 
@@ -863,8 +870,8 @@ body.page-transitioning {
     padding: 0.7rem 1rem;
     border-radius: 999px;
     border: 1px solid var(--card-border);
-    background: rgba(255, 255, 255, 0.85);
-    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink-primary);
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
@@ -991,11 +998,11 @@ body.page-transitioning {
     font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 0.8rem;
-    color: var(--heading-color);
+    color: var(--ink-primary);
 }
 
 .focus-card p {
-    color: var(--text-secondary);
+    color: var(--ink-secondary);
     margin-bottom: 1.4rem;
 }
 

@@ -18,7 +18,7 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../index.html#showcase">Showcase</a></li>
             </ul>
         </div>
     </nav>
@@ -26,12 +26,12 @@
     <main>
         <section class="case-hero motion-section" data-section="hero">
             <div class="container">
-                <a class="case-breadcrumb" href="../projects.html">← Back to projects</a>
+                <a class="case-breadcrumb" href="../index.html#showcase">← Back to showcase</a>
                 <div class="case-header">
                     <span class="case-pill">Marketing Website</span>
                     <h1 class="case-title">RealEstateHirsch</h1>
                     <p class="case-lede">
-                        A responsive marketing site for a family-run leasing business. Built to modernize property storytelling, simplify tour scheduling, and streamline lead capture without paying for heavyweight CMS tools.
+                        A responsive leasing hub for a family-run business. I designed and engineered every page to guide visitors from property storytelling into tour bookings, confirmation emails, and leasing workflows.
                     </p>
                 </div>
                 <div class="case-meta">
@@ -45,11 +45,11 @@
                     </dl>
                     <dl>
                         <dt>Stack</dt>
-                        <dd>HTML · CSS · JavaScript · Express.js</dd>
+                        <dd>HTML · CSS · JavaScript · Express.js · MySQL · Nodemailer · Flatpickr</dd>
                     </dl>
                     <dl>
                         <dt>Result</dt>
-                        <dd>Launched on Render with automated lead routing</dd>
+                        <dd>Live on Render with automated booking &amp; email confirmations</dd>
                     </dl>
                 </div>
                 <div class="case-hero-media" data-tilt>
@@ -85,21 +85,63 @@
                     <h2>Experience highlights</h2>
                 </div>
                 <div class="case-subsection">
-                    <h3>Tour-centric landing pages</h3>
+                    <h3>Responsive landing experience</h3>
                     <p>
-                        I designed anchored layouts where each hero section pairs immersive photography with a single action—“Schedule a showing.” Scroll animations reveal floor plans, amenities, and neighborhood context without overwhelming mobile visitors.
+                        The hero on <code>website.html</code> stretches full screen, pairing high-impact photography with an availability banner and primary CTA that jumps visitors directly into the tour scheduler. Every breakpoint keeps that conversion path above the fold.
                     </p>
                 </div>
                 <div class="case-subsection">
-                    <h3>Booking workflow</h3>
+                    <h3>Global navigation &amp; brand consistency</h3>
                     <p>
-                        The Express backend proxies form submissions, normalizes them, and sends a structured email digest to agents. Conditional logic routes VIP properties to the owner and standard listings to junior agents, cutting manual triage time.
+                        A shared <code>navbar.css</code> powers the announcement ribbon, logo lockup, and “Apply Now” CTA across every page so key flows stay one click away whether you are on listings, story, or scheduling.
                     </p>
                 </div>
                 <div class="case-subsection">
-                    <h3>Content guardrails</h3>
+                    <h3>Property catalog with quick filters</h3>
                     <p>
-                        To keep updates lightweight, I split property data into JSON files and micro-templates. Agents can update pricing and availability in a single source, and the site re-builds with fresh content during deployment.
+                        <code>properties.html</code> lists units with photography, specs, pricing, and Google Maps links. Client-side filters for beds, baths, and availability let prospects drill into relevant inventory without waiting on a backend round trip.
+                    </p>
+                </div>
+                <div class="case-subsection">
+                    <h3>Rich listing detail pages</h3>
+                    <p>
+                        Each property page—such as <code>property-hv.html</code>—packages descriptions, square footage, and scrolling galleries that showcase interiors and exteriors. The layout keeps lead capture CTAs persistent while guests explore the imagery.
+                    </p>
+                </div>
+                <div class="case-subsection">
+                    <h3>Company story &amp; trust signals</h3>
+                    <p>
+                        <code>aboutUs.html</code> introduces every team member with headshots, credentials, and roles, reinforcing the family-run, service-oriented brand that differentiates the firm from generic rental sites.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="automation">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Automated scheduling &amp; CRM handoff</h2>
+                </div>
+                <div class="case-subsection">
+                    <ul class="case-list">
+                        <li><strong>Interactive tour scheduling:</strong> <code>schedule.html</code> pairs Flatpickr date picking with live time-slot availability from <code>/api/available-times</code>, hiding booked slots and confirming reservations inline.</li>
+                        <li><strong>Server-side booking protection:</strong> The Express API (<code>server.js</code>) guards against duplicate emails and overlapping date/time combinations before accepting a reservation.</li>
+                        <li><strong>Automated confirmation emails:</strong> Successful bookings trigger templated Gmail messages to the guest and leasing inbox with visit details and a one-click manage link.</li>
+                        <li><strong>Self-service cancellation portal:</strong> Emails include a unique cancel ID; <code>view-cancel.html</code> fetches booking data via <code>/api/booking</code> and immediately calls <code>/cancel/:id</code> to release the slot.</li>
+                        <li><strong>MySQL-backed storage:</strong> When the remote database is online the system persists reservations, exposes <code>/api/bookings</code> for staff review, and enforces the same cancellation workflow from a single source of truth.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="forms">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Applications &amp; contact intake</h2>
+                </div>
+                <div class="case-subsection">
+                    <p>
+                        Lead capture extends beyond tours. <code>apply.html</code> collects detailed applicant profiles—move-in date, lease duration, occupants, and notes—and posts them to <code>/api/application</code>, which emails both the applicant and leasing staff a formatted summary. <code>contact.html</code> already mirrors the Node mailer pattern, ready to integrate into the existing pipeline for general inquiries.
                     </p>
                 </div>
             </div>
@@ -132,14 +174,14 @@
                 </div>
                 <div class="case-subsection">
                     <ul class="case-list">
-                        <li>Cut average response time for new leads from 12 hours to under 4.</li>
-                        <li>Increased completed tour requests by 32% within the first month after launch.</li>
-                        <li>Agents now update availability in minutes without touching code.</li>
+                        <li>Automated confirmations ensure new leads receive same-day responses without manual follow-up.</li>
+                        <li>The guided scheduler gives prospects a clear path from browsing to booking a tour.</li>
+                        <li>Reusable content modules make it easy for agents to update availability without touching code.</li>
                     </ul>
                     <div class="case-callout">
                         <h3>Next</h3>
                         <p>
-                            I’m experimenting with a lightweight CMS layer so seasonal promotions can be scheduled, and exploring WebGL flourishes for the gallery while preserving current Lighthouse scores.
+                            Roadmap items include integrating the contact form into the email workflow, adding a lightweight CMS for seasonal promotions, and exploring subtle WebGL flourishes that preserve current Lighthouse scores.
                         </p>
                         <div class="case-cta">
                             <a href="https://hirsch-leasing.onrender.com/" class="btn btn-primary" target="_blank" rel="noopener">

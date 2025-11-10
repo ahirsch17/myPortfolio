@@ -21,7 +21,7 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/projects">Projects</a></li>
+                <li><a href="#showcase">Showcase</a></li>
             </ul>
         </div>
     </nav>
@@ -57,11 +57,11 @@
                                 <span class="tagline-caret" aria-hidden="true">▌</span>
                             </p>
                             <p class="hero-description">
-                                I prototype immersive digital experiences that blend human-centered UX, motion design, and accessible frontend engineering. 
-                                Currently experimenting with AI-assisted creativity, design systems, and real-time data storytelling at Virginia Tech.
+                                I craft human-centered web experiences that balance motion, accessibility, and clear storytelling.
+                                I’m currently studying Human Computer Interaction at Virginia Tech while iterating on AI-assisted design systems.
                             </p>
                             <div class="hero-actions">
-                                <a href="projects.html" class="btn btn-primary">
+                                <a href="#showcase" class="btn btn-primary">
                                     <span>Explore Selected Work</span>
                                     <span class="btn-glow"></span>
                                 </a>
@@ -86,7 +86,7 @@
                                 <span class="hero-preview-label">Latest Launch</span>
                                 <h3>SamePath</h3>
                             </header>
-                            <p>Mobile platform pairing classmates with compatible study partners. Built with React Native, TypeScript, Flask, and thoughtful onboarding flows.</p>
+                            <p>Student scheduling assistant that surfaces shared classes and overlapping breaks so planning meetups takes seconds.</p>
                             <a href="projects/samepath.html" class="hero-preview-link">See the product</a>
                         </article>
                         <article class="hero-preview-card" data-tilt>
@@ -94,8 +94,16 @@
                                 <span class="hero-preview-label gradient">In the Lab</span>
                                 <h3>SportsPredictor</h3>
                             </header>
-                            <p>Analytics sandbox crunching live stats, injuries, and weather to forecast outcomes — coupled with custom visual reports.</p>
+                            <p>Python-driven NFL analytics tool that merges weekly stats, injuries, and weather to ship explainable matchup forecasts.</p>
                             <a href="projects/sportspredictor.html" class="hero-preview-link">Read the story</a>
+                        </article>
+                        <article class="hero-preview-card" data-tilt>
+                            <header>
+                                <span class="hero-preview-label">Live Product</span>
+                                <h3>RealEstateHirsch</h3>
+                            </header>
+                            <p>Responsive leasing site with guided tour scheduling, automated confirmations, and easy content updates.</p>
+                            <a href="https://hirsch-leasing.onrender.com/" target="_blank" rel="noopener" class="hero-preview-link">Visit live site</a>
                         </article>
                     </div>
                 </div>
@@ -103,11 +111,11 @@
         </section>
 
         <!-- Project Carousel Showcase -->
-        <section class="project-carousel motion-section" data-section="showcase">
+        <section class="project-carousel motion-section" id="showcase" data-section="showcase">
             <div class="container">
                 <header class="section-header">
-                    <h2>Showcase Mode</h2>
-                    <p>Immediate proof of craft. Scroll, hover, or let it autoplay — each project teaser loops through real UI captures.</p>
+                    <h2>Showcase</h2>
+                    <p>A snapshot of recent builds. Hover or tap to jump into the full case studies.</p>
                 </header>
                 <div class="carousel-wrapper" id="carouselWrapper">
                     <button class="carousel-control prev" aria-label="Previous project">&larr;</button>
@@ -118,26 +126,26 @@
                                 <div class="preview-overlay">
                                     <h3>SamePath</h3>
                                     <p>Connecting classmates through context-aware recommendations and collaborative rituals.</p>
-                                    <span class="preview-tags">React Native · Flask · MongoDB</span>
+                                    <span class="preview-tags">React Native · Flask · Azure</span>
                                 </div>
                             </a>
                         </article>
                         <article class="preview-card" data-project="realestate">
-                            <a href="projects/realestatehirsch.html" class="preview-link">
+                            <a href="https://hirsch-leasing.onrender.com/" target="_blank" rel="noopener" class="preview-link">
                                 <div class="preview-media realestate"></div>
                                 <div class="preview-overlay">
                                     <h3>RealEstateHirsch</h3>
                                     <p>A branded property experience orchestrating tours, lead capture, and storytelling in one flow.</p>
-                                    <span class="preview-tags">Express · Design Systems · Motion</span>
+                                    <span class="preview-tags">Express · MySQL · Automated Emails</span>
                                 </div>
                             </a>
                         </article>
                         <article class="preview-card" data-project="sportspredictor">
                             <a href="projects/sportspredictor.html" class="preview-link">
-                                <div class="preview-media" style="background-image: url('Images/sportsPredictor/injuryExtract.jpg');"></div>
+                                <div class="preview-media" style="background-image: url('Images/sportsPredictor/SportsPredictorSingleMatchup.jpg');"></div>
                                 <div class="preview-overlay">
                                     <h3>SportsPredictor</h3>
-                                    <p>Layered data visualizations with real-time pipelines and machine learning insights for weekly matchups.</p>
+                                    <p>Weekly data pipeline and CLI that analyze matchups with machine learning and surface key drivers.</p>
                                     <span class="preview-tags">Python · ML · Data Viz</span>
                                 </div>
                             </a>
@@ -243,7 +251,7 @@
                         <span>Email Alexis</span>
                         <span class="btn-glow"></span>
                     </a>
-                    <a href="projects.html" class="btn btn-ghost">Browse full project index</a>
+                    <a href="#showcase" class="btn btn-ghost">View project showcase</a>
                 </div>
             </div>
         </section>

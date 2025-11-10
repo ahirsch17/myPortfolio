@@ -13,7 +13,7 @@ A modern, responsive portfolio website showcasing my web development projects an
 
 1. **SamePath** - Student collaboration platform built with React Native
 2. **RealEstateHirsch** - Professional real estate website
-3. **SportsPredictor** - ML-powered sports analytics system
+3. **SportsPredictor** - ML-powered sports analytics system ([download](./public/downloads/sportsPredictor.zip) to try it locally)
 
 ## Technologies Used
 
@@ -67,6 +67,12 @@ myPortfolio/
     ├── projects.html  # Projects showcase page
     └── styles.css     # Global styles
 ```
+
+## Try SportsPredictor Locally
+
+1. [Download the zipped project](./public/downloads/sportsPredictor.zip) from this repository.
+2. Extract the archive and open a terminal in the `sportsPredictor` folder.
+3. Follow the instructions in `readme.md` to launch the API with Uvicorn or open `web/index.html` to explore the UI.
 
 ## Future Enhancements
 

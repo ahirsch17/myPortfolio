@@ -18,7 +18,7 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../index.html#showcase">Showcase</a></li>
             </ul>
         </div>
     </nav>
@@ -26,18 +26,18 @@
     <main>
         <section class="case-hero motion-section" data-section="hero">
             <div class="container">
-                <a class="case-breadcrumb" href="../projects.html">← Back to projects</a>
+                <a class="case-breadcrumb" href="../index.html#showcase">← Back to showcase</a>
                 <div class="case-header">
-                    <span class="case-pill">Mobile Collaboration</span>
+                    <span class="case-pill">Schedule Intelligence</span>
                     <h1 class="case-title">SamePath</h1>
                     <p class="case-lede">
-                        SamePath pairs classmates with compatible study partners and lightweight collaboration tools. I led product strategy, UX, and full-stack development to help university students build peer accountability without adding friction to their already busy schedules.
+                        SamePath is a solo-built project that unlocks shared time for classmates. I designed and engineered the system—from the concept to the APIs—to help students see who shares their courses, where long breaks overlap, and when it’s worth catching a friend between classes.
                     </p>
                 </div>
                 <div class="case-meta">
                     <dl>
                         <dt>Role</dt>
-                        <dd>Product Designer · Full Stack Engineer</dd>
+                        <dd>Founder · Product Designer · Full Stack Engineer</dd>
                     </dl>
                     <dl>
                         <dt>Timeline</dt>
@@ -45,7 +45,7 @@
                     </dl>
                     <dl>
                         <dt>Stack</dt>
-                        <dd>React Native · TypeScript · Flask · MongoDB</dd>
+                        <dd>React Native · TypeScript · Flask · Azure Table Storage</dd>
                     </dl>
                     <dl>
                         <dt>Status</dt>
@@ -71,10 +71,10 @@
                     </div>
                     <div class="case-callout">
                         <h3>What shaped the solution</h3>
-                        <ul class="case-list">
-                            <li>Virginia Tech students needed a safe, invite-first environment before sharing personal schedules.</li>
-                            <li>Matching had to reflect real availability, not just shared courses, to be meaningful.</li>
-                            <li>Mobile-first flows let students act on push notifications from anywhere on campus.</li>
+                    <ul class="case-list">
+                        <li>Students often miss out on friendships because they never realise a friend is in the same section or an alternate section they could swap into.</li>
+                        <li>Coordinating free time is painful—nobody memorises everyone’s schedule, so long campus breaks get lost to scrolling solo.</li>
+                        <li>Privacy matters: schedules only surface after a mutual connection, with easy controls to pause sharing.</li>
                         </ul>
                     </div>
                 </div>
@@ -89,19 +89,19 @@
                 <div class="case-subsection">
                     <h3>1. Schedule-aware onboarding</h3>
                     <p>
-                        Students can search by CRN or pull from their SIS export. I added helpful empty states, auto-complete, and guardrails that explain why schedule information unlocks smarter recommendations.
+                        Students can search by CRN or import their SIS export. Guardrails explain why schedule data fuels smarter matches, and every screen reinforces that only approved friends will ever see your timetable.
                     </p>
                 </div>
                 <div class="case-subsection">
                     <h3>2. Compatibility scoring</h3>
                     <p>
-                        I built a TypeScript matching service that scores classmates by free-time overlap, location proximity, and preferred study formats. The UI breaks the score into digestible tags—“Morning sessions”, “Project sprint ready”, or “Weekly review”—so students understand why a match looks promising.
+                        A TypeScript service crunches each person’s calendar, detects overlapping windows, and ranks them using a priority list the user sets. If more than three overlaps exceed 30 minutes, SamePath surfaces the highest value slots first so decisions become effortless.
                     </p>
                 </div>
                 <div class="case-subsection">
-                    <h3>3. Lightweight rooms</h3>
+                    <h3>3. Mutual reveals & rooms</h3>
                     <p>
-                        Once a match is accepted, teams move into “rooms” with shared task lists, meet-up reminders, and quick prompts. Flask handles real-time notifications while MongoDB stores room state for fast retrieval.
+                        Azure-hosted Flask APIs power friend requests, mutual schedule reveals, and quick meetup planning. Privacy toggles let anyone pause sharing or remove a connection instantly so students stay in control.
                     </p>
                 </div>
             </div>
@@ -115,16 +115,14 @@
                 </div>
                 <div class="case-gallery">
                     <figure data-tilt>
-                        <img src="../Images/SamePath/1 - app loading on ExpoGo.png" alt="SamePath splash screen">
-                        <figcaption>Splash and status messages branded for campus pilots.</figcaption>
+                        <video controls preload="metadata" style="width: 100%; height: auto; display: block; border-radius: 18px;">
+                            <source src="../Images/SamePath/screen-recording.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
+                        <figcaption>Product walkthrough covering onboarding, friend approvals, and overlap prioritisation.</figcaption>
                     </figure>
-                    <figure data-tilt>
-                        <img src="../Images/SamePath/3 - I_m New.png" alt="SamePath new student onboarding">
-                        <figcaption>New student onboarding with CRN lookup and schedule previews.</figcaption>
-                    </figure>
-                    <figure data-tilt>
-                        <img src="../Images/SamePath/3 - I_m Returning.png" alt="SamePath returning students screen">
-                        <figcaption>Returning users jump straight into their rooms and pending invites.</figcaption>
+                    <figure data-tilt class="case-media-placeholder">
+                        Schedule privacy: only mutual friends see your timetable, and you can pause sharing at any time.
                     </figure>
                 </div>
             </div>
@@ -137,9 +135,9 @@
                 </div>
                 <div class="case-subsection">
                     <ul class="case-list">
-                        <li>30+ students participated in early usability labs—90% felt the matching explanations increased trust.</li>
-                        <li>Live notifications nudged 12 dormant rooms back into collaboration during midterms.</li>
-                        <li>Faculty expressed interest in using study rooms as supplemental group forming for large lectures.</li>
+                        <li>Early usability sessions confirmed the overlap explanations helped classmates understand why a connection surfaced.</li>
+                        <li>Push notifications nudge study groups to reconnect during busier weeks like midterms.</li>
+                        <li>Pilots with commuters explore how to use shared breaks to keep students on campus rather than heading home.</li>
                     </ul>
                     <div class="case-callout">
                         <h3>Next</h3>

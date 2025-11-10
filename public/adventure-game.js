@@ -12,7 +12,7 @@ class CodeAdventure {
                 x: 100,
                 y: 150,
                 color: '#667eea',
-                description: 'Student Collaboration Platform'
+                description: 'Schedule Intelligence for Students'
             },
             {
                 id: 'realestatehirsch',
