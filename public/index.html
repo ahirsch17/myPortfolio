@@ -48,26 +48,36 @@
 
                 <div class="hero-content">
                     <div class="hero-intro">
-                        <span class="hero-pill">Frontend Developer · UI/UX Designer</span>
-                        <h1 class="hero-name">Alexis Hirsch</h1>
-                        <p class="hero-tagline" aria-live="polite">
-                            <span class="tagline-prefix">Designing for</span>
-                            <span id="taglineText" class="tagline-text">Delightful Interfaces</span>
-                            <span class="tagline-caret" aria-hidden="true">▌</span>
-                        </p>
-                        <p class="hero-description">
-                            I prototype immersive digital experiences that blend human-centered UX, motion design, and accessible frontend engineering. 
-                            Currently experimenting with AI-assisted creativity, design systems, and real-time data storytelling at Virginia Tech.
-                        </p>
-                        <div class="hero-actions">
-                            <a href="/projects" class="btn btn-primary">
-                                <span>Explore Selected Work</span>
-                                <span class="btn-glow"></span>
-                            </a>
-                            <button class="btn btn-ghost" data-scroll-target="contact">
-                                <span>Let’s build something interactive</span>
-                            </button>
+                        <div class="hero-intro-text">
+                            <span class="hero-pill">Frontend Developer · UI/UX Designer</span>
+                            <h1 class="hero-name">Alexis Hirsch</h1>
+                            <p class="hero-tagline" aria-live="polite">
+                                <span class="tagline-prefix">Designing for</span>
+                                <span id="taglineText" class="tagline-text">Delightful Interfaces</span>
+                                <span class="tagline-caret" aria-hidden="true">▌</span>
+                            </p>
+                            <p class="hero-description">
+                                I prototype immersive digital experiences that blend human-centered UX, motion design, and accessible frontend engineering. 
+                                Currently experimenting with AI-assisted creativity, design systems, and real-time data storytelling at Virginia Tech.
+                            </p>
+                            <div class="hero-actions">
+                                <a href="projects.html" class="btn btn-primary">
+                                    <span>Explore Selected Work</span>
+                                    <span class="btn-glow"></span>
+                                </a>
+                                <button class="btn btn-ghost" data-scroll-target="contact">
+                                    <span>Let’s build something interactive</span>
+                                </button>
+                            </div>
                         </div>
+                        <figure class="hero-portrait" data-tilt>
+                            <span class="portrait-glow"></span>
+                            <img src="Images/AlexPic.jpg" alt="Portrait of Alexis Hirsch" loading="lazy">
+                            <figcaption>
+                                <strong>Virginia Tech · 2025</strong>
+                                <span>Human Computer Interaction minor with focus on motion design systems.</span>
+                            </figcaption>
+                        </figure>
                     </div>
 
                     <div class="hero-preview">
@@ -77,7 +87,7 @@
                                 <h3>SamePath</h3>
                             </header>
                             <p>Mobile platform pairing classmates with compatible study partners. Built with React Native, TypeScript, Flask, and thoughtful onboarding flows.</p>
-                            <a href="/projects#samepath" class="hero-preview-link">See the product</a>
+                            <a href="projects/samepath.html" class="hero-preview-link">See the product</a>
                         </article>
                         <article class="hero-preview-card" data-tilt>
                             <header>
@@ -85,7 +95,7 @@
                                 <h3>SportsPredictor</h3>
                             </header>
                             <p>Analytics sandbox crunching live stats, injuries, and weather to forecast outcomes — coupled with custom visual reports.</p>
-                            <a href="/projects#sportspredictor" class="hero-preview-link">Read the story</a>
+                            <a href="projects/sportspredictor.html" class="hero-preview-link">Read the story</a>
                         </article>
                     </div>
                 </div>
@@ -103,28 +113,34 @@
                     <button class="carousel-control prev" aria-label="Previous project">&larr;</button>
                     <div class="carousel-track" id="projectCarousel" role="region" aria-live="polite">
                         <article class="preview-card active" data-project="samepath">
-                            <div class="preview-media" style="background-image: url('Images/SamePath/2 - Welcome.png');"></div>
-                            <div class="preview-overlay">
-                                <h3>SamePath</h3>
-                                <p>Connecting classmates through context-aware recommendations and collaborative rituals.</p>
-                                <span class="preview-tags">React Native · Flask · MongoDB</span>
-                            </div>
+                            <a href="projects/samepath.html" class="preview-link">
+                                <div class="preview-media" style="background-image: url('Images/SamePath/2 - Welcome.png');"></div>
+                                <div class="preview-overlay">
+                                    <h3>SamePath</h3>
+                                    <p>Connecting classmates through context-aware recommendations and collaborative rituals.</p>
+                                    <span class="preview-tags">React Native · Flask · MongoDB</span>
+                                </div>
+                            </a>
                         </article>
                         <article class="preview-card" data-project="realestate">
-                            <div class="preview-media realestate"></div>
-                            <div class="preview-overlay">
-                                <h3>RealEstateHirsch</h3>
-                                <p>A branded property experience orchestrating tours, lead capture, and storytelling in one flow.</p>
-                                <span class="preview-tags">Express · Design Systems · Motion</span>
-                            </div>
+                            <a href="projects/realestatehirsch.html" class="preview-link">
+                                <div class="preview-media realestate"></div>
+                                <div class="preview-overlay">
+                                    <h3>RealEstateHirsch</h3>
+                                    <p>A branded property experience orchestrating tours, lead capture, and storytelling in one flow.</p>
+                                    <span class="preview-tags">Express · Design Systems · Motion</span>
+                                </div>
+                            </a>
                         </article>
                         <article class="preview-card" data-project="sportspredictor">
-                            <div class="preview-media" style="background-image: url('Images/sportsPredictor/injuryExtract.jpg');"></div>
-                            <div class="preview-overlay">
-                                <h3>SportsPredictor</h3>
-                                <p>Layered data visualizations with real-time pipelines and machine learning insights for weekly matchups.</p>
-                                <span class="preview-tags">Python · ML · Data Viz</span>
-                            </div>
+                            <a href="projects/sportspredictor.html" class="preview-link">
+                                <div class="preview-media" style="background-image: url('Images/sportsPredictor/injuryExtract.jpg');"></div>
+                                <div class="preview-overlay">
+                                    <h3>SportsPredictor</h3>
+                                    <p>Layered data visualizations with real-time pipelines and machine learning insights for weekly matchups.</p>
+                                    <span class="preview-tags">Python · ML · Data Viz</span>
+                                </div>
+                            </a>
                         </article>
                     </div>
                     <button class="carousel-control next" aria-label="Next project">&rarr;</button>
@@ -161,11 +177,27 @@
                     </div>
                     <div class="lab-card" data-lab="scroll-motion">
                         <h3>Scroll Reactions</h3>
-                        <p>Cards ease into view with physics-based motion as you explore the page.</p>
-                        <div class="scroll-demo">
-                            <div class="scroll-demo-card">Framer-style fade</div>
-                            <div class="scroll-demo-card">Spring slide-in</div>
-                            <div class="scroll-demo-card">Perspective flip</div>
+                        <p>Play through the easing curves that choreograph section handoffs in my case studies.</p>
+                        <div class="scroll-simulator" data-effect="fade">
+                            <div class="scroll-preview" aria-live="polite">
+                                <div class="scroll-item">
+                                    <span class="scroll-item-label">Case Study</span>
+                                    <strong>Strategy Sprint Notes</strong>
+                                </div>
+                                <div class="scroll-item">
+                                    <span class="scroll-item-label">Design Review</span>
+                                    <strong>Motion Spec v2</strong>
+                                </div>
+                                <div class="scroll-item">
+                                    <span class="scroll-item-label">Code Drop</span>
+                                    <strong>Framer Motion Handoff</strong>
+                                </div>
+                            </div>
+                            <div class="scroll-controls" role="group" aria-label="Scroll effect previews">
+                                <button class="scroll-control active" data-effect="fade">Fade + Stagger</button>
+                                <button class="scroll-control" data-effect="slide">Slide on Scroll</button>
+                                <button class="scroll-control" data-effect="parallax">Depth Parallax</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,7 +243,7 @@
                         <span>Email Alexis</span>
                         <span class="btn-glow"></span>
                     </a>
-                    <a href="/projects" class="btn btn-ghost">Browse full project index</a>
+                    <a href="projects.html" class="btn btn-ghost">Browse full project index</a>
                 </div>
             </div>
         </section>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamePath Case Study · Alexis Hirsch</title>
+    <link rel="icon" type="image/png" href="../Images/Logo.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../theme-sandbox.js" defer></script>
+    <script src="../page-transitions.js" defer></script>
+    <script src="../home-interactions.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../Images/Logo.png" alt="Alexis Hirsch" class="logo-img">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="case-hero motion-section" data-section="hero">
+            <div class="container">
+                <a class="case-breadcrumb" href="../projects.html">← Back to projects</a>
+                <div class="case-header">
+                    <span class="case-pill">Mobile Collaboration</span>
+                    <h1 class="case-title">SamePath</h1>
+                    <p class="case-lede">
+                        SamePath pairs classmates with compatible study partners and lightweight collaboration tools. I led product strategy, UX, and full-stack development to help university students build peer accountability without adding friction to their already busy schedules.
+                    </p>
+                </div>
+                <div class="case-meta">
+                    <dl>
+                        <dt>Role</dt>
+                        <dd>Product Designer · Full Stack Engineer</dd>
+                    </dl>
+                    <dl>
+                        <dt>Timeline</dt>
+                        <dd>Spring 2024 · 10 Weeks</dd>
+                    </dl>
+                    <dl>
+                        <dt>Stack</dt>
+                        <dd>React Native · TypeScript · Flask · MongoDB</dd>
+                    </dl>
+                    <dl>
+                        <dt>Status</dt>
+                        <dd>Private Beta · On-campus pilots</dd>
+                    </dl>
+                </div>
+                <div class="case-hero-media" data-tilt>
+                    <figure>
+                        <img src="../Images/SamePath/2 - Welcome.png" alt="SamePath welcome screen">
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="overview">
+            <div class="container case-section-inner">
+                <div class="case-subsection">
+                    <div class="case-section-header">
+                        <h2>Designing a gentler way to form study crews</h2>
+                        <p>
+                            Most matching tools overwhelm students with forms or generic chat rooms. SamePath takes a progressive-disclosure approach: quick onboarding, gentle nudges, and context-aware suggestions powered by live course data. My goal was to make the “find a study buddy” task feel as casual as texting a friend.
+                        </p>
+                    </div>
+                    <div class="case-callout">
+                        <h3>What shaped the solution</h3>
+                        <ul class="case-list">
+                            <li>Virginia Tech students needed a safe, invite-first environment before sharing personal schedules.</li>
+                            <li>Matching had to reflect real availability, not just shared courses, to be meaningful.</li>
+                            <li>Mobile-first flows let students act on push notifications from anywhere on campus.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="flows">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Key product flows</h2>
+                </div>
+                <div class="case-subsection">
+                    <h3>1. Schedule-aware onboarding</h3>
+                    <p>
+                        Students can search by CRN or pull from their SIS export. I added helpful empty states, auto-complete, and guardrails that explain why schedule information unlocks smarter recommendations.
+                    </p>
+                </div>
+                <div class="case-subsection">
+                    <h3>2. Compatibility scoring</h3>
+                    <p>
+                        I built a TypeScript matching service that scores classmates by free-time overlap, location proximity, and preferred study formats. The UI breaks the score into digestible tags—“Morning sessions”, “Project sprint ready”, or “Weekly review”—so students understand why a match looks promising.
+                    </p>
+                </div>
+                <div class="case-subsection">
+                    <h3>3. Lightweight rooms</h3>
+                    <p>
+                        Once a match is accepted, teams move into “rooms” with shared task lists, meet-up reminders, and quick prompts. Flask handles real-time notifications while MongoDB stores room state for fast retrieval.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="gallery">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Snapshots</h2>
+                    <p>Selected UI moments from the React Native build.</p>
+                </div>
+                <div class="case-gallery">
+                    <figure data-tilt>
+                        <img src="../Images/SamePath/1 - app loading on ExpoGo.png" alt="SamePath splash screen">
+                        <figcaption>Splash and status messages branded for campus pilots.</figcaption>
+                    </figure>
+                    <figure data-tilt>
+                        <img src="../Images/SamePath/3 - I_m New.png" alt="SamePath new student onboarding">
+                        <figcaption>New student onboarding with CRN lookup and schedule previews.</figcaption>
+                    </figure>
+                    <figure data-tilt>
+                        <img src="../Images/SamePath/3 - I_m Returning.png" alt="SamePath returning students screen">
+                        <figcaption>Returning users jump straight into their rooms and pending invites.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="outcomes">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Outcomes & next steps</h2>
+                </div>
+                <div class="case-subsection">
+                    <ul class="case-list">
+                        <li>30+ students participated in early usability labs—90% felt the matching explanations increased trust.</li>
+                        <li>Live notifications nudged 12 dormant rooms back into collaboration during midterms.</li>
+                        <li>Faculty expressed interest in using study rooms as supplemental group forming for large lectures.</li>
+                    </ul>
+                    <div class="case-callout">
+                        <h3>Next</h3>
+                        <p>
+                            I’m layering in analytics dashboards for mentors, iterating on ARIA patterns for accessibility, and preparing the matching service for more universities.
+                        </p>
+                        <div class="case-cta">
+                            <a href="https://github.com/ahirsch17/SamePath" class="btn btn-primary" target="_blank" rel="noopener">
+                                <span>View GitHub repository</span>
+                                <span class="btn-glow"></span>
+                            </a>
+                            <a href="../Images/SamePath/screen-recording.mov" class="btn btn-ghost" target="_blank" rel="noopener">Watch prototype demo</a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="case-nav">
+                    <a href="realestatehirsch.html">← RealEstateHirsch</a>
+                    <a href="sportspredictor.html">SportsPredictor →</a>
+                </nav>
+            </div>
+        </section>
+        <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alexis Hirsch. Built with passion for web development.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

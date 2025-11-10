@@ -199,7 +199,7 @@ class ThemeSandbox {
             .sandbox-section label {
                 display: block;
                 font-weight: 600;
-                color: var(--text-color);
+                color: var(--text-primary);
                 margin-bottom: 0.5rem;
                 font-size: 0.9rem;
             }
@@ -273,7 +273,7 @@ class ThemeSandbox {
             
             .btn-reset {
                 background: #f3f4f6;
-                color: var(--text-color);
+                color: var(--text-primary);
             }
             
             .btn-reset:hover {

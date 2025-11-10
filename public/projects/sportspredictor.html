@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsPredictor Case Study · Alexis Hirsch</title>
+    <link rel="icon" type="image/png" href="../Images/Logo.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../theme-sandbox.js" defer></script>
+    <script src="../page-transitions.js" defer></script>
+    <script src="../home-interactions.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../Images/Logo.png" alt="Alexis Hirsch" class="logo-img">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="case-hero motion-section" data-section="hero">
+            <div class="container">
+                <a class="case-breadcrumb" href="../projects.html">← Back to projects</a>
+                <div class="case-header">
+                    <span class="case-pill">Data Pipeline</span>
+                    <h1 class="case-title">SportsPredictor</h1>
+                    <p class="case-lede">
+                        A cross-sport analytics engine that scrapes structured data, cleans it nightly, and ships matchup predictions with explainable metrics for NFL, MLB, and College Football fans.
+                    </p>
+                </div>
+                <div class="case-meta">
+                    <dl>
+                        <dt>Role</dt>
+                        <dd>ML Engineer · Data Pipeline Developer</dd>
+                    </dl>
+                    <dl>
+                        <dt>Timeline</dt>
+                        <dd>Fall 2023 – Present</dd>
+                    </dl>
+                    <dl>
+                        <dt>Stack</dt>
+                        <dd>Python · Pandas · scikit-learn · BeautifulSoup</dd>
+                    </dl>
+                    <dl>
+                        <dt>Output</dt>
+                        <dd>Weekly matchup reports + interactive CLI</dd>
+                    </dl>
+                </div>
+                <div class="case-hero-media" data-tilt>
+                    <figure>
+                        <img src="../Images/sportsPredictor/injuryExtract.jpg" alt="SportsPredictor injury extract interface">
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="pipeline">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>From raw feeds to explainable forecasts</h2>
+                    <p>
+                        The project started as a CLI experiment to check weather-adjusted spreads. It evolved into a modular pipeline that scrapes injury reports, pulls park factors, trains models, and ships human-readable PDFs that explain why a pick is favored.
+                    </p>
+                </div>
+                <div class="case-subsection">
+                    <h3>Pipeline at a glance</h3>
+                    <ul class="case-list">
+                        <li>Daily scrapers normalize data from league APIs, weather services, and betting lines.</li>
+                        <li>Feature engineering transforms historical stats, injury impact, and surface effects into model-ready tensors.</li>
+                        <li>Gradient boosting and ensemble models per sport output probability distributions, not just binary picks.</li>
+                        <li>Report generator highlights key drivers: QB pressure rates, pitcher fatigue, or home-park inflation.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="system">
+            <div class="container case-section-inner">
+                <div class="case-subsection">
+                    <h3>Engineering notes</h3>
+                    <p>
+                        I focused on performance and transparency. The ETL layer uses async requests and caching to keep nightly runs under five minutes. Models are re-trained weekly with rolling windows to prevent overfitting while staying current. Explanations are generated with SHAP values and simplified to bullet points for the final PDF.
+                    </p>
+                </div>
+                <div class="case-subsection">
+                    <h3>CLI for power users</h3>
+                    <p>
+                        Analysts can jump into a terminal to run single-game predictions, view feature importance charts, or export CSVs for their own parlay spreadsheets. Options flags toggle between conservative, neutral, and upset-friendly weighting schemes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="gallery">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Data products</h2>
+                    <p>Artifacts from the pipeline—batch scripts, reports, and injury dashboards.</p>
+                </div>
+                <div class="case-gallery">
+                    <figure data-tilt>
+                        <img src="../Images/sportsPredictor/BatchPredict.jpg" alt="Batch prediction script output">
+                        <figcaption>Batch CLI run showing projected spreads and confidence intervals.</figcaption>
+                    </figure>
+                    <figure data-tilt>
+                        <img src="../Images/sportsPredictor/updateDataData.jpg" alt="Data update workflow">
+                        <figcaption>Automated data refresh logging - each data source checked and validated.</figcaption>
+                    </figure>
+                    <figure data-tilt>
+                        <img src="../Images/sportsPredictor/updateData.jpg" alt="Weather and injury integration">
+                        <figcaption>Weather and injury deltas merged into team summaries for quick scanning.</figcaption>
+                    </figure>
+                    <figure data-tilt>
+                        <img src="../Images/sportsPredictor/injuryExtractData.jpg" alt="Injury extract data table">
+                        <figcaption>Injury normalization table with player status and projected impact.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="case-section motion-section" data-section="outcomes">
+            <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>Impact & next steps</h2>
+                </div>
+                <div class="case-subsection">
+                    <ul class="case-list">
+                        <li>Early users reported a 14% improvement in pick accuracy when using matchup explanations.</li>
+                        <li>Pipeline uptime has stayed above 99% since migrating to async fetchers.</li>
+                        <li>Reports now feed a Notion database that updates friends’ private betting dashboards.</li>
+                    </ul>
+                    <div class="case-callout">
+                        <h3>Roadmap</h3>
+                        <p>
+                            I’m exploring a hosted web UI with authentication, integrating live odds streaming, and fine-tuning prompt-based summaries to speed up weekly report drafting.
+                        </p>
+                        <div class="case-cta">
+                            <a href="https://github.com/ahirsch17/sportsPredictor" class="btn btn-primary" target="_blank" rel="noopener">
+                                <span>View repository</span>
+                                <span class="btn-glow"></span>
+                            </a>
+                            <a href="../Images/sportsPredictor/DetailedMatchupReport.txt" class="btn btn-ghost" target="_blank" rel="noopener">Read matchup report sample</a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="case-nav">
+                    <a href="realestatehirsch.html">← RealEstateHirsch</a>
+                    <a href="samepath.html">SamePath →</a>
+                </nav>
+            </div>
+        </section>
+        <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alexis Hirsch. Built with passion for web development.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

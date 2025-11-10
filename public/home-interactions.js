@@ -15,31 +15,82 @@
         carouselAutoDelay: 5200,
         themePalette: {
             light: {
-                '--bg-color': '#f5f6fb',
-                '--card-bg': '#ffffff',
-                '--text-color': '#1f2933',
                 '--primary-color': '#6d7bff',
                 '--secondary-color': '#a855f7',
                 '--accent-color': '#ec4899',
-                '--shadow-color': 'rgba(17, 24, 39, 0.12)'
+                '--bg-color': '#f5f6fb',
+                '--surface-color': 'rgba(255, 255, 255, 0.94)',
+                '--surface-soft': 'rgba(255, 255, 255, 0.85)',
+                '--card-bg': 'rgba(255, 255, 255, 0.92)',
+                '--card-border': 'rgba(148, 163, 184, 0.18)',
+                '--nav-bg': 'rgba(255, 255, 255, 0.85)',
+                '--nav-border': 'rgba(148, 163, 184, 0.18)',
+                '--toolbar-bg': 'rgba(15, 23, 42, 0.45)',
+                '--toolbar-border': 'rgba(255, 255, 255, 0.12)',
+                '--toolbar-text': '#f8fafc',
+                '--heading-color': '#0f172a',
+                '--text-primary': '#111827',
+                '--text-secondary': 'rgba(30, 41, 59, 0.72)',
+                '--text-muted': 'rgba(71, 85, 105, 0.68)',
+                '--pill-bg': 'rgba(255, 255, 255, 0.65)',
+                '--preview-overlay': 'linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(15, 23, 42, 0.78))',
+                '--contact-surface': 'linear-gradient(135deg, rgba(109, 123, 255, 0.12), rgba(236, 72, 153, 0.12))',
+                '--scroll-preview-bg': 'rgba(15, 23, 42, 0.06)',
+                '--shadow-color': 'rgba(17, 24, 39, 0.12)',
+                '--footer-bg': '#0f172a',
+                '--footer-text': 'rgba(226, 232, 240, 0.8)'
             },
             dusk: {
-                '--bg-color': '#141527',
-                '--card-bg': 'rgba(15, 23, 42, 0.85)',
-                '--text-color': '#f5f3ff',
                 '--primary-color': '#8b5cf6',
                 '--secondary-color': '#ec4899',
                 '--accent-color': '#f97316',
-                '--shadow-color': 'rgba(15, 23, 42, 0.35)'
+                '--bg-color': '#111827',
+                '--surface-color': 'rgba(26, 32, 58, 0.9)',
+                '--surface-soft': 'rgba(30, 41, 72, 0.82)',
+                '--card-bg': 'rgba(20, 30, 54, 0.88)',
+                '--card-border': 'rgba(99, 102, 241, 0.35)',
+                '--nav-bg': 'rgba(17, 24, 39, 0.7)',
+                '--nav-border': 'rgba(99, 102, 241, 0.28)',
+                '--toolbar-bg': 'rgba(79, 70, 229, 0.25)',
+                '--toolbar-border': 'rgba(148, 163, 184, 0.38)',
+                '--toolbar-text': '#e2e8f0',
+                '--heading-color': '#f5f3ff',
+                '--text-primary': '#e2e8f0',
+                '--text-secondary': 'rgba(203, 213, 225, 0.85)',
+                '--text-muted': 'rgba(148, 163, 184, 0.7)',
+                '--pill-bg': 'rgba(99, 102, 241, 0.22)',
+                '--preview-overlay': 'linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.8))',
+                '--contact-surface': 'linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(236, 72, 153, 0.16))',
+                '--scroll-preview-bg': 'rgba(17, 24, 39, 0.55)',
+                '--shadow-color': 'rgba(15, 23, 42, 0.4)',
+                '--footer-bg': 'rgba(10, 14, 26, 0.95)',
+                '--footer-text': 'rgba(226, 232, 240, 0.85)'
             },
             midnight: {
-                '--bg-color': '#0b1220',
-                '--card-bg': 'rgba(15, 23, 42, 0.9)',
-                '--text-color': '#e2e8f0',
                 '--primary-color': '#38bdf8',
                 '--secondary-color': '#6366f1',
                 '--accent-color': '#c084fc',
-                '--shadow-color': 'rgba(8, 145, 178, 0.25)'
+                '--bg-color': '#050711',
+                '--surface-color': 'rgba(8, 12, 24, 0.92)',
+                '--surface-soft': 'rgba(12, 18, 32, 0.82)',
+                '--card-bg': 'rgba(10, 17, 31, 0.88)',
+                '--card-border': 'rgba(56, 189, 248, 0.28)',
+                '--nav-bg': 'rgba(5, 8, 17, 0.75)',
+                '--nav-border': 'rgba(56, 189, 248, 0.24)',
+                '--toolbar-bg': 'rgba(56, 189, 248, 0.22)',
+                '--toolbar-border': 'rgba(148, 163, 184, 0.25)',
+                '--toolbar-text': '#e0f2fe',
+                '--heading-color': '#f0f9ff',
+                '--text-primary': 'rgba(226, 232, 240, 0.96)',
+                '--text-secondary': 'rgba(203, 213, 225, 0.85)',
+                '--text-muted': 'rgba(148, 163, 184, 0.6)',
+                '--pill-bg': 'rgba(56, 189, 248, 0.22)',
+                '--preview-overlay': 'linear-gradient(180deg, rgba(8, 12, 24, 0.4), rgba(5, 8, 17, 0.85))',
+                '--contact-surface': 'linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(99, 102, 241, 0.25))',
+                '--scroll-preview-bg': 'rgba(6, 11, 24, 0.7)',
+                '--shadow-color': 'rgba(8, 145, 178, 0.28)',
+                '--footer-bg': 'rgba(3, 6, 15, 0.95)',
+                '--footer-text': 'rgba(226, 232, 240, 0.82)'
             }
         },
         init() {
@@ -243,7 +294,24 @@
             const cards = Array.from(track.querySelectorAll('.preview-card'));
             if (cards.length === 0) return;
 
-            const goToSlide = (index) => {
+            let currentIndex = 0;
+
+            const centerActiveCard = (index, behavior = prefersReducedMotion ? 'auto' : 'smooth') => {
+                const activeCard = cards[index];
+                if (!activeCard) return;
+
+                const trackRect = track.getBoundingClientRect();
+                const cardRect = activeCard.getBoundingClientRect();
+                const offset = (cardRect.left - trackRect.left) - (trackRect.width / 2 - cardRect.width / 2);
+                const targetScroll = track.scrollLeft + offset;
+
+                track.scrollTo({
+                    left: targetScroll,
+                    behavior
+                });
+            };
+
+            const goToSlide = (index, options = {}) => {
                 const clamped = (index + cards.length) % cards.length;
                 cards.forEach((card, idx) => {
                     card.classList.toggle('active', idx === clamped);
@@ -253,6 +321,9 @@
                     indicator.setAttribute('aria-selected', idx === clamped ? 'true' : 'false');
                 });
                 track.setAttribute('data-active-index', String(clamped));
+                currentIndex = clamped;
+                const behavior = options.behavior ?? (prefersReducedMotion ? 'auto' : 'smooth');
+                centerActiveCard(clamped, behavior);
             };
 
             const next = () => {
@@ -334,7 +405,11 @@
                 resume();
             });
 
-            goToSlide(0);
+            window.addEventListener('resize', () => {
+                centerActiveCard(currentIndex);
+            });
+
+            goToSlide(0, { behavior: 'auto' });
         },
         setupScrollTargets() {
             document.querySelectorAll('[data-scroll-target]').forEach((trigger) => {
@@ -392,21 +467,29 @@
                 Object.entries(palette).forEach(([key, value]) => {
                     document.documentElement.style.setProperty(key, value);
                 });
+                document.documentElement.setAttribute('data-theme', theme);
             };
 
+            const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+
             chips.forEach((chip) => {
+                const isActive = chip.dataset.theme === initialTheme;
+                chip.classList.toggle('active', isActive);
+                chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
                 chip.addEventListener('click', () => {
                     chips.forEach((c) => c.classList.remove('active'));
                     chip.classList.add('active');
+                    chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
                     applyPalette(chip.dataset.theme || 'light');
                 });
             });
+            applyPalette(initialTheme);
         },
         setupCursorGlow() {
             const glow = document.getElementById('cursorGlow');
             if (!glow) return;
 
-            const interactiveSelectors = 'a, button, .hero-preview-card, .preview-card';
+            const interactiveSelectors = 'a, button, .hero-preview-card, .preview-card, .preview-link';
             const interactiveElements = document.querySelectorAll(interactiveSelectors);
 
             const moveGlow = (event) => {
@@ -427,11 +510,44 @@
             });
         },
         setupScrollDemo() {
-            const cards = document.querySelectorAll('.scroll-demo-card');
-            if (!cards.length) return;
+            const simulators = document.querySelectorAll('.scroll-simulator');
+            if (!simulators.length) return;
 
-            cards.forEach((card, index) => {
-                card.style.transitionDelay = `${index * 0.08}s`;
+            simulators.forEach((simulator) => {
+                const controls = simulator.querySelectorAll('.scroll-control');
+                const items = simulator.querySelectorAll('.scroll-item');
+
+                const setEffect = (effect) => {
+                    simulator.dataset.effect = effect;
+                    controls.forEach((control) => {
+                        control.classList.toggle('active', control.dataset.effect === effect);
+                    });
+
+                    if (prefersReducedMotion) {
+                        items.forEach((item) => {
+                            item.style.animation = 'none';
+                            item.style.opacity = '1';
+                            item.style.transform = 'none';
+                        });
+                        return;
+                    }
+
+                    items.forEach((item) => {
+                        item.style.animation = 'none';
+                        void item.offsetWidth;
+                        item.style.animation = '';
+                    });
+                };
+
+                controls.forEach((control) => {
+                    control.addEventListener('click', () => {
+                        const effect = control.dataset.effect || 'fade';
+                        setEffect(effect);
+                    });
+                });
+
+                const defaultEffect = simulator.dataset.effect || 'fade';
+                setEffect(defaultEffect);
             });
         }
     };
