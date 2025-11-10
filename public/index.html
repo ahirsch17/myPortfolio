@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alexis - Full Stack Developer</title>
+    <title>Alexis Hirsch · Creative Frontend Developer</title>
     <link rel="icon" type="image/png" href="Images/Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="theme-sandbox.js" defer></script>
+    <script src="page-transitions.js" defer></script>
+    <script src="home-interactions.js" defer></script>
 </head>
 <body>
     <nav class="navbar">
@@ -21,136 +27,195 @@
     </nav>
 
     <main>
-        <!-- Hero Section with Profile -->
-        <section class="hero">
-            <div class="hero-container">
-                <div class="profile-section">
-                    <div class="profile-image-wrapper">
-                        <img src="Images/AlexPic.jpg" alt="Alexis Hirsch" class="profile-image">
-                    </div>
-                    <div class="profile-content">
+        <!-- Hero Section -->
+        <section class="hero motion-section" data-section="hero">
+            <canvas id="heroCanvas" aria-hidden="true"></canvas>
+            <div class="hero-overlay">
+                <div class="floating-toolbar" id="floatingToolbar" aria-label="Quick Links">
+                    <a href="https://www.linkedin.com/in/alexis-j-hirsch" target="_blank" rel="noopener" class="toolbar-link" aria-label="LinkedIn">
+                        <span class="toolbar-icon">in</span>
+                        <span class="toolbar-text">LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/ahirsch17" target="_blank" rel="noopener" class="toolbar-link" aria-label="GitHub">
+                        <span class="toolbar-icon">{ }</span>
+                        <span class="toolbar-text">GitHub</span>
+                    </a>
+                    <a href="Images/Resume.pdf" target="_blank" rel="noopener" class="toolbar-link" aria-label="Resume">
+                        <span class="toolbar-icon">CV</span>
+                        <span class="toolbar-text">Resume</span>
+                    </a>
+                </div>
+
+                <div class="hero-content">
+                    <div class="hero-intro">
+                        <span class="hero-pill">Frontend Developer · UI/UX Designer</span>
                         <h1 class="hero-name">Alexis Hirsch</h1>
-                        <p class="hero-title">Full Stack Developer</p>
-                        <p class="hero-subtitle">Senior Computer Science Student at Virginia Tech</p>
-                        <p class="hero-description">
-                            Minor in Human Computer Interaction. Creating websites and apps for fun, 
-                            with some aspiring to become real businesses and publicly accessible applications. 
-                            I openly use AI to assist in my development process.
+                        <p class="hero-tagline" aria-live="polite">
+                            <span class="tagline-prefix">Designing for</span>
+                            <span id="taglineText" class="tagline-text">Delightful Interfaces</span>
+                            <span class="tagline-caret" aria-hidden="true">▌</span>
                         </p>
-                        <div class="social-links">
-                            <a href="https://www.linkedin.com/in/alexis-j-hirsch" target="_blank" class="social-link linkedin">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                </svg>
-                                <span>LinkedIn</span>
+                        <p class="hero-description">
+                            I prototype immersive digital experiences that blend human-centered UX, motion design, and accessible frontend engineering. 
+                            Currently experimenting with AI-assisted creativity, design systems, and real-time data storytelling at Virginia Tech.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="/projects" class="btn btn-primary">
+                                <span>Explore Selected Work</span>
+                                <span class="btn-glow"></span>
                             </a>
-                            <a href="https://github.com/ahirsch17" target="_blank" class="social-link github">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                                <span>GitHub</span>
-                            </a>
-                            <a href="Images/Resume.pdf" target="_blank" class="social-link resume">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                                </svg>
-                                <span>Resume</span>
-                            </a>
+                            <button class="btn btn-ghost" data-scroll-target="contact">
+                                <span>Let’s build something interactive</span>
+                            </button>
                         </div>
+                    </div>
+
+                    <div class="hero-preview">
+                        <article class="hero-preview-card" data-tilt>
+                            <header>
+                                <span class="hero-preview-label">Latest Launch</span>
+                                <h3>SamePath</h3>
+                            </header>
+                            <p>Mobile platform pairing classmates with compatible study partners. Built with React Native, TypeScript, Flask, and thoughtful onboarding flows.</p>
+                            <a href="/projects#samepath" class="hero-preview-link">See the product</a>
+                        </article>
+                        <article class="hero-preview-card" data-tilt>
+                            <header>
+                                <span class="hero-preview-label gradient">In the Lab</span>
+                                <h3>SportsPredictor</h3>
+                            </header>
+                            <p>Analytics sandbox crunching live stats, injuries, and weather to forecast outcomes — coupled with custom visual reports.</p>
+                            <a href="/projects#sportspredictor" class="hero-preview-link">Read the story</a>
+                        </article>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Game Section -->
-        <section class="game-section">
+        <!-- Project Carousel Showcase -->
+        <section class="project-carousel motion-section" data-section="showcase">
             <div class="container">
-                <div class="minigames-carousel">
-                    <button class="carousel-arrow left" onclick="changeGame(-1)">❮</button>
-                    
-                    <div class="game-container" id="shipdodgeGame">
-                        <h2 class="game-title">Ship Dodge</h2>
-                        <div class="game-stats">
-                            <div class="stat">
-                                <span class="stat-label">Score</span>
-                                <span class="stat-value" id="score">0</span>
+                <header class="section-header">
+                    <h2>Showcase Mode</h2>
+                    <p>Immediate proof of craft. Scroll, hover, or let it autoplay — each project teaser loops through real UI captures.</p>
+                </header>
+                <div class="carousel-wrapper" id="carouselWrapper">
+                    <button class="carousel-control prev" aria-label="Previous project">&larr;</button>
+                    <div class="carousel-track" id="projectCarousel" role="region" aria-live="polite">
+                        <article class="preview-card active" data-project="samepath">
+                            <div class="preview-media" style="background-image: url('Images/SamePath/2 - Welcome.png');"></div>
+                            <div class="preview-overlay">
+                                <h3>SamePath</h3>
+                                <p>Connecting classmates through context-aware recommendations and collaborative rituals.</p>
+                                <span class="preview-tags">React Native · Flask · MongoDB</span>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">High Score</span>
-                                <span class="stat-value" id="highScore">0</span>
+                        </article>
+                        <article class="preview-card" data-project="realestate">
+                            <div class="preview-media realestate"></div>
+                            <div class="preview-overlay">
+                                <h3>RealEstateHirsch</h3>
+                                <p>A branded property experience orchestrating tours, lead capture, and storytelling in one flow.</p>
+                                <span class="preview-tags">Express · Design Systems · Motion</span>
                             </div>
-                            <div class="stat">
-                                <span class="stat-label">Coins</span>
-                                <span class="stat-value" id="coins">0</span>
+                        </article>
+                        <article class="preview-card" data-project="sportspredictor">
+                            <div class="preview-media" style="background-image: url('Images/sportsPredictor/injuryExtract.jpg');"></div>
+                            <div class="preview-overlay">
+                                <h3>SportsPredictor</h3>
+                                <p>Layered data visualizations with real-time pipelines and machine learning insights for weekly matchups.</p>
+                                <span class="preview-tags">Python · ML · Data Viz</span>
                             </div>
-                        </div>
-
-                        <canvas id="gameCanvas"></canvas>
-
-                    <!-- Controls removed; use Space/Click to start or restart -->
-
-                    <div class="upgrade-shop">
-                        <h3>Upgrades Shop</h3>
-                        <div class="upgrades-grid">
-                            <div class="upgrade-item">
-                                <span class="upgrade-name">Speed Boost</span>
-                                <span class="upgrade-price">💰 5</span>
-                                <button class="upgrade-btn" onclick="buyUpgrade('speed')" id="speedBtn">Buy</button>
-                            </div>
-                            <div class="upgrade-item">
-                                <span class="upgrade-name">Double Points</span>
-                                <span class="upgrade-price">💰 15</span>
-                                <button class="upgrade-btn" onclick="buyUpgrade('points')" id="pointsBtn">Buy</button>
-                            </div>
-                            <div class="upgrade-item">
-                                <span class="upgrade-name">Ship Customizer</span>
-                                <span class="upgrade-price">💰 10</span>
-                                <button class="upgrade-btn" onclick="buyUpgrade('customize')" id="customizeBtn">Buy</button>
-                            </div>
-                        </div>
+                        </article>
                     </div>
-
-                        <div class="customize-section" id="customizeSection" style="display: none;">
-                            <h3>Customize Ship</h3>
-                            <div class="customize-grid">
-                                <div class="customize-item" style="max-width: 200px; margin: 0 auto;">
-                                    <label for="shipColor">Ship Color:</label>
-                                    <input type="color" id="shipColor" value="#ffffff" onchange="changeShipColor(this.value)">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Geometry Dash Game -->
-                    <div class="game-container locked" id="gdGame">
-                        <h2 class="game-title">Geometry Dash</h2>
-                        <div class="lock-overlay">
-                            <div class="lock-icon">🔒</div>
-                            <p>Unlock this game by achieving a score of 30 or higher in Ship Dodge!</p>
-                        </div>
-                        <div class="gd-game-content" style="display: none;">
-                            <div class="game-stats">
-                                <div class="stat">
-                                    <span class="stat-label">Score</span>
-                                    <span class="stat-value" id="gdScore">0</span>
-                                </div>
-                                <div class="stat">
-                                    <span class="stat-label">High Score</span>
-                                    <span class="stat-value" id="gdHighScore">0</span>
-                                </div>
-                            </div>
-
-                            <canvas id="gdCanvas" width="600" height="400"></canvas>
-
-                            <!-- Controls removed; use Space/Click/Arrow to start or restart -->
-                            <p style="text-align: center; color: #64748b; margin-top: 1rem; font-size: 0.9rem;">Press Space/Click/Arrow to jump</p>
-                        </div>
-                    </div>
-                    
-                    <button class="carousel-arrow right" onclick="changeGame(1)">❯</button>
+                    <button class="carousel-control next" aria-label="Next project">&rarr;</button>
+                </div>
+                <div class="carousel-indicators" id="carouselIndicators" role="tablist">
+                    <button class="indicator active" data-slide="0" aria-label="SamePath preview" aria-selected="true"></button>
+                    <button class="indicator" data-slide="1" aria-label="RealEstateHirsch preview" aria-selected="false"></button>
+                    <button class="indicator" data-slide="2" aria-label="SportsPredictor preview" aria-selected="false"></button>
                 </div>
             </div>
         </section>
+
+        <!-- Interaction Playground -->
+        <section class="interaction-lab motion-section" data-section="playground">
+            <div class="container">
+                <header class="section-header">
+                    <h2>Interaction Playground</h2>
+                    <p>Micro-interactions, theming, and responsive components that highlight the craft behind the code.</p>
+                </header>
+                <div class="lab-grid">
+                    <div class="lab-card" data-lab="hover-glow">
+                        <h3>Gradient Buttons</h3>
+                        <p>Hover to trigger ripple trails and layered glow states.</p>
+                        <button class="lab-button" data-ripple>Hover pulse</button>
+                    </div>
+                    <div class="lab-card" data-lab="theme-toggle">
+                        <h3>Theme Toggle</h3>
+                        <p>Switch between light, dusk, and midnight palettes with animated gradients.</p>
+                        <div class="theme-toggle">
+                            <button class="theme-chip active" data-theme="light">Light</button>
+                            <button class="theme-chip" data-theme="dusk">Dusk</button>
+                            <button class="theme-chip" data-theme="midnight">Midnight</button>
+                        </div>
+                    </div>
+                    <div class="lab-card" data-lab="scroll-motion">
+                        <h3>Scroll Reactions</h3>
+                        <p>Cards ease into view with physics-based motion as you explore the page.</p>
+                        <div class="scroll-demo">
+                            <div class="scroll-demo-card">Framer-style fade</div>
+                            <div class="scroll-demo-card">Spring slide-in</div>
+                            <div class="scroll-demo-card">Perspective flip</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Focus Areas -->
+        <section class="focus-areas motion-section" data-section="focus">
+            <div class="container">
+                <header class="section-header">
+                    <h2>What I’m Focusing On</h2>
+                    <p>Crafting experiences that balance storytelling, accessibility, and playful exploration.</p>
+                </header>
+                <div class="focus-grid">
+                    <article class="focus-card">
+                        <h3>Design Systems</h3>
+                        <p>Codifying typography, motion, and interaction patterns that scale across brands and platforms.</p>
+                        <span>Components · Tokens · Documentation</span>
+                    </article>
+                    <article class="focus-card">
+                        <h3>Creative Coding</h3>
+                        <p>Generative visuals and interactive canvases that react to scroll, motion, and data streams.</p>
+                        <span>Canvas · Three.js · Web Animations</span>
+                    </article>
+                    <article class="focus-card">
+                        <h3>Human-Centered AI</h3>
+                        <p>Pairing AI copilots with ethical affordances to accelerate workflows without losing trust.</p>
+                        <span>Prompt Design · Accessibility · Automation</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact motion-section" id="contact" data-section="contact">
+            <div class="container contact-inner">
+                <div>
+                    <h2>Let’s Collaborate</h2>
+                    <p>Open to internships, freelance collaborations, and cross-disciplinary design sprints. Tell me about the experience you want to build — I’ll prototype the journey.</p>
+                </div>
+                <div class="contact-actions">
+                    <a href="mailto:alexisjh@vt.edu" class="btn btn-primary">
+                        <span>Email Alexis</span>
+                        <span class="btn-glow"></span>
+                    </a>
+                    <a href="/projects" class="btn btn-ghost">Browse full project index</a>
+                </div>
+            </div>
+        </section>
+        <div id="cursorGlow" class="cursor-glow" aria-hidden="true"></div>
     </main>
 
     <footer>
@@ -158,1162 +223,6 @@
             <p>&copy; 2025 Alexis Hirsch. Built with passion for web development.</p>
         </div>
     </footer>
-
-    <script>
-        // Game variables
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = 600;
-        canvas.height = 400;
-
-        let gameState = 'waiting'; // waiting, playing, paused, gameover
-        let score = 0;
-        let highScore = localStorage.getItem('highScore') || 0;
-        let coins = parseInt(localStorage.getItem('coins')) || 0;
-        
-        // Player upgrades
-        let upgrades = {
-            speed: 1,
-            size: 1,
-            points: 1
-        };
-
-        // Customization colors
-        let shipColor = localStorage.getItem('shipColor') || '#ffffff';
-        let hasCustomizer = localStorage.getItem('hasCustomizer') === 'true';
-
-        // Player
-        const player = {
-            x: 100,
-            y: canvas.height / 2,
-            radius: 10 * upgrades.size,
-            velocity: 0,
-            gravity: 0.5,
-            jump: -8,
-            airTime: 0 // Track how long player has been in the air before applying gravity
-        };
-
-        // Obstacles
-        const obstacles = [];
-        const gameCoins = [];
-        let obstacleTimer = 0;
-        let coinTimer = 0;
-
-        function init() {
-            document.getElementById('score').textContent = score;
-            document.getElementById('highScore').textContent = highScore;
-            document.getElementById('coins').textContent = coins;
-            updateButtons();
-            
-            // Load saved colors and check if customizer is unlocked
-            document.getElementById('shipColor').value = shipColor;
-            if (hasCustomizer) {
-                document.getElementById('customizeSection').style.display = 'block';
-                document.getElementById('customizeBtn').textContent = 'Owned';
-            }
-        }
-
-        function changeShipColor(color) {
-            shipColor = color;
-            localStorage.setItem('shipColor', shipColor);
-        }
-
-        function startGame() {
-            if (gameState === 'playing') return;
-            gameState = 'playing';
-            score = 0;
-            obstacles.length = 0;
-            gameCoins.length = 0;
-            player.y = canvas.height / 2;
-            player.velocity = 0;
-            updateScore();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function pauseGame() {
-            if (gameState === 'playing') {
-                gameState = 'paused';
-                updateButtons();
-            } else if (gameState === 'paused') {
-                gameState = 'playing';
-                requestAnimationFrame(gameLoop);
-            }
-        }
-
-        function resetGame() {
-            gameState = 'waiting';
-            score = 0;
-            obstacles.length = 0;
-            gameCoins.length = 0;
-            player.y = canvas.height / 2;
-            player.velocity = 0;
-            updateScore();
-            updateButtons();
-        }
-
-        function gameLoop() {
-            if (gameState !== 'playing') return;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw background gradient
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(1, '#764ba2');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Update player with air time delay
-            if (player.velocity <= 0) {
-                // Player is moving up or stationary
-                player.velocity += player.gravity;
-                player.airTime = 0;
-            } else {
-                // Player is moving down - delay before applying more gravity
-                player.airTime++;
-                if (player.airTime > 5) { // 5 frames of air time before falling faster
-                    player.velocity += player.gravity;
-                }
-            }
-            player.y += player.velocity * upgrades.speed;
-
-            // Keep player in bounds - die on both top and bottom
-            if (player.y + player.radius > canvas.height) {
-                player.y = canvas.height - player.radius;
-                gameOver();
-            }
-            if (player.y - player.radius < 0) {
-                player.y = 0 + player.radius;
-                gameOver();
-            }
-
-            // Draw player (ship)
-            ctx.fillStyle = shipColor;
-            ctx.beginPath();
-            ctx.moveTo(player.x, player.y - player.radius);
-            ctx.lineTo(player.x + player.radius * 2, player.y);
-            ctx.lineTo(player.x, player.y + player.radius);
-            ctx.lineTo(player.x - player.radius, player.y);
-            ctx.closePath();
-            ctx.fill();
-
-            // Create obstacles
-            obstacleTimer++;
-            if (obstacleTimer > 120 / upgrades.speed) {
-                const newObs = {
-                    x: canvas.width,
-                    gap: 150,
-                    topHeight: Math.random() * (canvas.height - 200) + 50,
-                    passed: false
-                };
-                obstacles.push(newObs);
-                
-                // Spawn coin in the new obstacle's gap (only sometimes)
-                if (Math.random() > 0.4) {
-                    const gapCenter = newObs.topHeight + newObs.gap / 2;
-                    const safeY = gapCenter + (Math.random() - 0.5) * (newObs.gap - 40);
-                    gameCoins.push({
-                        x: canvas.width + 100, // Spawn coin ahead of the obstacle on the right
-                        y: safeY,
-                        radius: 12,
-                        collected: false,
-                        rotation: 0
-                    });
-                }
-                
-                obstacleTimer = 0;
-            }
-
-            // Update and draw obstacles
-            for (let i = obstacles.length - 1; i >= 0; i--) {
-                const obs = obstacles[i];
-                obs.x -= 3 * upgrades.speed;
-
-                // Draw top obstacle
-                ctx.fillStyle = '#5a5a5a';
-                ctx.fillRect(obs.x, 0, 40, obs.topHeight);
-                // Draw bottom obstacle
-                ctx.fillRect(obs.x, obs.topHeight + obs.gap, 40, canvas.height);
-
-                // Check collision
-                if (player.x + player.radius > obs.x && player.x - player.radius < obs.x + 40) {
-                    if (player.y - player.radius < obs.topHeight || player.y + player.radius > obs.topHeight + obs.gap) {
-                        gameOver();
-                    }
-                }
-
-                // Score
-                if (!obs.passed && obs.x + 40 < player.x) {
-                    obs.passed = true;
-                    score += 1 * upgrades.points;
-                    updateScore();
-                }
-
-                // Remove off-screen obstacles
-                if (obs.x + 40 < 0) {
-                    obstacles.splice(i, 1);
-                }
-            }
-
-            // Old coin spawning logic removed - coins now spawn with obstacles
-
-            // Update and draw coins
-            for (let i = gameCoins.length - 1; i >= 0; i--) {
-                const coin = gameCoins[i];
-                coin.x -= 3 * upgrades.speed;
-                coin.rotation += 0.1;
-
-                // Draw coin
-                ctx.save();
-                ctx.translate(coin.x, coin.y);
-                ctx.rotate(coin.rotation);
-                ctx.fillStyle = '#FFD700';
-                ctx.beginPath();
-                ctx.arc(0, 0, coin.radius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#FFA500';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.restore();
-
-                // Check collection
-                const dx = coin.x - player.x;
-                const dy = coin.y - player.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < coin.radius + player.radius && !coin.collected) {
-                    coin.collected = true;
-                    coins++;
-                    updateScore();
-                }
-
-                // Remove collected or off-screen coins
-                if (coin.collected || coin.x + coin.radius < 0) {
-                    gameCoins.splice(i, 1);
-                }
-            }
-
-            // Draw clouds
-            drawCloud(canvas.width / 2, 50);
-            drawCloud(canvas.width / 3, 80);
-            drawCloud(canvas.width * 0.7, 120);
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        function drawCloud(x, y) {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-            ctx.beginPath();
-            ctx.arc(x, y, 20, 0, Math.PI * 2);
-            ctx.arc(x + 25, y, 30, 0, Math.PI * 2);
-            ctx.arc(x + 50, y, 20, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        function gameOver() {
-            gameState = 'gameover';
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('highScore', highScore);
-            }
-            localStorage.setItem('coins', coins);
-            updateScore();
-            updateButtons();
-            drawGameOver();
-        }
-
-        function drawGameOver() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 36px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - 40);
-            ctx.font = '24px sans-serif';
-            ctx.fillText('Press Space or Click to restart', canvas.width / 2, canvas.height / 2 + 20);
-        }
-
-        function updateScore() {
-            document.getElementById('score').textContent = score;
-            document.getElementById('highScore').textContent = highScore;
-            document.getElementById('coins').textContent = coins;
-            
-            // Check for Geometry Dash unlock at high score 30 or higher
-            if (parseInt(highScore) >= 30) {
-                if (!localStorage.getItem('gdUnlocked')) {
-                    localStorage.setItem('gdUnlocked', 'true');
-                    const gdGame = document.getElementById('gdGame');
-                    if (gdGame) {
-                        const overlay = gdGame.querySelector('.lock-overlay');
-                        if (overlay) overlay.style.display = 'none';
-                    }
-                }
-            }
-        }
-
-        // Game carousel navigation
-        let currentGameIndex = 0;
-        const gameContainers = document.querySelectorAll('.game-container');
-        
-        function changeGame(direction) {
-            currentGameIndex += direction;
-            if (currentGameIndex < 0) currentGameIndex = gameContainers.length - 1;
-            if (currentGameIndex >= gameContainers.length) currentGameIndex = 0;
-            
-            // Check if Geometry Dash is unlocked
-            const gdUnlocked = localStorage.getItem('gdUnlocked') === 'true';
-            if (currentGameIndex === 1 && !gdUnlocked) {
-                // Skip over locked games
-                if (direction === 1) {
-                    currentGameIndex = 0;
-                } else {
-                    currentGameIndex = 0;
-                }
-            }
-            
-            // Update visibility
-            gameContainers.forEach((container, index) => {
-                if (index === currentGameIndex) {
-                    container.style.display = 'block';
-                } else {
-                    container.style.display = 'none';
-                }
-            });
-        }
-        
-        // Initialize game visibility and check GD unlock status
-        function checkGDUnlock() {
-            // Unlock by default if not set so the game is playable immediately
-            if (localStorage.getItem('gdUnlocked') === null) {
-                localStorage.setItem('gdUnlocked', 'true');
-            }
-            const gdUnlocked = localStorage.getItem('gdUnlocked') === 'true';
-            const gdGame = document.getElementById('gdGame');
-            if (gdGame) {
-                const overlay = gdGame.querySelector('.lock-overlay');
-                const gameContent = gdGame.querySelector('.gd-game-content');
-                if (overlay && gameContent) {
-                    if (gdUnlocked) {
-                        overlay.style.display = 'none';
-                        gameContent.style.display = 'block';
-                        gdGame.classList.remove('locked');
-                    } else {
-                        overlay.style.display = 'flex';
-                        gameContent.style.display = 'none';
-                        gdGame.classList.add('locked');
-                    }
-                }
-            }
-        }
-        
-        gameContainers.forEach((container, index) => {
-            if (index === 0) {
-                container.style.display = 'block';
-            } else {
-                container.style.display = 'none';
-            }
-        });
-        
-        checkGDUnlock();
-
-        function updateButtons() {
-            document.getElementById('pauseBtn').textContent = gameState === 'paused' ? 'Resume' : 'Pause';
-            document.getElementById('speedBtn').textContent = upgrades.speed > 1 ? 'Owned' : 'Buy';
-            document.getElementById('pointsBtn').textContent = upgrades.points > 1 ? 'Owned' : 'Buy';
-        }
-
-        function buyUpgrade(type) {
-            const prices = { speed: 5, points: 15, customize: 10 };
-            const price = prices[type];
-
-            if (type === 'customize' && coins >= price && !hasCustomizer) {
-                coins -= price;
-                hasCustomizer = true;
-                localStorage.setItem('hasCustomizer', 'true');
-                localStorage.setItem('coins', coins);
-                document.getElementById('customizeSection').style.display = 'block';
-                document.getElementById('customizeBtn').textContent = 'Owned';
-                updateScore();
-            } else if (coins >= price && upgrades[type] === 1) {
-                coins -= price;
-                upgrades[type] = (type === 'points') ? 2 : 1.5;
-                updateScore();
-                updateButtons();
-                localStorage.setItem('coins', coins);
-            }
-        }
-
-        // Controls
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' || e.code === 'ArrowUp') {
-                e.preventDefault();
-                e.stopPropagation();
-                if (gameState === 'waiting' || gameState === 'gameover') {
-                    startGame();
-                } else if (gameState === 'playing') {
-                    player.velocity = player.jump;
-                    player.airTime = 0;
-                } else if (gameState === 'paused') {
-                    pauseGame();
-                }
-            }
-        });
-
-        canvas.addEventListener('click', () => {
-            if (gameState === 'waiting' || gameState === 'gameover') {
-                startGame();
-            } else if (gameState === 'playing') {
-                player.velocity = player.jump;
-                player.airTime = 0;
-            } else if (gameState === 'paused') {
-                pauseGame();
-            }
-        });
-
-        // Draw waiting screen
-        function drawWaiting() {
-            if (gameState !== 'waiting') return;
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(1, '#764ba2');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-            ctx.font = 'bold 32px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('Click or Press Space!', canvas.width / 2, canvas.height / 2);
-
-            // Draw player
-            ctx.fillStyle = shipColor;
-            ctx.beginPath();
-            ctx.moveTo(player.x, player.y - player.radius);
-            ctx.lineTo(player.x + player.radius * 2, player.y);
-            ctx.lineTo(player.x, player.y + player.radius);
-            ctx.lineTo(player.x - player.radius, player.y);
-            ctx.closePath();
-            ctx.fill();
-
-            drawCloud(canvas.width / 2, 50);
-            drawCloud(canvas.width / 3, 80);
-            drawCloud(canvas.width * 0.7, 120);
-
-            requestAnimationFrame(drawWaiting);
-        }
-
-        init();
-        drawWaiting();
-
-        // ===== GEOMETRY DASH GAME =====
-        let gdCanvas, gdCtx;
-        let gdState = 'waiting'; // waiting, playing, paused, gameover
-        let gdScore = 0;
-        let gdHighScore = parseInt(localStorage.getItem('gdHighScore') || '0', 10);
-
-        const gdWorld = {
-            groundY: 320,
-            gravity: 0.6,
-            speed: 6
-        };
-
-        const gdPlayer = {
-            x: 100,
-            y: gdWorld.groundY - 40,
-            size: 40,
-            vy: 0,
-            canJump: true
-        };
-
-        const gdObstacles = [];
-        const gdPlatforms = [];
-        const gdBouncePads = [];
-        let gdSpawnTimer = 0;
-        let gdPlatformSpawnTimer = 0;
-        let gdBounceSpawnTimer = 0;
-
-        function startGD() {
-            if (gdState === 'playing') return;
-            gdState = 'playing';
-            gdScore = 0;
-            gdObstacles.length = 0;
-            gdPlayer.y = gdWorld.groundY - gdPlayer.size;
-            gdPlayer.vy = 0;
-            requestAnimationFrame(gdLoop);
-        }
-
-        function pauseGD() {
-            if (gdState === 'playing') {
-                gdState = 'paused';
-            } else if (gdState === 'paused') {
-                gdState = 'playing';
-                requestAnimationFrame(gdLoop);
-            }
-        }
-
-        function resetGD() {
-            gdState = 'waiting';
-            gdScore = 0;
-            gdObstacles.length = 0;
-            drawGDWaiting();
-        }
-
-        function gdJump() {
-            if (gdState === 'waiting') startGD();
-            if (gdState !== 'playing') return;
-            if (gdPlayer.canJump) {
-                gdPlayer.vy = -12;
-                gdPlayer.canJump = false;
-            }
-        }
-
-        function gdLoop() {
-            if (gdState !== 'playing' || !gdCanvas || !gdCtx) return;
-            gdCtx.clearRect(0, 0, gdCanvas.width, gdCanvas.height);
-
-            // Background
-            const bg = gdCtx.createLinearGradient(0, 0, gdCanvas.width, gdCanvas.height);
-            bg.addColorStop(0, '#141e30');
-            bg.addColorStop(1, '#243b55');
-            gdCtx.fillStyle = bg;
-            gdCtx.fillRect(0, 0, gdCanvas.width, gdCanvas.height);
-
-            // Ground
-            gdCtx.fillStyle = '#2c3e50';
-            gdCtx.fillRect(0, gdWorld.groundY, gdCanvas.width, gdCanvas.height - gdWorld.groundY);
-
-            // Player physics
-            gdPlayer.vy += gdWorld.gravity;
-            const prevY = gdPlayer.y;
-            gdPlayer.y += gdPlayer.vy;
-            if (gdPlayer.y + gdPlayer.size >= gdWorld.groundY) {
-                gdPlayer.y = gdWorld.groundY - gdPlayer.size;
-                gdPlayer.vy = 0;
-                gdPlayer.canJump = true;
-            }
-
-            // Draw player cube
-            gdCtx.fillStyle = '#e74c3c';
-            gdCtx.fillRect(gdPlayer.x, gdPlayer.y, gdPlayer.size, gdPlayer.size);
-
-            // Spawn obstacles
-            gdSpawnTimer++;
-            if (gdSpawnTimer > 60) {
-                gdObstacles.push({ x: gdCanvas.width + 20, width: 20 + Math.random() * 20, height: 20 + Math.random() * 40, passed: false });
-                gdSpawnTimer = 0;
-            }
-
-            // Spawn platforms periodically
-            gdPlatformSpawnTimer++;
-            if (gdPlatformSpawnTimer > 180) {
-                const pWidth = 80 + Math.random() * 80;
-                const pHeight = 12;
-                const top = gdWorld.groundY - (80 + Math.random() * 120);
-                gdPlatforms.push({ x: gdCanvas.width + 40, y: top, width: pWidth, height: pHeight });
-                gdPlatformSpawnTimer = 0;
-            }
-
-            // Spawn bounce pads periodically on ground
-            gdBounceSpawnTimer++;
-            if (gdBounceSpawnTimer > 150) {
-                gdBouncePads.push({ x: gdCanvas.width + 20, y: gdWorld.groundY - 8, width: 30, height: 8, power: 16 });
-                gdBounceSpawnTimer = 0;
-            }
-
-            // Update obstacles
-            for (let i = gdObstacles.length - 1; i >= 0; i--) {
-                const ob = gdObstacles[i];
-                ob.x -= gdWorld.speed;
-
-                // Draw spike (triangle)
-                gdCtx.fillStyle = '#f1c40f';
-                gdCtx.beginPath();
-                gdCtx.moveTo(ob.x, gdWorld.groundY);
-                gdCtx.lineTo(ob.x + ob.width / 2, gdWorld.groundY - ob.height);
-                gdCtx.lineTo(ob.x + ob.width, gdWorld.groundY);
-                gdCtx.closePath();
-                gdCtx.fill();
-
-                // Decorative edge spikes on the triangle face
-                gdCtx.strokeStyle = '#d4ac0d';
-                gdCtx.lineWidth = 2;
-                const teeth = Math.max(3, Math.floor(ob.width / 8));
-                for (let t = 0; t < teeth; t++) {
-                    const bx = ob.x + (t / teeth) * ob.width;
-                    const by = gdWorld.groundY - (Math.abs((t - teeth / 2) / (teeth / 2))) * ob.height;
-                    gdCtx.beginPath();
-                    gdCtx.moveTo(bx, by);
-                    gdCtx.lineTo(bx + 4, by - 6);
-                    gdCtx.stroke();
-                }
-
-                // Collision
-                const px = gdPlayer.x, py = gdPlayer.y, ps = gdPlayer.size;
-                const obTop = gdWorld.groundY - ob.height;
-                if (px + ps > ob.x && px < ob.x + ob.width && py + ps > obTop && py < gdWorld.groundY) {
-                    gdGameOver();
-                }
-
-                // Score
-                if (!ob.passed && ob.x + ob.width < gdPlayer.x) {
-                    ob.passed = true;
-                    gdScore += 1;
-                    updateGDScore();
-                }
-
-                if (ob.x + ob.width < 0) gdObstacles.splice(i, 1);
-            }
-
-            // Update platforms
-            for (let i = gdPlatforms.length - 1; i >= 0; i--) {
-                const p = gdPlatforms[i];
-                p.x -= gdWorld.speed;
-
-                // Draw platform
-                gdCtx.fillStyle = '#16a085';
-                gdCtx.fillRect(p.x, p.y, p.width, p.height);
-                // Little top spikes for flair
-                gdCtx.fillStyle = '#1abc9c';
-                const spikesCount = Math.max(2, Math.floor(p.width / 14));
-                for (let s = 0; s < spikesCount; s++) {
-                    const sx = p.x + s * (p.width / spikesCount);
-                    gdCtx.beginPath();
-                    gdCtx.moveTo(sx, p.y);
-                    gdCtx.lineTo(sx + (p.width / spikesCount) / 2, p.y - 6);
-                    gdCtx.lineTo(sx + (p.width / spikesCount), p.y);
-                    gdCtx.closePath();
-                    gdCtx.fill();
-                }
-
-                // Landing collision (from above)
-                const playerBottom = gdPlayer.y + gdPlayer.size;
-                const prevBottom = prevY + gdPlayer.size;
-                const platformTop = p.y;
-                const overlapsX = (gdPlayer.x + gdPlayer.size > p.x) && (gdPlayer.x < p.x + p.width);
-                if (overlapsX && prevBottom <= platformTop && playerBottom >= platformTop) {
-                    gdPlayer.y = platformTop - gdPlayer.size;
-                    gdPlayer.vy = 0;
-                    gdPlayer.canJump = true;
-                }
-
-                if (p.x + p.width < 0) gdPlatforms.splice(i, 1);
-            }
-
-            // Update bounce pads
-            for (let i = gdBouncePads.length - 1; i >= 0; i--) {
-                const b = gdBouncePads[i];
-                b.x -= gdWorld.speed;
-                // Draw bounce pad
-                gdCtx.fillStyle = '#9b59b6';
-                gdCtx.fillRect(b.x, b.y, b.width, b.height);
-                // Arrow chevron
-                gdCtx.fillStyle = '#e67e22';
-                gdCtx.beginPath();
-                gdCtx.moveTo(b.x + 4, b.y);
-                gdCtx.lineTo(b.x + b.width / 2, b.y - 10);
-                gdCtx.lineTo(b.x + b.width - 4, b.y);
-                gdCtx.closePath();
-                gdCtx.fill();
-
-                // Trigger bounce when player overlaps from above
-                const overlapsX = (gdPlayer.x + gdPlayer.size > b.x) && (gdPlayer.x < b.x + b.width);
-                const playerBottom = gdPlayer.y + gdPlayer.size;
-                const prevBottom = prevY + gdPlayer.size;
-                const padTop = b.y;
-                if (overlapsX && prevBottom <= padTop && playerBottom >= padTop) {
-                    gdPlayer.y = padTop - gdPlayer.size;
-                    gdPlayer.vy = -b.power;
-                    gdPlayer.canJump = false;
-                }
-
-                if (b.x + b.width < 0) gdBouncePads.splice(i, 1);
-            }
-
-            requestAnimationFrame(gdLoop);
-        }
-
-        function gdGameOver() {
-            gdState = 'gameover';
-            if (gdScore > gdHighScore) {
-                gdHighScore = gdScore;
-                localStorage.setItem('gdHighScore', String(gdHighScore));
-            }
-            drawGDGameOver();
-        }
-
-        function updateGDScore() {
-            document.getElementById('gdScore').textContent = gdScore;
-            document.getElementById('gdHighScore').textContent = gdHighScore;
-        }
-
-        function drawGDWaiting() {
-            if (gdState !== 'waiting' || !gdCanvas || !gdCtx) return;
-            gdCtx.clearRect(0, 0, gdCanvas.width, gdCanvas.height);
-            const bg = gdCtx.createLinearGradient(0, 0, gdCanvas.width, gdCanvas.height);
-            bg.addColorStop(0, '#141e30');
-            bg.addColorStop(1, '#243b55');
-            gdCtx.fillStyle = bg;
-            gdCtx.fillRect(0, 0, gdCanvas.width, gdCanvas.height);
-            gdCtx.fillStyle = '#fff';
-            gdCtx.font = 'bold 28px sans-serif';
-            gdCtx.textAlign = 'center';
-            gdCtx.fillText('Press Space or Click to Jump', gdCanvas.width / 2, gdCanvas.height / 2);
-        }
-
-        function drawGDGameOver() {
-            gdCtx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            gdCtx.fillRect(0, 0, gdCanvas.width, gdCanvas.height);
-            gdCtx.fillStyle = '#fff';
-            gdCtx.font = 'bold 36px sans-serif';
-            gdCtx.textAlign = 'center';
-            gdCtx.fillText('Game Over!', gdCanvas.width / 2, gdCanvas.height / 2 - 40);
-            gdCtx.font = '24px sans-serif';
-            gdCtx.fillText('Press Space/Click/Arrow to restart', gdCanvas.width / 2, gdCanvas.height / 2 + 20);
-        }
-
-        // Controls for GD - only active when GD game is visible
-        function setupGDControls() {
-            function handleGDKey(e) {
-                // Only handle if GD is the current game
-                if (currentGameIndex !== 1) return;
-                if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'ArrowRight') {
-                    e.preventDefault();
-                    if (gdState === 'gameover') {
-                        startGD();
-                    } else if (gdState === 'waiting') {
-                        startGD();
-                    } else {
-                        gdJump();
-                    }
-                }
-            }
-            
-            function handleGDClick(e) {
-                // Only handle if clicking on GD canvas or its container
-                const gdGame = document.getElementById('gdGame');
-                if (currentGameIndex !== 1 || !gdGame) return;
-                if (gdGame.contains(e.target) || e.target === gdCanvas) {
-                    if (gdState === 'gameover') {
-                        startGD();
-                    } else if (gdState === 'waiting') {
-                        startGD();
-                    } else {
-                        gdJump();
-                    }
-                }
-            }
-            
-            document.addEventListener('keydown', handleGDKey);
-            document.addEventListener('click', handleGDClick);
-        }
-        setupGDControls();
-
-        function initGDGame() {
-            gdCanvas = document.getElementById('gdCanvas');
-            if (!gdCanvas) {
-                // Retry if canvas isn't ready yet
-                setTimeout(initGDGame, 100);
-                return;
-            }
-            gdCtx = gdCanvas.getContext('2d');
-            if (!gdCtx) return;
-            updateGDScore();
-            drawGDWaiting();
-            
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initGDGame);
-        } else {
-            initGDGame();
-        }
-        
-        // Reinitialize and redraw when switching to Geometry Dash game
-        function checkGDGameVisible() {
-            const gdGame = document.getElementById('gdGame');
-            if (!gdGame) return;
-            
-            const isVisible = gdGame.style.display !== 'none' && currentGameIndex === 1;
-            
-            if (isVisible) {
-                // Initialize if not already
-                if (!gdCanvas || !gdCtx) {
-                    initGDGame();
-                }
-                // Redraw waiting screen if in waiting state
-                if (gdState === 'waiting' && gdCanvas && gdCtx) {
-                    drawGDWaiting();
-                }
-            }
-        }
-        
-        // Check periodically and when switching games
-        const originalChangeGame = changeGame;
-        changeGame = function(direction) {
-            originalChangeGame(direction);
-            checkGDGameVisible();
-        };
-        
-        setInterval(checkGDGameVisible, 500);
-
-        // Global keyboard navigation: Arrow keys
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
-                const isGD = currentGameIndex === 1;
-                // If playing GD, use right arrow as an alternate jump
-                if (isGD && gdState === 'playing') {
-                    e.preventDefault();
-                    gdJump();
-                    return;
-                }
-                // Switch games only when not actively playing a game
-                if (gameState !== 'playing' && gdState !== 'playing') {
-                    e.preventDefault();
-                    changeGame(1);
-                }
-            }
-            if (e.key === 'ArrowLeft') {
-                if (gameState !== 'playing' && gdState !== 'playing') {
-                    e.preventDefault();
-                    changeGame(-1);
-                }
-            }
-        });
-    </script>
-
-    <style>
-        /* Game Section */
-        .game-section {
-            padding: 4rem 0;
-            background: #f8fafc;
-        }
-
-        .game-subtitle {
-            text-align: center;
-            color: #64748b;
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-        }
-
-        .minigames-carousel {
-            position: relative;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .carousel-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #667eea;
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-
-        .carousel-arrow:hover {
-            background: #5568d3;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-arrow.left {
-            left: -70px;
-        }
-
-        .carousel-arrow.right {
-            right: -70px;
-        }
-
-        .game-container {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .game-title {
-            text-align: center;
-            color: #1e293b;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .game-container.locked {
-            opacity: 0.6;
-        }
-
-        .lock-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.95);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            z-index: 100;
-        }
-
-        .lock-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .lock-overlay p {
-            color: #64748b;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 0 2rem;
-        }
-
-        .gd-game-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #gdCanvas {
-            border: 3px solid #3b82f6;
-            border-radius: 10px;
-            background: #0b1420;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin-bottom: 1.5rem;
-        }
-
-        .game-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid #e5e7eb;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-label {
-            display: block;
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        #gameCanvas {
-            border: 3px solid #667eea;
-            border-radius: 10px;
-            display: block;
-            margin: 0 auto 1.5rem;
-            background: #f8fafc;
-            cursor: pointer;
-            outline: none;
-        }
-
-        #gameCanvas:focus {
-            outline: none;
-        }
-
-        .game-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .control-btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .control-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .control-btn:active {
-            transform: translateY(0);
-        }
-
-        .upgrade-shop {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-        }
-
-        .upgrade-shop h3 {
-            text-align: center;
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-
-        .upgrades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-        }
-
-        .upgrade-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 2px solid #e5e7eb;
-        }
-
-        .upgrade-name {
-            display: block;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-        }
-
-        .upgrade-price {
-            display: block;
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .upgrade-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .upgrade-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .customize-section {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-top: 1rem;
-        }
-
-        .customize-section h3 {
-            text-align: center;
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-
-        .customize-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .customize-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 2px solid #e5e7eb;
-        }
-
-        .customize-item label {
-            display: block;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .customize-item input[type="color"] {
-            width: 100%;
-            height: 50px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        @media (max-width: 768px) {
-            .game-container {
-                padding: 1.5rem;
-                margin: 0 1rem;
-            }
-
-            .game-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .stat-value {
-                font-size: 1.5rem;
-            }
-
-            #gameCanvas {
-                width: 100%;
-                height: auto;
-            }
-
-            #gdCanvas {
-                width: 100%;
-                height: auto;
-            }
-
-            .game-controls {
-                flex-wrap: wrap;
-            }
-
-            .upgrades-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .carousel-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .carousel-arrow.left {
-                left: -50px;
-            }
-
-            .carousel-arrow.right {
-                right: -50px;
-            }
-
-            .minigames-carousel {
-                margin: 0 3rem;
-            }
-        }
-    </style>
 </body>
 </html>
 
