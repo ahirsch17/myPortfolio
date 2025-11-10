@@ -54,7 +54,10 @@
                 </div>
                 <div class="case-hero-media" data-tilt>
                     <figure>
-                        <img src="../Images/SamePath/2 - Welcome.png" alt="SamePath welcome screen">
+                        <video controls playsinline preload="metadata" style="width: 100%; height: auto; display: block; border-radius: 18px;">
+                            <source src="../Images/SamePath/screen-recording.mov" type="video/quicktime">
+                            Your browser does not support the video tag.
+                        </video>
                     </figure>
                 </div>
             </div>
@@ -62,68 +65,26 @@
 
         <section class="case-section motion-section" data-section="overview">
             <div class="container case-section-inner">
+                <div class="case-section-header">
+                    <h2>What the app delivers</h2>
+                    <p>
+                        SamePath keeps classmates aware of shared schedules so planning study time feels effortless and respectful of privacy.
+                    </p>
+                </div>
                 <div class="case-subsection">
-                    <div class="case-section-header">
-                        <h2>Designing a gentler way to form study crews</h2>
-                        <p>
-                            Most matching tools overwhelm students with forms or generic chat rooms. SamePath takes a progressive-disclosure approach: quick onboarding, gentle nudges, and context-aware suggestions powered by live course data. My goal was to make the “find a study buddy” task feel as casual as texting a friend.
-                        </p>
-                    </div>
-                    <div class="case-callout">
-                        <h3>What shaped the solution</h3>
                     <ul class="case-list">
-                        <li>Students often miss out on friendships because they never realise a friend is in the same section or an alternate section they could swap into.</li>
-                        <li>Coordinating free time is painful—nobody memorises everyone’s schedule, so long campus breaks get lost to scrolling solo.</li>
-                        <li>Privacy matters: schedules only surface after a mutual connection, with easy controls to pause sharing.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="flows">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Key product flows</h2>
+                        <li>Students import or search their class schedule, then see overlapping breaks and classes with approved friends.</li>
+                        <li>Compatibility scoring highlights the best meet-up windows first, so planning takes a few taps.</li>
+                        <li>Privacy tools let anyone pause sharing, remove connections, or hide specific days at any time.</li>
+                    </ul>
                 </div>
                 <div class="case-subsection">
-                    <h3>1. Schedule-aware onboarding</h3>
-                    <p>
-                        Students can search by CRN or import their SIS export. Guardrails explain why schedule data fuels smarter matches, and every screen reinforces that only approved friends will ever see your timetable.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>2. Compatibility scoring</h3>
-                    <p>
-                        A TypeScript service crunches each person’s calendar, detects overlapping windows, and ranks them using a priority list the user sets. If more than three overlaps exceed 30 minutes, SamePath surfaces the highest value slots first so decisions become effortless.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>3. Mutual reveals & rooms</h3>
-                    <p>
-                        Azure-hosted Flask APIs power friend requests, mutual schedule reveals, and quick meetup planning. Privacy toggles let anyone pause sharing or remove a connection instantly so students stay in control.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="gallery">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Snapshots</h2>
-                    <p>Selected UI moments from the React Native build.</p>
-                </div>
-                <div class="case-gallery">
-                    <figure data-tilt>
-                        <video controls preload="metadata" style="width: 100%; height: auto; display: block; border-radius: 18px;">
-                            <source src="../Images/SamePath/screen-recording.mov" type="video/quicktime">
-                            Your browser does not support the video tag.
-                        </video>
-                        <figcaption>Product walkthrough covering onboarding, friend approvals, and overlap prioritisation.</figcaption>
-                    </figure>
-                    <figure data-tilt class="case-media-placeholder">
-                        Schedule privacy: only mutual friends see your timetable, and you can pause sharing at any time.
-                    </figure>
+                    <h3>My role</h3>
+                    <ul class="case-list">
+                        <li>Designed the product flows, prototypes, and visual language.</li>
+                        <li>Developed the React Native client and Flask APIs with Azure storage.</li>
+                        <li>Led usability sessions to refine onboarding and privacy messaging.</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -135,9 +96,9 @@
                 </div>
                 <div class="case-subsection">
                     <ul class="case-list">
-                        <li>Early usability sessions confirmed the overlap explanations helped classmates understand why a connection surfaced.</li>
-                        <li>Push notifications nudge study groups to reconnect during busier weeks like midterms.</li>
-                        <li>Pilots with commuters explore how to use shared breaks to keep students on campus rather than heading home.</li>
+                        <li>Usability sessions confirmed schedule explanations help classmates understand why a connection surfaced.</li>
+                        <li>Push notifications nudge study groups to reconnect during busy weeks like midterms.</li>
+                        <li>Pilots with commuters explore how to use shared breaks to stay on campus between classes.</li>
                     </ul>
                     <div class="case-callout">
                         <h3>Next</h3>

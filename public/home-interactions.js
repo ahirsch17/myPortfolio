@@ -380,29 +380,18 @@
                 next();
             });
 
-            let pointerStart = null;
-            track.addEventListener('pointerdown', (event) => {
-                pointerStart = event.clientX;
-                track.setPointerCapture(event.pointerId);
-                pause();
-            });
-            track.addEventListener('pointerup', (event) => {
-                if (pointerStart !== null) {
-                    const delta = event.clientX - pointerStart;
-                    if (Math.abs(delta) > 40) {
-                        if (delta < 0) {
-                            next();
-                        } else {
-                            prev();
-                        }
+            cards.forEach((card) => {
+                const link = card.querySelector('.preview-link');
+                if (!link) return;
+
+                card.addEventListener('click', (event) => {
+                    const anchor = event.target.closest('a');
+                    if (anchor) {
+                        pause();
+                        return;
                     }
-                }
-                pointerStart = null;
-                resume();
-            });
-            track.addEventListener('pointercancel', () => {
-                pointerStart = null;
-                resume();
+                    window.location.href = link.href;
+                });
             });
 
             window.addEventListener('resize', () => {

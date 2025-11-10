@@ -60,109 +60,28 @@
             </div>
         </section>
 
-        <section class="case-section motion-section" data-section="brief">
+        <section class="case-section motion-section" data-section="overview">
             <div class="container case-section-inner">
                 <div class="case-section-header">
-                    <h2>Aligning stakeholders on a digital-first leasing experience</h2>
+                    <h2>What the site delivers</h2>
                     <p>
-                        The Hirsch family needed a modern site that highlights premium rentals and makes it easy to schedule private tours. I translated their offline sales playbook into a guided digital journey that surfaces credibility, differentiators, and easy conversion moments on every page.
+                        RealEstateHirsch turns a family leasing business into a guided digital experience that keeps prospects moving from discovery to tour confirmation.
                     </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>Goals</h3>
-                    <ul class="case-list">
-                        <li>Highlight high-quality property photography without slowing the experience.</li>
-                        <li>Capture leads directly into an email pipeline and flag urgent requests.</li>
-                        <li>Give agents an intuitive way to update availability without digging through code.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="experience">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Experience highlights</h2>
-                </div>
-                <div class="case-subsection">
-                    <h3>Responsive landing experience</h3>
-                    <p>
-                        The hero on <code>website.html</code> stretches full screen, pairing high-impact photography with an availability banner and primary CTA that jumps visitors directly into the tour scheduler. Every breakpoint keeps that conversion path above the fold.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>Global navigation &amp; brand consistency</h3>
-                    <p>
-                        A shared <code>navbar.css</code> powers the announcement ribbon, logo lockup, and “Apply Now” CTA across every page so key flows stay one click away whether you are on listings, story, or scheduling.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>Property catalog with quick filters</h3>
-                    <p>
-                        <code>properties.html</code> lists units with photography, specs, pricing, and Google Maps links. Client-side filters for beds, baths, and availability let prospects drill into relevant inventory without waiting on a backend round trip.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>Rich listing detail pages</h3>
-                    <p>
-                        Each property page—such as <code>property-hv.html</code>—packages descriptions, square footage, and scrolling galleries that showcase interiors and exteriors. The layout keeps lead capture CTAs persistent while guests explore the imagery.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>Company story &amp; trust signals</h3>
-                    <p>
-                        <code>aboutUs.html</code> introduces every team member with headshots, credentials, and roles, reinforcing the family-run, service-oriented brand that differentiates the firm from generic rental sites.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="automation">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Automated scheduling &amp; CRM handoff</h2>
                 </div>
                 <div class="case-subsection">
                     <ul class="case-list">
-                        <li><strong>Interactive tour scheduling:</strong> <code>schedule.html</code> pairs Flatpickr date picking with live time-slot availability from <code>/api/available-times</code>, hiding booked slots and confirming reservations inline.</li>
-                        <li><strong>Server-side booking protection:</strong> The Express API (<code>server.js</code>) guards against duplicate emails and overlapping date/time combinations before accepting a reservation.</li>
-                        <li><strong>Automated confirmation emails:</strong> Successful bookings trigger templated Gmail messages to the guest and leasing inbox with visit details and a one-click manage link.</li>
-                        <li><strong>Self-service cancellation portal:</strong> Emails include a unique cancel ID; <code>view-cancel.html</code> fetches booking data via <code>/api/booking</code> and immediately calls <code>/cancel/:id</code> to release the slot.</li>
-                        <li><strong>MySQL-backed storage:</strong> When the remote database is online the system persists reservations, exposes <code>/api/bookings</code> for staff review, and enforces the same cancellation workflow from a single source of truth.</li>
+                        <li>Responsive landing pages that showcase listings and keep scheduling calls-to-action above the fold.</li>
+                        <li>Interactive tour scheduling with live availability, server-side validation, and automated confirmation emails.</li>
+                        <li>Reusable content components so agents can refresh listings, availability, and promotions without touching code.</li>
                     </ul>
                 </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="forms">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Applications &amp; contact intake</h2>
-                </div>
                 <div class="case-subsection">
-                    <p>
-                        Lead capture extends beyond tours. <code>apply.html</code> collects detailed applicant profiles—move-in date, lease duration, occupants, and notes—and posts them to <code>/api/application</code>, which emails both the applicant and leasing staff a formatted summary. <code>contact.html</code> already mirrors the Node mailer pattern, ready to integrate into the existing pipeline for general inquiries.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="gallery">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Visual language</h2>
-                    <p>Gradients and panel treatments that support premium positioning while staying performant.</p>
-                </div>
-                <div class="case-gallery">
-                    <figure data-tilt class="case-media-placeholder">
-                        Hero panel with leasing CTA and quick facts
-                    </figure>
-                    <figure data-tilt class="case-media-placeholder">
-                        Property listing grid with hover overlays for amenities
-                    </figure>
-                    <figure data-tilt class="case-media-placeholder">
-                        Inquiry form with inline validation + calendar preferences
-                    </figure>
+                    <h3>My role</h3>
+                    <ul class="case-list">
+                        <li>Led product design, copy, and brand styling for the entire site.</li>
+                        <li>Built the Express.js backend powering scheduling, email automation, and MySQL storage.</li>
+                        <li>Set up deployment on Render and created quick-edit documentation for the team.</li>
+                    </ul>
                 </div>
             </div>
         </section>

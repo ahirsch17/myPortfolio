@@ -60,85 +60,59 @@
             </div>
         </section>
 
-        <section class="case-section motion-section" data-section="pipeline">
+        <section class="case-section motion-section" data-section="overview">
             <div class="container case-section-inner">
                 <div class="case-section-header">
-                    <h2>From raw feeds to explainable forecasts</h2>
+                    <h2>What the build delivers</h2>
                     <p>
-                        The project started as a CLI experiment to check weather-adjusted spreads. It evolved into a modular pipeline that scrapes injury reports, refreshes team stats, trains scikit-learn models, and ships human-readable summaries that explain why a pick is favored.
+                        SportsPredictor keeps weekly NFL data organized so matchup forecasts stay transparent and easy to share.
                     </p>
                 </div>
                 <div class="case-subsection">
-                    <h3>Pipeline at a glance</h3>
                     <ul class="case-list">
-                        <li>Daily scrapers normalize NFL data from public league sources, weather services, and injury reports.</li>
-                        <li>Feature engineering transforms drive efficiency, injury impact, and surface conditions into model-ready features.</li>
-                        <li>scikit-learn classifiers tuned for NFL matchups output confidence percentages instead of binary picks.</li>
-                        <li>Report generator highlights key drivers like pressure rates, secondary matchups, and red-zone efficiency.</li>
+                        <li>Nightly ETL routine that refreshes league stats, injuries, weather, and betting lines before predictions ship.</li>
+                        <li>Feature engineering and scikit-learn classifiers output confidence percentages plus the metrics that drove the pick.</li>
+                        <li>CLI tooling for both batch reports and single-matchup lookups, making it simple to check a game on demand.</li>
+                    </ul>
+                </div>
+                <div class="case-subsection">
+                    <h3>My focus</h3>
+                    <ul class="case-list">
+                        <li>Designed the data schema and scrapers to keep sources normalized and debuggable.</li>
+                        <li>Tuned model training pipelines and validation so updates stay current without overfitting.</li>
+                        <li>Built the reporting layer that explains every pick in plain language.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <section class="case-section motion-section" data-section="system">
-            <div class="container case-section-inner">
-                <div class="case-subsection">
-                    <h3>Engineering notes</h3>
-                    <p>
-                        The ETL layer focuses on transparency and maintainability. Batched requests and caching keep nightly runs fast, and models are refreshed weekly with rolling windows so predictions stay current without overfitting.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <h3>CLI for power users</h3>
-                    <p>
-                        Analysts can jump into a terminal to run single-game predictions, export CSVs, and tweak weighting schemes for conservative, neutral, or upset-friendly outputs.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="gallery">
+        <section class="case-section motion-section" data-section="media">
             <div class="container case-section-inner">
                 <div class="case-section-header">
-                    <h2>Data products</h2>
-                    <p>Artifacts from the pipeline—CLI outputs, batch scripts, and data refresh dashboards.</p>
+                    <h2>In action</h2>
+                    <p>Snapshots from the CLI summaries and batch refresh workflow.</p>
                 </div>
                 <div class="case-gallery">
                     <figure data-tilt>
                         <img src="../Images/sportsPredictor/SportsPredictorSingleMatchup.jpg" alt="Single matchup CLI summary">
-                        <figcaption>Single-matchup summary with confidence score and key drivers.</figcaption>
+                        <figcaption>Single-matchup breakdown with confidence score and key drivers.</figcaption>
                     </figure>
                     <figure data-tilt>
                         <img src="../Images/sportsPredictor/sportsPredictorBatchPredictDataRefreshes.jpg" alt="Batch predictions and data refresh">
-                        <figcaption>Batch run refreshing inputs and generating weekly picks.</figcaption>
+                        <figcaption>Automation refreshing inputs before generating the weekly slate.</figcaption>
                     </figure>
                 </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="outcomes">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Impact & next steps</h2>
-                </div>
-                <div class="case-subsection">
-                    <ul class="case-list">
-                        <li>Pipelines now run nightly to keep stats, injuries, and weather aligned before prediction day.</li>
-                        <li>CLI tooling makes single-matchup checks quick for friends following weekly games.</li>
-                        <li>Summaries highlight the main drivers behind a pick so the reasoning is easy to share.</li>
-                    </ul>
-                    <div class="case-callout">
-                        <h3>Roadmap</h3>
-                        <p>
-                            Next steps include a hosted web UI with authentication, integrating live odds streaming, and turning the summaries into printable one-pagers.
-                        </p>
-                        <div class="case-cta">
-                            <a href="../downloads/sportsPredictor.zip" class="btn btn-primary" target="_blank" rel="noopener">
-                                <span>Download project</span>
-                                <span class="btn-glow"></span>
-                            </a>
-                            <a href="https://github.com/ahirsch17/sportsPredictor" class="btn btn-ghost" target="_blank" rel="noopener">Browse source</a>
-                        </div>
+                <div class="case-callout">
+                    <h3>Try it locally</h3>
+                    <p>
+                        Download the project and follow the README to spin up the API or explore the dashboard in your browser.
+                    </p>
+                    <div class="case-cta">
+                        <a href="../downloads/sportsPredictor.zip" class="btn btn-primary" target="_blank" rel="noopener">
+                            <span>Download project</span>
+                            <span class="btn-glow"></span>
+                        </a>
+                        <a href="https://github.com/ahirsch17/sportsPredictor" class="btn btn-ghost" target="_blank" rel="noopener">Browse source</a>
                     </div>
                 </div>
                 <nav class="case-nav">
