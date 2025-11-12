@@ -63,9 +63,19 @@ myPortfolio/
 ├── README.md          # This file
 └── public/            # Static files
     ├── index.html     # Home page
-    ├── about.html     # About page
-    ├── projects.html  # Projects showcase page
-    └── styles.css     # Global styles
+    ├── styles.css     # Global styles
+    ├── theme-sandbox.js
+    ├── page-transitions.js
+    ├── home-interactions.js
+    ├── Images/        # Image assets
+    ├── projects/      # Individual project pages
+    │   ├── samepath.html
+    │   ├── sportspredictor.html
+    │   └── realestatehirsch.html
+    ├── playground/    # Interactive demos
+    │   └── effort-score-demo.html
+    └── downloads/     # Downloadable files
+        └── sportsPredictor.zip
 ```
 
 ## Try SportsPredictor Locally
