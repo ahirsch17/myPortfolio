@@ -18,103 +18,123 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../index.html#showcase">Showcase</a></li>
+                <li><a href="../index.html#stories">Stories</a></li>
             </ul>
         </div>
     </nav>
 
-    <main>
-        <section class="case-hero motion-section" data-section="hero">
+    <main class="project-case">
+        <section class="project-hero motion-section" data-section="hero">
             <div class="container">
-                <a class="case-breadcrumb" href="../index.html#showcase">← Back to showcase</a>
-                <div class="case-header">
-                    <span class="case-pill">Schedule Intelligence</span>
-                    <h1 class="case-title">SamePath</h1>
-                    <p class="case-lede">
-                        SamePath is a solo-built project that unlocks shared time for classmates. I designed and engineered the system—from the concept to the APIs—to help students see who shares their courses, where long breaks overlap, and when it’s worth catching a friend between classes.
-                    </p>
-                </div>
-                <div class="case-meta">
-                    <dl>
-                        <dt>Role</dt>
-                        <dd>Founder · Product Designer · Full Stack Engineer</dd>
-                    </dl>
-                    <dl>
-                        <dt>Timeline</dt>
-                        <dd>Spring 2024 · 10 Weeks</dd>
-                    </dl>
-                    <dl>
-                        <dt>Stack</dt>
-                        <dd>React Native · TypeScript · Flask · Azure Table Storage</dd>
-                    </dl>
-                    <dl>
-                        <dt>Status</dt>
-                        <dd>Private Beta · On-campus pilots</dd>
-                    </dl>
-                </div>
-                <div class="case-hero-media" data-tilt>
-                    <figure>
-                        <video controls playsinline preload="metadata" style="width: 100%; height: auto; display: block; border-radius: 18px;">
-                            <source src="../Images/SamePath/screen-recording.mov" type="video/quicktime">
-                            Your browser does not support the video tag.
-                        </video>
-                    </figure>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="overview">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>What the app delivers</h2>
-                    <p>
-                        SamePath keeps classmates aware of shared schedules so planning study time feels effortless and respectful of privacy.
-                    </p>
-                </div>
-                <div class="case-subsection">
-                    <ul class="case-list">
-                        <li>Students import or search their class schedule, then see overlapping breaks and classes with approved friends.</li>
-                        <li>Compatibility scoring highlights the best meet-up windows first, so planning takes a few taps.</li>
-                        <li>Privacy tools let anyone pause sharing, remove connections, or hide specific days at any time.</li>
-                    </ul>
-                </div>
-                <div class="case-subsection">
-                    <h3>My role</h3>
-                    <ul class="case-list">
-                        <li>Designed the product flows, prototypes, and visual language.</li>
-                        <li>Developed the React Native client and Flask APIs with Azure storage.</li>
-                        <li>Led usability sessions to refine onboarding and privacy messaging.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="case-section motion-section" data-section="outcomes">
-            <div class="container case-section-inner">
-                <div class="case-section-header">
-                    <h2>Outcomes & next steps</h2>
-                </div>
-                <div class="case-subsection">
-                    <ul class="case-list">
-                        <li>Usability sessions confirmed schedule explanations help classmates understand why a connection surfaced.</li>
-                        <li>Push notifications nudge study groups to reconnect during busy weeks like midterms.</li>
-                        <li>Pilots with commuters explore how to use shared breaks to stay on campus between classes.</li>
-                    </ul>
-                    <div class="case-callout">
-                        <h3>Next</h3>
-                        <p>
-                            I’m layering in analytics dashboards for mentors, iterating on ARIA patterns for accessibility, and preparing the matching service for more universities.
+                <a class="project-breadcrumb" href="../index.html#stories">← Back to project stories</a>
+                <div class="project-hero-inner">
+                    <div class="project-hero-copy">
+                        <span class="project-pill">Schedule Intelligence</span>
+                        <h1>SamePath</h1>
+                        <p class="project-tagline">Solo-built mobile app that finds shared free time so classmates can link up fast.</p>
+                        <p class="project-summary">
+                            SamePath turns course lists into smart overlap suggestions. Students import schedules, approve friends, and get quick nudges when they share a class or a long break.
                         </p>
-                        <div class="case-cta">
-                            <a href="https://github.com/ahirsch17/SamePath" class="btn btn-primary" target="_blank" rel="noopener">
-                                <span>View GitHub repository</span>
+                        <div class="project-hero-actions">
+                            <a href="../Images/SamePath/screen-recording.mp4" class="btn btn-primary" target="_blank" rel="noopener">
+                                <span>Play demo (MP4)</span>
                                 <span class="btn-glow"></span>
                             </a>
-                            <a href="../Images/SamePath/screen-recording.mov" class="btn btn-ghost" target="_blank" rel="noopener">Watch prototype demo</a>
+                            <a href="../Images/SamePath/screen-recording.mov" class="btn btn-ghost" download>Download MOV</a>
+                            <a href="https://github.com/ahirsch17/SamePath" class="btn btn-ghost" target="_blank" rel="noopener">View repo</a>
                         </div>
                     </div>
+                    <aside class="project-facts">
+                        <h2>Quick facts</h2>
+                        <dl>
+                            <div>
+                                <dt>Timeline</dt>
+                                <dd>Spring 2024 · 10 weeks</dd>
+                            </div>
+                            <div>
+                                <dt>Role</dt>
+                                <dd>Founder · Product design · Full stack</dd>
+                            </div>
+                            <div>
+                                <dt>Stack</dt>
+                                <dd>React Native · TypeScript · Flask · Azure Table Storage</dd>
+                            </div>
+                            <div>
+                                <dt>Status</dt>
+                                <dd>Private beta · On-campus pilots</dd>
+                            </div>
+                        </dl>
+                    </aside>
                 </div>
-                <nav class="case-nav">
+                <figure class="project-featured-media">
+                    <video controls playsinline preload="none">
+                        <source src="../Images/SamePath/screen-recording.mp4" type="video/mp4">
+                        <source src="../Images/SamePath/screen-recording.mov" type="video/quicktime">
+                        Your browser does not support the video tag.
+                    </video>
+                    <figcaption>Full walkthrough covering onboarding, approvals, and overlap suggestions. Download the MOV if your browser has trouble playing inline.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
+                    <h2>Why it matters</h2>
+                    <p>Students wanted quick ways to see who shares their classes without exposing their entire schedule.</p>
+                </div>
+                <div class="project-bullet-grid">
+                    <div class="project-card">
+                        <h3>Schedule import</h3>
+                        <p>Students paste CRNs or upload their SIS export; SamePath normalizes the data and maps it to meeting times.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Overlap scoring</h3>
+                        <p>A TypeScript service ranks shared breaks by length, proximity, and user preferences so the best windows surface first.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Privacy on demand</h3>
+                        <p>Visibility only flips on after a mutual connection. Anyone can pause sharing, remove a friend, or hide specific days with one tap.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
+                    <h2>How it works</h2>
+                    <p>Lightweight architecture keeps the app fast for beta testers and easy to extend.</p>
+                </div>
+                <div class="project-detail-grid">
+                    <div class="project-detail">
+                        <h3>Client</h3>
+                        <p>React Native app handles schedule import, friend approvals, and notifications. Local caching keeps critical data offline.</p>
+                    </div>
+                    <div class="project-detail">
+                        <h3>API</h3>
+                        <p>Flask endpoints clean and store schedule data, calculate overlaps on demand, and respect per-user visibility rules.</p>
+                    </div>
+                    <div class="project-detail">
+                        <h3>Storage</h3>
+                        <p>Azure Table Storage keeps student schedules and friendships lightweight while avoiding the overhead of a relational database.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
+                    <h2>Next steps</h2>
+                    <p>Beta feedback is guiding polish before a wider campus rollout.</p>
+                </div>
+                <ul class="project-checklist">
+                    <li>Layering in calendar analytics for mentors and student success teams.</li>
+                    <li>Hardening ARIA patterns and keyboard support for accessibility audits.</li>
+                    <li>Preparing the matching engine to support multiple campuses.</li>
+                </ul>
+                <nav class="project-nav">
                     <a href="realestatehirsch.html">← RealEstateHirsch</a>
                     <a href="sportspredictor.html">SportsPredictor →</a>
                 </nav>
