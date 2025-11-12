@@ -35,13 +35,12 @@
                         <p class="project-summary">
                             SportsPredictor normalizes league stats, injuries, weather, and odds so every forecast includes confidence percentages and the metrics that drove the pick.
                         </p>
-                        <div class="project-hero-actions">
-                            <a href="../downloads/sportsPredictor.zip" class="btn btn-primary" download>
-                                <span>Download project</span>
-                                <span class="btn-glow"></span>
-                            </a>
-                            <a href="https://github.com/ahirsch17/sportsPredictor" class="btn btn-ghost" target="_blank" rel="noopener">Browse source</a>
-                        </div>
+                    <div class="project-hero-actions">
+                        <a href="https://github.com/ahirsch17/sportsPredictor" class="btn btn-primary" target="_blank" rel="noopener">
+                            <span>Browse source</span>
+                            <span class="btn-glow"></span>
+                        </a>
+                    </div>
                     </div>
                     <aside class="project-facts">
                         <h2>Quick facts</h2>
@@ -82,14 +81,15 @@
                 </div>
                 <ol class="project-steps">
                     <li>
-                        Download and unzip <code>sportsPredictor.zip</code>.
+                        <strong>Download and unzip</strong> the project.<br>
+                        <a href="../downloads/sportsPredictor.zip" class="btn btn-ghost btn-compact" download>Get sportsPredictor.zip</a>
                     </li>
                     <li>
                         Open a terminal in the unzipped folder and run:<br>
-                        <code>cd sportsPredictor && python -m uvicorn api.server:app --reload --port 8001</code>
+                        <code class="code-light">cd sportsPredictor && python -m uvicorn api.server:app --reload --port 8001</code>
                     </li>
                     <li>
-                        In your file explorer, open <code>sportsPredictor/web/index.html</code> to view the UI.
+                        In your file explorer, open <code class="code-light">sportsPredictor/web/index.html</code> to view the UI.
                     </li>
                 </ol>
             </div>
