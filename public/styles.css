@@ -1071,8 +1071,10 @@ body.page-transitioning {
 
 .playground-frame {
     width: 100%;
-    min-height: 640px;
+    min-height: 720px;
     border: 0;
+    border-radius: 18px;
+    overflow: hidden;
     background: #0f172a;
 }
 
