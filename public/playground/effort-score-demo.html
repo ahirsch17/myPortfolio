@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effort Score Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            background: radial-gradient(circle at top, rgba(37, 99, 235, 0.35), rgba(15, 23, 42, 0.92));
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            backdrop-filter: blur(18px);
+        }
+        .kpi-pulse {
+            animation: kpiPulse 1.4s ease-in-out infinite;
+        }
+        @keyframes kpiPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.45); }
+            50% { box-shadow: 0 0 0 18px rgba(74, 222, 128, 0); }
+        }
+    </style>
+</head>
+<body class="text-slate-100">
+    <div id="root" class="min-h-screen py-8 px-4 sm:px-8 lg:px-12"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" data-presets="react">
+        const { useState, useEffect, useMemo, useRef } = React;
+        const {
+            ResponsiveContainer,
+            LineChart,
+            Line,
+            AreaChart,
+            Area,
+            XAxis,
+            YAxis,
+            Tooltip,
+            CartesianGrid,
+            ReferenceLine,
+            BarChart,
+            Bar,
+            RadarChart,
+            Radar,
+            PolarGrid,
+            PolarAngleAxis,
+            PolarRadiusAxis,
+        } = Recharts;
+
+        const BASE_INTERVAL_MS = 500;
+        const MAX_BUFFER = 1200;
+        const ZONE_WEIGHTS = [0.2, 0.4, 0.7, 1, 1.3];
+        const FOCUS_OPTIONS = [
+            { label: 'Mixed', value: 'mixed' },
+            { label: 'Cardio bias', value: 'cardio' },
+            { label: 'Strength bias', value: 'strength' },
+        ];
+        const SPEED_OPTIONS = [
+            { label: '0.5x', value: 0.5 },
+            { label: '1x', value: 1 },
+            { label: '2x', value: 2 },
+        ];
+        const ZONE_BANDS = [
+            { max: 100, color: 'rgba(56, 189, 248, 0.10)' },
+            { max: 119, color: 'rgba(34, 197, 94, 0.12)' },
+            { max: 139, color: 'rgba(250, 204, 21, 0.14)' },
+            { max: 159, color: 'rgba(249, 115, 22, 0.16)' },
+            { max: 190, color: 'rgba(239, 68, 68, 0.18)' },
+        ];
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function computeZone(hr) {
+            let zone = 1;
+            if (hr >= 160) zone = 5;
+            else if (hr >= 140) zone = 4;
+            else if (hr >= 120) zone = 3;
+            else if (hr >= 100) zone = 2;
+            return { zone, weight: ZONE_WEIGHTS[zone - 1] };
+        }
+
+        function computeEffort(hr, acc, focus, smoothQueue, prevEma, deltaMinutes) {
+            const { zone, weight } = computeZone(hr);
+            let zoneFactor = weight;
+            let movementFactor = clamp(0.2 + 0.25 * acc, 0.0, 1.2);
+
+            if (focus === 'cardio') {
+                zoneFactor *= 1.15;
+                movementFactor *= 0.9;
+            } else if (focus === 'strength') {
+                movementFactor *= 1.15;
+                zoneFactor *= 0.9;
+            }
+
+            const instantaneous = zoneFactor * movementFactor;
+            const updatedSmooth = smoothQueue.slice(-9);
+            updatedSmooth.push(instantaneous);
+
+            const smoothAverage =
+                updatedSmooth.reduce((sum, value) => sum + value, 0) /
+                (updatedSmooth.length || 1);
+            const effortInstant = clamp(100 * smoothAverage, 0, 130);
+
+            const alpha = 0.08;
+            const effortEma = clamp(alpha * effortInstant + (1 - alpha) * prevEma, 0, 100);
+            const kcalPerMin = 0.06 * hr + 0.5 * movementFactor;
+            const kcalDelta = kcalPerMin * deltaMinutes;
+
+            return {
+                effortInstant,
+                effortEma,
+                kcalDelta,
+                zone,
+                zoneWeight: weight,
+                smoothValues: updatedSmooth,
+            };
+        }
+
+        function formatDuration(ms) {
+            const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            return [hours, minutes, seconds].map((n) => String(n).padStart(2, '0')).join(':');
+        }
+
+        function createCsv(samples) {
+            const header = 'timestamp_iso,hr,acc,zone,effort_instant,effort_ema';
+            const rows = samples.map((sample) =>
+                [
+                    new Date(sample.ts).toISOString(),
+                    sample.hr.toFixed(1),
+                    sample.acc.toFixed(2),
+                    sample.zone,
+                    sample.effortInstant.toFixed(2),
+                    sample.effortEma.toFixed(2),
+                ].join(','),
+            );
+            return [header, ...rows].join('\\n');
+        }
+
+        function createSeed(seed) {
+            return {
+                hrPhase: (Math.sin(seed * 9.73) + 1) * Math.PI,
+                accPhase: (Math.cos(seed * 14.17) + 1) * Math.PI,
+                sprintTimer: 0,
+                sprintPhase: 0,
+            };
+        }
+
+        function useEffortStream({ focus, speed, playing, seed }) {
+            const bufferRef = useRef([]);
+            const smoothRef = useRef([]);
+            const emaRef = useRef(0);
+            const kcalRef = useRef(0);
+            const startRef = useRef(null);
+            const lastRef = useRef(null);
+            const hrOverrideRef = useRef(null);
+            const accOverrideRef = useRef(null);
+            const generatorRef = useRef(createSeed(seed));
+            const [metrics, setMetrics] = useState({ effortScore: 0, calories: 0, durationMs: 0 });
+            const [tick, setTick] = useState(0);
+            const [helperVisible, setHelperVisible] = useState(true);
+
+            useEffect(() => {
+                generatorRef.current = createSeed(seed);
+            }, [seed]);
+
+            useEffect(() => {
+                if (!playing) return;
+                const interval = clamp(BASE_INTERVAL_MS / speed, 80, 1200);
+                const id = setInterval(() => {
+                    const timestamp = Date.now();
+                    if (!startRef.current) {
+                        startRef.current = timestamp;
+                        lastRef.current = timestamp;
+                        bufferRef.current = [];
+                        smoothRef.current = [];
+                        emaRef.current = 0;
+                        kcalRef.current = 0;
+                    }
+
+                    const deltaMs = lastRef.current ? timestamp - lastRef.current : interval;
+                    lastRef.current = timestamp;
+                    const deltaMinutes = deltaMs / 60000;
+
+                    const generator = generatorRef.current;
+                    generator.hrPhase += 0.02 * speed;
+                    generator.accPhase += 0.035 * speed;
+
+                    let hr =
+                        120 +
+                        32 * Math.sin(generator.hrPhase) +
+                        10 * Math.sin(generator.hrPhase * 0.27) +
+                        4 * (Math.random() - 0.5);
+
+                    if (generator.sprintTimer <= 0 && Math.random() < 0.015) {
+                        generator.sprintTimer = 3 + Math.random() * 2;
+                        generator.sprintPhase = 0;
+                    }
+                    if (generator.sprintTimer > 0) {
+                        hr += 18 * Math.sin(generator.sprintPhase);
+                        generator.sprintPhase += 1.1;
+                        generator.sprintTimer -= deltaMinutes * 60;
+                    }
+
+                    let acc =
+                        0.5 +
+                        0.9 * Math.abs(Math.sin(generator.accPhase)) +
+                        0.4 * Math.abs(Math.sin(generator.accPhase * 1.7)) +
+                        0.25 * Math.random();
+
+                    if (generator.sprintTimer > 0) acc += 0.8;
+
+                    if (hrOverrideRef.current && timestamp < hrOverrideRef.current.end) {
+                        const blend = clamp(1 - (hrOverrideRef.current.end - timestamp) / 3000, 0, 1);
+                        hr = hr * (1 - blend) + hrOverrideRef.current.value * blend;
+                    } else {
+                        hrOverrideRef.current = null;
+                    }
+
+                    if (accOverrideRef.current && timestamp < accOverrideRef.current.end) {
+                        const blend = clamp(1 - (accOverrideRef.current.end - timestamp) / 3000, 0, 1);
+                        acc = acc * (1 - blend) + accOverrideRef.current.value * blend;
+                    } else {
+                        accOverrideRef.current = null;
+                    }
+
+                    const effort = computeEffort(
+                        hr,
+                        acc,
+                        focus,
+                        smoothRef.current,
+                        emaRef.current,
+                        deltaMinutes,
+                    );
+                    smoothRef.current = effort.smoothValues;
+                    emaRef.current = effort.effortEma;
+                    kcalRef.current += effort.kcalDelta;
+
+                    bufferRef.current.push({
+                        ts: timestamp,
+                        hr,
+                        acc,
+                        zone: effort.zone,
+                        zoneWeight: effort.zoneWeight,
+                        effortInstant: effort.effortInstant,
+                        effortEma: effort.effortEma,
+                        kcalTotal: kcalRef.current,
+                    });
+                    if (bufferRef.current.length > MAX_BUFFER) bufferRef.current.shift();
+
+                    setMetrics({
+                        effortScore: effort.effortEma,
+                        calories: kcalRef.current,
+                        durationMs: startRef.current ? timestamp - startRef.current : 0,
+                    });
+                    setTick((value) => value + 1);
+                    setHelperVisible(false);
+                }, interval);
+
+                return () => clearInterval(id);
+            }, [playing, speed, focus]);
+
+            const samples = useMemo(() => bufferRef.current.slice(), [tick]);
+
+            const triggerHr = (value) => {
+                hrOverrideRef.current = { value, end: Date.now() + 3000 };
+                setHelperVisible(false);
+            };
+
+            const triggerAcc = (value) => {
+                accOverrideRef.current = { value, end: Date.now() + 3000 };
+                setHelperVisible(false);
+            };
+
+            const reset = () => {
+                bufferRef.current = [];
+                smoothRef.current = [];
+                emaRef.current = 0;
+                kcalRef.current = 0;
+                startRef.current = null;
+                lastRef.current = null;
+                hrOverrideRef.current = null;
+                accOverrideRef.current = null;
+                setMetrics({ effortScore: 0, calories: 0, durationMs: 0 });
+                setHelperVisible(true);
+                setTick((value) => value + 1);
+            };
+
+            const randomize = () => {
+                reset();
+                generatorRef.current = createSeed(Math.random() * 1000);
+            };
+
+            return {
+                samples,
+                metrics,
+                helperVisible,
+                hasData: samples.length > 0,
+                triggerHr,
+                triggerAcc,
+                reset,
+                randomize,
+            };
+        }
+
+        function InfoModal({ open, onClose }) {
+            if (!open) return null;
+            return (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 px-4"
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div className="glass max-w-2xl w-full rounded-3xl shadow-xl p-6 md:p-8">
+                        <div className="flex items-start justify-between">
+                            <div>
+                                <h3 className="text-xl font-semibold text-white">Effort score formula</h3>
+                                <p className="text-sm text-slate-300 mt-1">
+                                    This playground fuses simulated heart rate and movement to produce the effort score.
+                                </p>
+                            </div>
+                            <button
+                                onClick={onClose}
+                                aria-label="Close modal"
+                                className="text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400 rounded-full p-1"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-200">
+                            <p>
+                                Instantaneous effort <strong>eₜ</strong> = 100 × smooth_avg₁₀ ( zoneWeight × movementFactor ).
+                            </p>
+                            <ul className="list-disc list-inside space-y-2">
+                                <li>Zones weight heart rate from recovery to max effort.</li>
+                                <li>Movement factor scales with g-force and is clamped between 0 and 1.2.</li>
+                                <li>Focus modes bias the contribution toward cardio or strength intensity.</li>
+                                <li>Session score is an exponential moving average (α = 0.08) capped at 100.</li>
+                                <li>Calories are a playful estimate mixing heart rate and movement.</li>
+                            </ul>
+                        </div>
+                        <div className="mt-6 text-right">
+                            <button
+                                onClick={onClose}
+                                className="inline-flex items-center px-4 py-2 rounded-full bg-sky-500 text-slate-900 font-semibold hover:bg-sky-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-400"
+                            >
+                                Got it
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function EffortScoreDemo() {
+            const [focus, setFocus] = useState('mixed');
+            const [speed, setSpeed] = useState(1);
+            const [playing, setPlaying] = useState(false);
+            const [seed, setSeed] = useState(() => Math.random() * 1000);
+            const [showInfo, setShowInfo] = useState(false);
+            const [activeTab, setActiveTab] = useState('live');
+            const [cursorTs, setCursorTs] = useState(null);
+            const [toast, setToast] = useState(null);
+
+            const stream = useEffortStream({ focus, speed, playing, seed });
+
+            const liveSamples = useMemo(() => stream.samples.slice(-160), [stream.samples]);
+            const lastFive = useMemo(() => stream.samples.slice(-600), [stream.samples]);
+            const sparklineData = useMemo(
+                () => stream.samples.slice(-80).map((sample) => ({ ts: sample.ts, effort: sample.effortInstant })),
+                [stream.samples],
+            );
+
+            const summaryZones = useMemo(() => {
+                const totals = [0, 0, 0, 0, 0];
+                lastFive.forEach((sample) => { totals[sample.zone - 1] += 1; });
+                const total = totals.reduce((sum, count) => sum + count, 0);
+                return totals.map((count, index) => ({
+                    zone: `Zone ${index + 1}`,
+                    minutes: total ? (count / 2 / 60).toFixed(2) : '0.00',
+                    value: total ? (count / total) * 100 : 0,
+                }));
+            }, [lastFive]);
+
+            const intensityRadar = useMemo(() => {
+                if (!lastFive.length) {
+                    return [
+                        { metric: 'Cardio load', value: 0 },
+                        { metric: 'Strength load', value: 0 },
+                        { metric: 'Consistency', value: 0 },
+                        { metric: 'Recovery', value: 0 },
+                    ];
+                }
+                const avgHr = lastFive.reduce((sum, sample) => sum + sample.hr, 0) / lastFive.length;
+                const avgAcc = lastFive.reduce((sum, sample) => sum + sample.acc, 0) / lastFive.length;
+                const highEffort = lastFive.filter((sample) => sample.effortInstant > 70).length / lastFive.length;
+                const lowEffort = lastFive.filter((sample) => sample.zone <= 2).length / lastFive.length;
+                return [
+                    { metric: 'Cardio load', value: clamp((avgHr / 170) * 100, 0, 100) },
+                    { metric: 'Strength load', value: clamp((avgAcc / 3.5) * 100, 0, 100) },
+                    { metric: 'Consistency', value: clamp((1 - Math.abs(0.5 - highEffort)) * 100, 0, 100) },
+                    { metric: 'Recovery', value: clamp((1 - highEffort + lowEffort) * 50, 0, 100) },
+                ];
+            }, [lastFive]);
+
+            const durationFormatted = formatDuration(stream.metrics.durationMs);
+            const effortHighlight = stream.metrics.effortScore >= 80;
+
+            const handleCopyTimeline = async () => {
+                const csv = createCsv(stream.samples.slice(-120));
+                try {
+                    await navigator.clipboard.writeText(csv);
+                    setToast('Timeline copied to clipboard');
+                } catch (error) {
+                    setToast('Clipboard unavailable');
+                }
+                setTimeout(() => setToast(null), 1800);
+            };
+
+            const handleReset = () => {
+                setPlaying(false);
+                stream.reset();
+            };
+
+            const handleRandomize = () => {
+                setSeed(Math.random() * 1000);
+                stream.randomize();
+            };
+
+            return (
+                <>
+                    <div className="glass rounded-3xl p-6 md:p-8 shadow-2xl space-y-8">
+                        <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h1 className="text-3xl font-bold text-white">Effort Score</h1>
+                                <p className="text-slate-300 text-sm mt-1">Simulated heart rate and movement</p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => setShowInfo(true)}
+                                    className="rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400"
+                                >
+                                    ℹ️ Info
+                                </button>
+                                <button
+                                    onClick={handleCopyTimeline}
+                                    className="rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400"
+                                >
+                                    Copy Effort Timeline
+                                </button>
+                            </div>
+                        </header>
+
+                        <div className="grid gap-6 lg:grid-cols-2">
+                            <div className="space-y-6">
+                                <div className="grid gap-4 md:grid-cols-3">
+                                    <div
+                                        className={`rounded-2xl bg-slate-900/65 border border-slate-700/60 p-4 transition ${
+                                            effortHighlight ? 'kpi-pulse border-l-4 border-l-emerald-400' : ''
+                                        }`}
+                                    >
+                                        <p className="text-xs uppercase tracking-wide text-slate-400">Effort Score</p>
+                                        <div className="flex items-end gap-2 mt-1">
+                                            <span className="text-3xl font-semibold text-white">
+                                                {stream.metrics.effortScore.toFixed(1)}
+                                            </span>
+                                            <div className="flex gap-1">
+                                                <span className="text-xs bg-slate-800 px-2 py-0.5 rounded-full">Cardio load</span>
+                                                <span className="text-xs bg-slate-800 px-2 py-0.5 rounded-full">Strength load</span>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3 h-12">
+                                            <ResponsiveContainer>
+                                                <AreaChart data={sparklineData}>
+                                                    <defs>
+                                                        <linearGradient id="effortSpark" x1="0" y1="0" x2="0" y2="1">
+                                                            <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.7} />
+                                                            <stop offset="95%" stopColor="#38bdf8" stopOpacity={0.0} />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <Area type="monotone" dataKey="effort" stroke="#38bdf8" fill="url(#effortSpark)" strokeWidth={2} />
+                                                </AreaChart>
+                                            </ResponsiveContainer>
+                                        </div>
+                                    </div>
+                                    <div className="rounded-2xl bg-slate-900/65 border border-slate-700/60 p-4">
+                                        <p className="text-xs uppercase tracking-wide text-slate-400">Calories</p>
+                                        <p className="text-3xl font-semibold text-white mt-2">{stream.metrics.calories.toFixed(1)}</p>
+                                        <p className="text-xs text-slate-400 mt-1">Estimated total</p>
+                                    </div>
+                                    <div className="rounded-2xl bg-slate-900/65 border border-slate-700/60 p-4">
+                                        <p className="text-xs uppercase tracking-wide text-slate-400">Duration</p>
+                                        <p className="text-3xl font-semibold text-white mt-2">{durationFormatted}</p>
+                                        <p className="text-xs text-slate-400 mt-1">Session timer</p>
+                                    </div>
+                                </div>
+
+                                <div className="glass rounded-3xl border border-slate-700/60 p-5 space-y-5">
+                                    <div className="flex items-center justify-between">
+                                        <h3 className="text-lg font-semibold text-white">Try it</h3>
+                                        <div className="flex items-center gap-2 text-sm text-slate-300">
+                                            <span>Status:</span>
+                                            <span
+                                                className={`inline-flex items-center gap-1 px-3 py-1 rounded-full ${
+                                                    playing ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-700 text-slate-200'
+                                                }`}
+                                            >
+                                                {playing ? 'Streaming' : 'Paused'}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <label className="block">
+                                        <span className="flex justify-between text-sm text-slate-300 mb-1">
+                                            <span>Heart rate override</span>
+                                            <span className="text-slate-400">60–190 bpm</span>
+                                        </span>
+                                        <input
+                                            type="range"
+                                            min={60}
+                                            max={190}
+                                            onChange={(event) => stream.triggerHr(Number(event.target.value))}
+                                            className="w-full accent-sky-400"
+                                        />
+                                    </label>
+
+                                    <label className="block">
+                                        <span className="flex justify-between text-sm text-slate-300 mb-1">
+                                            <span>Movement (g-force)</span>
+                                            <span className="text-slate-400">0–4 g</span>
+                                        </span>
+                                        <input
+                                            type="range"
+                                            min={0}
+                                            max={4}
+                                            step={0.05}
+                                            onChange={(event) => stream.triggerAcc(Number(event.target.value))}
+                                            className="w-full accent-sky-400"
+                                        />
+                                    </label>
+
+                                    <label className="block text-sm text-slate-300">
+                                        Focus mode
+                                        <select
+                                            value={focus}
+                                            onChange={(event) => setFocus(event.target.value)}
+                                            className="mt-1 w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2"
+                                        >
+                                            {FOCUS_OPTIONS.map((option) => (
+                                                <option key={option.value} value={option.value}>
+                                                    {option.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </label>
+
+                                    <div className="grid gap-3 md:grid-cols-2">
+                                        <div className="flex items-center gap-3">
+                                            <button
+                                                onClick={() => setPlaying((value) => !value)}
+                                                className={`flex-1 rounded-full px-4 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-400 ${
+                                                    playing ? 'bg-slate-800 hover:bg-slate-700' : 'bg-emerald-400 text-slate-900 hover:bg-emerald-300'
+                                                }`}
+                                            >
+                                                {playing ? 'Pause' : 'Play'}
+                                            </button>
+                                            <button
+                                                onClick={handleReset}
+                                                className="rounded-full px-4 py-2 bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400"
+                                            >
+                                                Reset
+                                            </button>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <select
+                                                value={speed}
+                                                onChange={(event) => setSpeed(Number(event.target.value))}
+                                                className="flex-1 rounded-full bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm"
+                                            >
+                                                {SPEED_OPTIONS.map((option) => (
+                                                    <option key={option.value} value={option.value}>
+                                                        {option.label} speed
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <button
+                                                onClick={handleRandomize}
+                                                className="rounded-full px-4 py-2 bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-400"
+                                            >
+                                                Randomize
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {stream.helperVisible && (
+                                        <div className="rounded-2xl border border-slate-700 bg-slate-900/60 px-4 py-3 text-sm text-slate-300">
+                                            Press Play or drag a slider to start the stream.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="glass rounded-3xl border border-slate-700/60 p-5">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white">Visuals</h3>
+                                            <p className="text-sm text-slate-400">Explore the simulated signal</p>
+                                        </div>
+                                        <div className="flex items-center gap-2 rounded-full bg-slate-900/60 p-1">
+                                            {['live', 'last5', 'summary'].map((tab) => (
+                                                <button
+                                                    key={tab}
+                                                    onClick={() => setActiveTab(tab)}
+                                                    className={`px-3 py-1 rounded-full text-xs font-semibold transition ${
+                                                        activeTab === tab ? 'bg-sky-500 text-slate-900' : 'text-slate-300 hover:text-white'
+                                                    }`}
+                                                >
+                                                    {tab === 'live' ? 'Live' : tab === 'last5' ? 'Last 5 min' : 'Summary'}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {activeTab !== 'summary' && (
+                                        <div className="space-y-5">
+                                            <div className="h-40 md:h-48 rounded-2xl bg-slate-900/60 border border-slate-800 px-3 py-2">
+                                                {stream.hasData ? (
+                                                    <ResponsiveContainer>
+                                                        <LineChart
+                                                            data={activeTab === 'live' ? liveSamples : lastFive}
+                                                            onMouseMove={(state) => {
+                                                                if (state && state.activeLabel) setCursorTs(state.activeLabel);
+                                                            }}
+                                                            onMouseLeave={() => setCursorTs(null)}
+                                                        >
+                                                            <CartesianGrid stroke="rgba(148, 163, 184, 0.18)" vertical={false} />
+                                                            <XAxis
+                                                                dataKey="ts"
+                                                                stroke="#94a3b8"
+                                                                tickFormatter={(value) =>
+                                                                    new Date(value).toLocaleTimeString([], { minute: '2-digit', second: '2-digit' })
+                                                                }
+                                                            />
+                                                            <YAxis domain={[60, 190]} stroke="#94a3b8" />
+                                                            <Tooltip
+                                                                contentStyle={{
+                                                                    background: '#0f172a',
+                                                                    borderRadius: '0.75rem',
+                                                                    border: '1px solid rgba(148,163,184,0.4)',
+                                                                }}
+                                                                labelFormatter={(value) => new Date(value).toLocaleTimeString()}
+                                                                formatter={(value) => [`${Number(value).toFixed(1)} bpm`, 'Heart rate']}
+                                                            />
+                                                            {ZONE_BANDS.map((band, index) => (
+                                                                <ReferenceLine key={index} y={band.max} stroke="transparent" fill={band.color} ifOverflow="extendDomain" />
+                                                            ))}
+                                                            <Line type="monotone" dataKey="hr" stroke="#38bdf8" strokeWidth={2} dot={false} />
+                                                            {cursorTs && <ReferenceLine x={cursorTs} stroke="#facc15" strokeDasharray="3 3" />}
+                                                        </LineChart>
+                                                    </ResponsiveContainer>
+                                                ) : (
+                                                    <div className="h-full rounded-xl border border-dashed border-slate-700 flex items-center justify-center text-slate-400 text-sm">
+                                                        Feed starts once you press Play.
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="h-36 md:h-40 rounded-2xl bg-slate-900/60 border border-slate-800 px-3 py-2">
+                                                {stream.hasData ? (
+                                                    <ResponsiveContainer>
+                                                        <AreaChart
+                                                            data={activeTab === 'live' ? liveSamples : lastFive}
+                                                            onMouseMove={(state) => {
+                                                                if (state && state.activeLabel) setCursorTs(state.activeLabel);
+                                                            }}
+                                                            onMouseLeave={() => setCursorTs(null)}
+                                                        >
+                                                            <CartesianGrid stroke="rgba(148, 163, 184, 0.16)" vertical={false} />
+                                                            <XAxis
+                                                                dataKey="ts"
+                                                                stroke="#94a3b8"
+                                                                tickFormatter={(value) =>
+                                                                    new Date(value).toLocaleTimeString([], { minute: '2-digit', second: '2-digit' })
+                                                                }
+                                                            />
+                                                            <YAxis domain={[0, 4.5]} stroke="#94a3b8" />
+                                                            <Tooltip
+                                                                contentStyle={{
+                                                                    background: '#0f172a',
+                                                                    borderRadius: '0.75rem',
+                                                                    border: '1px solid rgba(148,163,184,0.4)',
+                                                                }}
+                                                                labelFormatter={(value) => new Date(value).toLocaleTimeString()}
+                                                                formatter={(value) => [`${Number(value).toFixed(2)} g`, 'Movement']}
+                                                            />
+                                                            <defs>
+                                                                <linearGradient id="accGradient" x1="0" y1="0" x2="0" y2="1">
+                                                                    <stop offset="5%" stopColor="#f97316" stopOpacity={0.6} />
+                                                                    <stop offset="95%" stopColor="#f97316" stopOpacity={0.05} />
+                                                                </linearGradient>
+                                                            </defs>
+                                                            <Area type="monotone" dataKey="acc" stroke="#f97316" fill="url(#accGradient)" strokeWidth={2} />
+                                                            {cursorTs && <ReferenceLine x={cursorTs} stroke="#facc15" strokeDasharray="3 3" />}
+                                                        </AreaChart>
+                                                    </ResponsiveContainer>
+                                                ) : (
+                                                    <div className="h-full rounded-xl border border-dashed border-slate-700 flex items-center justify-center text-slate-400 text-sm">
+                                                        Movement preview will display here.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {activeTab === 'summary' && (
+                                        <div className="grid gap-6 lg:grid-cols-2">
+                                            <div className="h-56 rounded-2xl bg-slate-900/60 border border-slate-800 px-3 py-2">
+                                                <ResponsiveContainer>
+                                                    <BarChart data={summaryZones}>
+                                                        <CartesianGrid stroke="rgba(148, 163, 184, 0.16)" vertical={false} />
+                                                        <XAxis dataKey="zone" stroke="#94a3b8" />
+                                                        <YAxis stroke="#94a3b8" unit="%" />
+                                                        <Tooltip
+                                                            contentStyle={{
+                                                                background: '#0f172a',
+                                                                borderRadius: '0.75rem',
+                                                                border: '1px solid rgba(148,163,184,0.4)',
+                                                            }}
+                                                            formatter={(value, _, payload) => [`${payload.payload.minutes} min`, 'Time']}
+                                                        />
+                                                        <Bar dataKey="value" fill="#38bdf8" radius={[10, 10, 0, 0]} />
+                                                    </BarChart>
+                                                </ResponsiveContainer>
+                                            </div>
+                                            <div className="h-56 rounded-2xl bg-slate-900/60 border border-slate-800 px-3 py-2">
+                                                <ResponsiveContainer>
+                                                    <RadarChart data={intensityRadar}>
+                                                        <PolarGrid stroke="rgba(148, 163, 184, 0.2)" />
+                                                        <PolarAngleAxis dataKey="metric" stroke="#94a3b8" />
+                                                        <PolarRadiusAxis angle={45} domain={[0, 100]} stroke="#94a3b8" />
+                                                        <Radar dataKey="value" stroke="#f472b6" fill="#f472b6" fillOpacity={0.35} />
+                                                    </RadarChart>
+                                                </ResponsiveContainer>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                </div>
+                                <div className="glass rounded-3xl border border-slate-700/60 p-5">
+                                    <h3 className="text-lg font-semibold text-white mb-3">What affects the score</h3>
+                                    <ul className="space-y-2 text-sm text-slate-300">
+                                        <li className="flex items-center gap-2">
+                                            <span
+                                                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${
+                                                    focus === 'cardio' ? 'bg-sky-500/20 text-sky-300' : 'bg-slate-800 text-slate-200'
+                                                }`}
+                                            >
+                                                HR bias
+                                            </span>
+                                            Higher zones (4–5) drive the score faster during cardio sessions.
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span
+                                                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${
+                                                    focus === 'strength' ? 'bg-orange-500/20 text-orange-300' : 'bg-slate-800 text-slate-200'
+                                                }`}
+                                            >
+                                                Movement bias
+                                            </span>
+                                            Acceleration spikes matter more when you emphasize strength work.
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span
+                                                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${
+                                                    stream.metrics.effortScore > 60 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-800 text-slate-200'
+                                                }`}
+                                            >
+                                                Consistency
+                                            </span>
+                                            Staying above 60 keeps the EMA climbing; dropping below 40 cools it quickly.
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span
+                                                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${
+                                                    sparklineData.some((sample) => sample.effort > 85)
+                                                        ? 'bg-rose-500/20 text-rose-300'
+                                                        : 'bg-slate-800 text-slate-200'
+                                                }`}
+                                            >
+                                                Sprint spikes
+                                            </span>
+                                            Short bursts add excitement but reduce recovery credit later in the session.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <InfoModal open={showInfo} onClose={() => setShowInfo(false)} />
+                    {toast && (
+                        <div className="fixed bottom-6 right-6 bg-slate-900/90 text-slate-100 px-4 py-2 rounded-full border border-slate-700 shadow-lg text-sm">
+                            {toast}
+                        </div>
+                    )}
+                </>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<EffortScoreDemo />);
+    </script>
+</body>
+</html>
+

@@ -22,6 +22,7 @@
             <ul class="nav-menu">
                 <li><a href="/">Home</a></li>
                 <li><a href="#stories">Stories</a></li>
+                <li><a href="#playground">Playground</a></li>
             </ul>
         </div>
     </nav>
@@ -115,7 +116,7 @@
                         </div>
                         <div class="chapter-media">
                             <figure>
-                                <video controls playsinline preload="none">
+                                <video class="project-video project-video-portrait" controls playsinline preload="none">
                                     <source src="Images/SamePath/screen-recording.mp4" type="video/mp4">
                                     <source src="Images/SamePath/screen-recording.mov" type="video/quicktime">
                                     Your browser does not support the video tag.
@@ -139,6 +140,14 @@
                                 <li><strong>Outcome:</strong> Nightly refresh with CLI tools for batch reports and single-game checks.</li>
                             </ul>
                             <p>The system normalizes league stats, injuries, weather, and odds to produce forecasts with confidence percentages and callouts that are easy to share with friends.</p>
+                            <div class="chapter-instructions">
+                                <h4>Try it locally</h4>
+                                <ol>
+                                    <li>Download and unzip the project.</li>
+                                    <li>Open a terminal in the unzipped folder and run:<br><code>cd sportsPredictor && python -m uvicorn api.server:app --reload --port 8001</code></li>
+                                    <li>In your file explorer, open <code>sportsPredictor/web/index.html</code>.</li>
+                                </ol>
+                            </div>
                             <div class="chapter-cta">
                                 <a href="projects/sportspredictor.html" class="btn btn-primary">Read case study</a>
                                 <a href="downloads/sportsPredictor.zip" class="btn btn-ghost" download>Download project</a>
@@ -174,13 +183,11 @@
                             </div>
                         </div>
                         <div class="chapter-media">
-                            <figure class="chapter-placeholder">
+                            <figure>
                                 <a href="https://hirsch-leasing.onrender.com/" target="_blank" rel="noopener">
-                                    <div class="placeholder-card">
-                                        <span>Open the live leasing experience in a new tab.</span>
-                                    </div>
+                                    <img src="Images/HirschLeasing/HirschLeasingPreview.jpg" alt="Preview of the RealEstateHirsch website" class="project-preview-image">
                                 </a>
-                                <figcaption>Explore property listings, the tour scheduler, and automated confirmations.</figcaption>
+                                <figcaption>Tap to explore property listings, the tour scheduler, and automated confirmations.</figcaption>
                             </figure>
                         </div>
                     </div>
@@ -189,52 +196,22 @@
         </section>
 
         <!-- Interaction Playground -->
-        <section class="interaction-lab motion-section" data-section="playground">
+        <section class="playground motion-section" id="playground" data-section="playground">
             <div class="container">
                 <header class="section-header">
                     <h2>Interaction Playground</h2>
-                    <p>Micro-interactions, theming, and responsive components that highlight the craft behind the code.</p>
+                    <p>Dive into an interactive Effort Score demo that simulates Apple Watch signals and lets you tune the algorithm in real time.</p>
                 </header>
-                <div class="lab-grid">
-                    <div class="lab-card" data-lab="hover-glow">
-                        <h3>Gradient Buttons</h3>
-                        <p>Hover to trigger ripple trails and layered glow states.</p>
-                        <button class="lab-button" data-ripple>Hover pulse</button>
-                    </div>
-                    <div class="lab-card" data-lab="theme-toggle">
-                        <h3>Theme Toggle</h3>
-                        <p>Switch between light, dusk, and midnight palettes with animated gradients.</p>
-                        <div class="theme-toggle">
-                            <button class="theme-chip active" data-theme="light">Light</button>
-                            <button class="theme-chip" data-theme="dusk">Dusk</button>
-                            <button class="theme-chip" data-theme="midnight">Midnight</button>
-                        </div>
-                    </div>
-                    <div class="lab-card" data-lab="scroll-motion">
-                        <h3>Scroll Reactions</h3>
-                        <p>Play through the easing curves that choreograph section handoffs in my case studies.</p>
-                        <div class="scroll-simulator" data-effect="fade">
-                            <div class="scroll-preview" aria-live="polite">
-                                <div class="scroll-item">
-                                    <span class="scroll-item-label">Case Study</span>
-                                    <strong>Strategy Sprint Notes</strong>
-                                </div>
-                                <div class="scroll-item">
-                                    <span class="scroll-item-label">Design Review</span>
-                                    <strong>Motion Spec v2</strong>
-                                </div>
-                                <div class="scroll-item">
-                                    <span class="scroll-item-label">Code Drop</span>
-                                    <strong>Framer Motion Handoff</strong>
-                                </div>
-                            </div>
-                            <div class="scroll-controls" role="group" aria-label="Scroll effect previews">
-                                <button class="scroll-control active" data-effect="fade">Fade + Stagger</button>
-                                <button class="scroll-control" data-effect="slide">Slide on Scroll</button>
-                                <button class="scroll-control" data-effect="parallax">Depth Parallax</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="playground-frame-wrapper">
+                    <iframe
+                        src="playground/effort-score-demo.html"
+                        title="Effort Score React Demo"
+                        loading="lazy"
+                        class="playground-frame"
+                    ></iframe>
+                </div>
+                <div class="playground-note">
+                    <p>Built with React + Recharts. Open the demo in a <a href="playground/effort-score-demo.html" target="_blank" rel="noopener">new tab</a> for a full-page experience.</p>
                 </div>
             </div>
         </section>
@@ -244,14 +221,13 @@
             <div class="container contact-inner">
                 <div>
                     <h2>Let’s Collaborate</h2>
-                    <p>Open to internships, freelance collaborations, and cross-disciplinary design sprints. Tell me about the experience you want to build — I’ll prototype the journey.</p>
+                    <p>I'm currently pursuing full-time software roles and happy to relocate. Let's connect about how I can help ship your next product.</p>
                 </div>
                 <div class="contact-actions">
                     <a href="mailto:alexisjh@vt.edu" class="btn btn-primary">
                         <span>Email Alexis</span>
                         <span class="btn-glow"></span>
                     </a>
-                    <a href="#stories" class="btn btn-ghost">View project stories</a>
                 </div>
             </div>
         </section>

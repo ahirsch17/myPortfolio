@@ -721,6 +721,38 @@ body.page-transitioning {
     margin-bottom: 1.4rem;
 }
 
+.chapter-instructions {
+    margin: 1.4rem 0;
+    padding: 1.2rem 1.4rem;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow: 0 18px 32px rgba(15, 23, 42, 0.15);
+}
+
+.chapter-instructions h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    margin-bottom: 0.8rem;
+}
+
+.chapter-instructions ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.chapter-instructions code {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    padding: 0.15rem 0.45rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
 .chapter-cta {
     display: flex;
     flex-wrap: wrap;
@@ -892,6 +924,11 @@ body.page-transitioning {
     width: 100%;
 }
 
+.project-preview-image {
+    object-fit: cover;
+    height: 100%;
+}
+
 .project-featured-media figcaption {
     padding: 1rem 1.4rem;
     font-size: 0.95rem;
@@ -968,6 +1005,33 @@ body.page-transitioning {
     color: var(--text-secondary);
 }
 
+.project-steps {
+    list-style: decimal;
+    padding-left: 1.4rem;
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.project-steps li {
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    padding: 0.9rem 1.1rem;
+    border-radius: 18px;
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+}
+
+.project-steps code {
+    display: inline-block;
+    margin-top: 0.35rem;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    padding: 0.2rem 0.55rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
 .project-gallery {
     display: grid;
     gap: clamp(1.2rem, 3vw, 1.6rem);
@@ -993,6 +1057,54 @@ body.page-transitioning {
     font-size: 0.9rem;
     color: var(--text-secondary);
     background: rgba(248, 250, 252, 0.82);
+}
+
+.playground {
+    position: relative;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.92));
+}
+
+.playground-frame-wrapper {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    background: radial-gradient(circle at top, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.85));
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.28);
+}
+
+.playground-frame {
+    width: 100%;
+    min-height: 640px;
+    border: 0;
+    background: #0f172a;
+}
+
+.playground-note {
+    margin-top: clamp(1.5rem, 4vw, 2.25rem);
+    text-align: center;
+    color: rgba(148, 163, 184, 0.85);
+    font-size: 0.95rem;
+}
+
+.playground-note a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.playground-note a:hover {
+    text-decoration: underline;
+}
+
+.project-video-portrait {
+    width: auto !important;
+    max-width: 100%;
+    max-height: 80vh;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 18px;
 }
 
 .project-checklist {
@@ -1065,6 +1177,9 @@ body.page-transitioning {
     }
     .project-nav {
         flex-direction: column;
+    }
+    .playground-frame {
+        min-height: 520px;
     }
 }
 

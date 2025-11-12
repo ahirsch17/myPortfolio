@@ -77,6 +77,27 @@
         <section class="project-section motion-section">
             <div class="container project-section-inner">
                 <div class="project-section-header">
+                    <h2>Run it yourself</h2>
+                    <p>Follow these steps to boot the API and open the dashboard locally.</p>
+                </div>
+                <ol class="project-steps">
+                    <li>
+                        Download and unzip <code>sportsPredictor.zip</code>.
+                    </li>
+                    <li>
+                        Open a terminal in the unzipped folder and run:<br>
+                        <code>cd sportsPredictor && python -m uvicorn api.server:app --reload --port 8001</code>
+                    </li>
+                    <li>
+                        In your file explorer, open <code>sportsPredictor/web/index.html</code> to view the UI.
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
                     <h2>What it delivers</h2>
                     <p>Keep weekly predictions fast, transparent, and easy to share with friends following the games.</p>
                 </div>
