@@ -116,15 +116,61 @@
 
     }
 
+    
+
+    /* Loading spinner */
+
+    .loading-spinner {
+
+      border: 3px solid rgba(148, 163, 184, 0.3);
+
+      border-radius: 50%;
+
+      border-top: 3px solid #38bdf8;
+
+      width: 40px;
+
+      height: 40px;
+
+      animation: spin 1s linear infinite;
+
+    }
+
+    
+
+    @keyframes spin {
+
+      0% { transform: rotate(0deg); }
+
+      100% { transform: rotate(360deg); }
+
+    }
+
   </style>
 
 </head>
 
 <body class="text-slate-300">
 
-  <div id="root"></div>
+  <div id="root">
 
+    <!-- Loading state -->
 
+    <div class="flex flex-col items-center justify-center min-h-screen">
+
+      <div class="glass rounded-3xl p-8 max-w-md text-center">
+
+        <div class="loading-spinner mx-auto mb-4"></div>
+
+        <h2 class="text-xl font-bold text-white mb-2">Loading Effort Score Demo</h2>
+
+        <p class="text-slate-400">Please wait while dependencies are loading...</p>
+
+      </div>
+
+    </div>
+
+  </div>
 
   <!-- Dependencies -->
 
@@ -136,35 +182,71 @@
 
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+  <script>
 
+    // Wait for all dependencies to load before rendering the React app
 
-  <script type="text/babel" data-presets="react">
+    function initApp() {
 
-    // Check if dependencies are loaded
+      if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Recharts === 'undefined') {
 
-    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Recharts === 'undefined') {
+        document.getElementById('root').innerHTML = `
 
-      document.getElementById('root').innerHTML = `
+          <div class="flex items-center justify-center min-h-screen">
 
-        <div class="flex items-center justify-center min-h-screen">
+            <div class="glass rounded-3xl p-8 max-w-md text-center">
 
-          <div class="glass rounded-3xl p-8 max-w-md text-center">
+              <h2 class="text-xl font-bold text-white mb-4">Dependencies Failed to Load</h2>
 
-            <h2 class="text-xl font-bold text-white mb-4">Dependencies Failed to Load</h2>
+              <p class="text-slate-400 mb-4">Please check your internet connection and refresh the page.</p>
 
-            <p class="text-slate-400">Please check your internet connection and refresh the page.</p>
+              <button onclick="window.location.reload()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-2xl transition-colors">
+
+                Retry
+
+              </button>
+
+            </div>
 
           </div>
 
-        </div>
+        `;
 
-      `;
+        return;
 
-      throw new Error('Required dependencies not loaded');
+      }
+
+      // Now that dependencies are loaded, execute the React app
+
+      const script = document.createElement('script');
+
+      script.type = 'text/babel';
+
+      script.dataset.presets = 'react';
+
+      script.textContent = document.getElementById('react-app-code').textContent;
+
+      document.body.appendChild(script);
 
     }
 
+    // Initialize when page loads
 
+    if (document.readyState === 'loading') {
+
+      document.addEventListener('DOMContentLoaded', initApp);
+
+    } else {
+
+      initApp();
+
+    }
+
+  </script>
+
+  <!-- React application code -->
+
+  <script id="react-app-code" type="text/babel">
 
     // Destructure Recharts components
 
@@ -187,8 +269,6 @@
       Cell
 
     } = Recharts;
-
-
 
     // Utility functions
 
@@ -289,8 +369,6 @@
     
 
     const createSeed = () => Math.floor(Math.random() * 10000);
-
-
 
     // Custom hook for effort stream
 
@@ -464,9 +542,9 @@
 
         // Generate or use override values
 
-        let hr = hrOverrideRef.current !== null ? hrOverrideRef.current : generateHr();
+        let hr = hrOverrideRef.current !== null ? hrOverrideRef.current.value : generateHr();
 
-        let acc = accOverrideRef.current !== null ? accOverrideRef.current : generateAcc();
+        let acc = accOverrideRef.current !== null ? accOverrideRef.current.value : generateAcc();
 
         
 
@@ -751,8 +829,6 @@
       };
 
     };
-
-
 
     // Main App Component
 
@@ -1102,29 +1178,33 @@
 
                     <div className="w-20 h-8">
 
-                      <ResponsiveContainer width="100%" height="100%">
+                      {displayData.length > 0 && (
 
-                        <AreaChart data={displayData.slice(-80)}>
+                        <ResponsiveContainer width="100%" height="100%">
 
-                          <Area 
+                          <AreaChart data={displayData.slice(-80)}>
 
-                            type="monotone" 
+                            <Area 
 
-                            dataKey="effortEma" 
+                              type="monotone" 
 
-                            stroke={metrics.effortScore >= 80 ? "#10b981" : "#38bdf8"} 
+                              dataKey="effortEma" 
 
-                            fill={metrics.effortScore >= 80 ? "rgba(16,185,129,0.2)" : "rgba(56,189,248,0.2)"} 
+                              stroke={metrics.effortScore >= 80 ? "#10b981" : "#38bdf8"} 
 
-                            strokeWidth={1.5}
+                              fill={metrics.effortScore >= 80 ? "rgba(16,185,129,0.2)" : "rgba(56,189,248,0.2)"} 
 
-                            isAnimationActive={false}
+                              strokeWidth={1.5}
 
-                          />
+                              isAnimationActive={false}
 
-                        </AreaChart>
+                            />
 
-                      </ResponsiveContainer>
+                          </AreaChart>
+
+                        </ResponsiveContainer>
+
+                      )}
 
                     </div>
 
@@ -1220,7 +1300,7 @@
 
                       onChange={(e) => triggerHr(e.target.value)}
 
-                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider-thumb"
+                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-sky-500"
 
                     />
 
@@ -1262,7 +1342,7 @@
 
                       onChange={(e) => triggerAcc(e.target.value)}
 
-                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider-thumb"
+                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500"
 
                     />
 
@@ -1556,111 +1636,123 @@
 
                         <h3 className="text-slate-300 font-medium mb-2">Heart Rate</h3>
 
-                        <ResponsiveContainer width="100%" height="100%">
+                        {displayData.length > 0 ? (
 
-                          <LineChart data={displayData} syncId="effortSync">
+                          <ResponsiveContainer width="100%" height="100%">
 
-                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+                            <LineChart data={displayData} syncId="effortSync">
 
-                            <XAxis 
+                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
 
-                              dataKey="timestamp" 
+                              <XAxis 
 
-                              tickFormatter={(ts) => {
+                                dataKey="timestamp" 
 
-                                const date = new Date(ts);
+                                tickFormatter={(ts) => {
 
-                                return `${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                                  const date = new Date(ts);
 
-                              }}
+                                  return `${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
-                              stroke="rgba(148,163,184,0.5)"
+                                }}
 
-                              fontSize={12}
+                                stroke="rgba(148,163,184,0.5)"
 
-                            />
+                                fontSize={12}
 
-                            <YAxis 
+                              />
 
-                              domain={[60, 190]} 
+                              <YAxis 
 
-                              stroke="rgba(148,163,184,0.5)"
+                                domain={[60, 190]} 
 
-                              fontSize={12}
+                                stroke="rgba(148,163,184,0.5)"
 
-                            />
+                                fontSize={12}
 
-                            <Tooltip
+                              />
 
-                              content={({ active, payload, label }) => {
+                              <Tooltip
 
-                                if (active && payload && payload.length) {
+                                content={({ active, payload, label }) => {
 
-                                  const data = payload[0].payload;
+                                  if (active && payload && payload.length) {
 
-                                  return (
+                                    const data = payload[0].payload;
 
-                                    <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
+                                    return (
 
-                                      <p className="text-slate-400 text-sm">
+                                      <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
 
-                                        {new Date(label).toLocaleTimeString()}
+                                        <p className="text-slate-400 text-sm">
 
-                                      </p>
+                                          {new Date(label).toLocaleTimeString()}
 
-                                      <p className="text-sky-400 font-medium">
+                                        </p>
 
-                                        HR: {data.hr.toFixed(0)} bpm
+                                        <p className="text-sky-400 font-medium">
 
-                                      </p>
+                                          HR: {data.hr.toFixed(0)} bpm
 
-                                      <p className="text-slate-300">
+                                        </p>
 
-                                        Effort: {data.effortInstant.toFixed(1)}
+                                        <p className="text-slate-300">
 
-                                      </p>
+                                          Effort: {data.effortInstant.toFixed(1)}
 
-                                    </div>
+                                        </p>
 
-                                  );
+                                      </div>
 
-                                }
+                                    );
 
-                                return null;
+                                  }
 
-                              }}
+                                  return null;
 
-                            />
+                                }}
 
-                            <ReferenceArea y1={60} y2={100} fill="rgba(56,189,248,0.10)" />
+                              />
 
-                            <ReferenceArea y1={100} y2={120} fill="rgba(34,197,94,0.12)" />
+                              <ReferenceArea y1={60} y2={100} fill="rgba(56,189,248,0.10)" />
 
-                            <ReferenceArea y1={120} y2={140} fill="rgba(250,204,21,0.14)" />
+                              <ReferenceArea y1={100} y2={120} fill="rgba(34,197,94,0.12)" />
 
-                            <ReferenceArea y1={140} y2={160} fill="rgba(249,115,22,0.16)" />
+                              <ReferenceArea y1={120} y2={140} fill="rgba(250,204,21,0.14)" />
 
-                            <ReferenceArea y1={160} y2={190} fill="rgba(239,68,68,0.18)" />
+                              <ReferenceArea y1={140} y2={160} fill="rgba(249,115,22,0.16)" />
 
-                            <Line 
+                              <ReferenceArea y1={160} y2={190} fill="rgba(239,68,68,0.18)" />
 
-                              type="monotone" 
+                              <Line 
 
-                              dataKey="hr" 
+                                type="monotone" 
 
-                              stroke="#38bdf8" 
+                                dataKey="hr" 
 
-                              strokeWidth={2}
+                                stroke="#38bdf8" 
 
-                              dot={false}
+                                strokeWidth={2}
 
-                              isAnimationActive={false}
+                                dot={false}
 
-                            />
+                                isAnimationActive={false}
 
-                          </LineChart>
+                              />
 
-                        </ResponsiveContainer>
+                            </LineChart>
+
+                          </ResponsiveContainer>
+
+                        ) : (
+
+                          <div className="h-full flex items-center justify-center text-slate-500">
+
+                            No data available. Press Play to start streaming.
+
+                          </div>
+
+                        )}
 
                       </div>
 
@@ -1672,113 +1764,125 @@
 
                         <h3 className="text-slate-300 font-medium mb-2">Movement</h3>
 
-                        <ResponsiveContainer width="100%" height="100%">
+                        {displayData.length > 0 ? (
 
-                          <AreaChart data={displayData} syncId="effortSync">
+                          <ResponsiveContainer width="100%" height="100%">
 
-                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+                            <AreaChart data={displayData} syncId="effortSync">
 
-                            <XAxis 
+                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
 
-                              dataKey="timestamp" 
+                              <XAxis 
 
-                              tickFormatter={(ts) => {
+                                dataKey="timestamp" 
 
-                                const date = new Date(ts);
+                                tickFormatter={(ts) => {
 
-                                return `${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                                  const date = new Date(ts);
 
-                              }}
+                                  return `${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
 
-                              stroke="rgba(148,163,184,0.5)"
+                                }}
 
-                              fontSize={12}
+                                stroke="rgba(148,163,184,0.5)"
 
-                            />
+                                fontSize={12}
 
-                            <YAxis 
+                              />
 
-                              domain={[0, 4.5]} 
+                              <YAxis 
 
-                              stroke="rgba(148,163,184,0.5)"
+                                domain={[0, 4.5]} 
 
-                              fontSize={12}
+                                stroke="rgba(148,163,184,0.5)"
 
-                            />
+                                fontSize={12}
 
-                            <Tooltip
+                              />
 
-                              content={({ active, payload, label }) => {
+                              <Tooltip
 
-                                if (active && payload && payload.length) {
+                                content={({ active, payload, label }) => {
 
-                                  const data = payload[0].payload;
+                                  if (active && payload && payload.length) {
 
-                                  return (
+                                    const data = payload[0].payload;
 
-                                    <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
+                                    return (
 
-                                      <p className="text-slate-400 text-sm">
+                                      <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
 
-                                        {new Date(label).toLocaleTimeString()}
+                                        <p className="text-slate-400 text-sm">
 
-                                      </p>
+                                          {new Date(label).toLocaleTimeString()}
 
-                                      <p className="text-orange-400 font-medium">
+                                        </p>
 
-                                        Movement: {data.acc.toFixed(2)}g
+                                        <p className="text-orange-400 font-medium">
 
-                                      </p>
+                                          Movement: {data.acc.toFixed(2)}g
 
-                                      <p className="text-slate-300">
+                                        </p>
 
-                                        Effort: {data.effortInstant.toFixed(1)}
+                                        <p className="text-slate-300">
 
-                                      </p>
+                                          Effort: {data.effortInstant.toFixed(1)}
 
-                                    </div>
+                                        </p>
 
-                                  );
+                                      </div>
 
-                                }
+                                    );
 
-                                return null;
+                                  }
 
-                              }}
+                                  return null;
 
-                            />
+                                }}
 
-                            <defs>
+                              />
 
-                              <linearGradient id="movementGradient" x1="0" y1="0" x2="0" y2="1">
+                              <defs>
 
-                                <stop offset="5%" stopColor="#f97316" stopOpacity={0.8}/>
+                                <linearGradient id="movementGradient" x1="0" y1="0" x2="0" y2="1">
 
-                                <stop offset="95%" stopColor="#f97316" stopOpacity={0.1}/>
+                                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.8}/>
 
-                              </linearGradient>
+                                  <stop offset="95%" stopColor="#f97316" stopOpacity={0.1}/>
 
-                            </defs>
+                                </linearGradient>
 
-                            <Area 
+                              </defs>
 
-                              type="monotone" 
+                              <Area 
 
-                              dataKey="acc" 
+                                type="monotone" 
 
-                              stroke="#f97316" 
+                                dataKey="acc" 
 
-                              fill="url(#movementGradient)"
+                                stroke="#f97316" 
 
-                              strokeWidth={1.5}
+                                fill="url(#movementGradient)"
 
-                              isAnimationActive={false}
+                                strokeWidth={1.5}
 
-                            />
+                                isAnimationActive={false}
 
-                          </AreaChart>
+                              />
 
-                        </ResponsiveContainer>
+                            </AreaChart>
+
+                          </ResponsiveContainer>
+
+                        ) : (
+
+                          <div className="h-full flex items-center justify-center text-slate-500">
+
+                            No data available. Press Play to start streaming.
+
+                          </div>
+
+                        )}
 
                       </div>
 
@@ -1796,77 +1900,89 @@
 
                         <h3 className="text-slate-300 font-medium mb-4 text-center">Zone Distribution</h3>
 
-                        <ResponsiveContainer width="100%" height="100%">
+                        {data.length > 0 ? (
 
-                          <BarChart data={[
+                          <ResponsiveContainer width="100%" height="100%">
 
-                            { name: 'Zone 1', value: zoneDistribution[0] },
+                            <BarChart data={[
 
-                            { name: 'Zone 2', value: zoneDistribution[1] },
+                              { name: 'Zone 1', value: zoneDistribution[0] },
 
-                            { name: 'Zone 3', value: zoneDistribution[2] },
+                              { name: 'Zone 2', value: zoneDistribution[1] },
 
-                            { name: 'Zone 4', value: zoneDistribution[3] },
+                              { name: 'Zone 3', value: zoneDistribution[2] },
 
-                            { name: 'Zone 5', value: zoneDistribution[4] }
+                              { name: 'Zone 4', value: zoneDistribution[3] },
 
-                          ]}>
+                              { name: 'Zone 5', value: zoneDistribution[4] }
 
-                            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+                            ]}>
 
-                            <XAxis dataKey="name" stroke="rgba(148,163,184,0.5)" fontSize={12} />
+                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
 
-                            <YAxis stroke="rgba(148,163,184,0.5)" fontSize={12} />
+                              <XAxis dataKey="name" stroke="rgba(148,163,184,0.5)" fontSize={12} />
 
-                            <Tooltip 
+                              <YAxis stroke="rgba(148,163,184,0.5)" fontSize={12} />
 
-                              formatter={(value) => [`${value.toFixed(1)}%`, 'Time in Zone']}
+                              <Tooltip 
 
-                              contentStyle={{ 
+                                formatter={(value) => [`${value.toFixed(1)}%`, 'Time in Zone']}
 
-                                background: 'rgba(15, 23, 42, 0.9)', 
+                                contentStyle={{ 
 
-                                border: '1px solid rgba(148,163,184,0.2)',
+                                  background: 'rgba(15, 23, 42, 0.9)', 
 
-                                borderRadius: '12px'
+                                  border: '1px solid rgba(148,163,184,0.2)',
 
-                              }}
+                                  borderRadius: '12px'
 
-                            />
+                                }}
 
-                            <Bar 
+                              />
 
-                              dataKey="value" 
+                              <Bar 
 
-                              fill="#38bdf8"
+                                dataKey="value" 
 
-                              radius={[4, 4, 0, 0]}
+                                fill="#38bdf8"
 
-                            >
+                                radius={[4, 4, 0, 0]}
 
-                              {[
+                              >
 
-                                { name: 'Zone 1', value: zoneDistribution[0] },
+                                {[
 
-                                { name: 'Zone 2', value: zoneDistribution[1] },
+                                  { name: 'Zone 1', value: zoneDistribution[0] },
 
-                                { name: 'Zone 3', value: zoneDistribution[2] },
+                                  { name: 'Zone 2', value: zoneDistribution[1] },
 
-                                { name: 'Zone 4', value: zoneDistribution[3] },
+                                  { name: 'Zone 3', value: zoneDistribution[2] },
 
-                                { name: 'Zone 5', value: zoneDistribution[4] }
+                                  { name: 'Zone 4', value: zoneDistribution[3] },
 
-                              ].map((entry, index) => (
+                                  { name: 'Zone 5', value: zoneDistribution[4] }
 
-                                <Cell key={`cell-${index}`} fill="#38bdf8" />
+                                ].map((entry, index) => (
 
-                              ))}
+                                  <Cell key={`cell-${index}`} fill="#38bdf8" />
 
-                            </Bar>
+                                ))}
 
-                          </BarChart>
+                              </Bar>
 
-                        </ResponsiveContainer>
+                            </BarChart>
+
+                          </ResponsiveContainer>
+
+                        ) : (
+
+                          <div className="h-full flex items-center justify-center text-slate-500">
+
+                            No data available
+
+                          </div>
+
+                        )}
 
                       </div>
 
@@ -1878,47 +1994,59 @@
 
                         <h3 className="text-slate-300 font-medium mb-4 text-center">Intensity Profile</h3>
 
-                        <ResponsiveContainer width="100%" height="100%">
+                        {data.length > 0 ? (
 
-                          <RadarChart data={radarData}>
+                          <ResponsiveContainer width="100%" height="100%">
 
-                            <PolarGrid stroke="rgba(148,163,184,0.2)" />
+                            <RadarChart data={radarData}>
 
-                            <PolarAngleAxis 
+                              <PolarGrid stroke="rgba(148,163,184,0.2)" />
 
-                              dataKey="subject" 
+                              <PolarAngleAxis 
 
-                              tick={{ fill: 'rgba(148,163,184,0.8)', fontSize: 12 }}
+                                dataKey="subject" 
 
-                            />
+                                tick={{ fill: 'rgba(148,163,184,0.8)', fontSize: 12 }}
 
-                            <PolarRadiusAxis 
+                              />
 
-                              angle={90} 
+                              <PolarRadiusAxis 
 
-                              domain={[0, 100]}
+                                angle={90} 
 
-                              tick={{ fill: 'rgba(148,163,184,0.5)', fontSize: 10 }}
+                                domain={[0, 100]}
 
-                            />
+                                tick={{ fill: 'rgba(148,163,184,0.5)', fontSize: 10 }}
 
-                            <Radar
+                              />
 
-                              name="Intensity"
+                              <Radar
 
-                              dataKey="value"
+                                name="Intensity"
 
-                              stroke="#f472b6"
+                                dataKey="value"
 
-                              fill="#f472b6"
+                                stroke="#f472b6"
 
-                              fillOpacity={0.35}
+                                fill="#f472b6"
 
-                            />
+                                fillOpacity={0.35}
 
-                          </RadarChart>
+                              />
 
-                        </ResponsiveContainer>
+                            </RadarChart>
+
+                          </ResponsiveContainer>
+
+                        ) : (
+
+                          <div className="h-full flex items-center justify-center text-slate-500">
+
+                            No data available
+
+                          </div>
+
+                        )}
 
                       </div>
 
@@ -2109,8 +2237,6 @@
       );
 
     };
-
-
 
     // Render the app
 
