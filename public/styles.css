@@ -1060,6 +1060,11 @@ body.page-transitioning {
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.92));
 }
 
+.playground .section-header h2,
+.playground .section-header p {
+    color: #ffffff;
+}
+
 .playground-frame-wrapper {
     position: relative;
     border-radius: 28px;
