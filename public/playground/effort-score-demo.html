@@ -8,8 +8,6 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.tailwindcss.com; connect-src 'self'; img-src 'self' data:; font-src 'self';">
-
   <title>Effort Score Demo</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -74,50 +72,6 @@
 
     
 
-    .recharts-tooltip-wrapper {
-
-      z-index: 1000;
-
-    }
-
-    
-
-    /* Custom scrollbar for webkit browsers */
-
-    ::-webkit-scrollbar {
-
-      width: 6px;
-
-    }
-
-    
-
-    ::-webkit-scrollbar-track {
-
-      background: rgba(15, 23, 42, 0.5);
-
-    }
-
-    
-
-    ::-webkit-scrollbar-thumb {
-
-      background: rgba(148, 163, 184, 0.3);
-
-      border-radius: 3px;
-
-    }
-
-    
-
-    ::-webkit-scrollbar-thumb:hover {
-
-      background: rgba(148, 163, 184, 0.5);
-
-    }
-
-    
-
     /* Loading spinner */
 
     .loading-spinner {
@@ -146,6 +100,34 @@
 
     }
 
+    
+
+    .slider-thumb {
+
+      -webkit-appearance: none;
+
+      appearance: none;
+
+      height: 16px;
+
+      width: 16px;
+
+      border-radius: 50%;
+
+      background: #38bdf8;
+
+      cursor: pointer;
+
+    }
+
+    
+
+    .slider-thumb-orange {
+
+      background: #f97316;
+
+    }
+
   </style>
 
 </head>
@@ -153,8 +135,6 @@
 <body class="text-slate-300">
 
   <div id="root">
-
-    <!-- Loading state -->
 
     <div class="flex flex-col items-center justify-center min-h-screen">
 
@@ -172,1785 +152,1783 @@
 
   </div>
 
+
+
   <!-- Dependencies -->
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-  <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.8/umd/Recharts.min.js"></script>
 
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+
+
   <script>
 
-    // Wait for all dependencies to load before rendering the React app
+    let dependenciesLoaded = false;
 
-    function initApp() {
+    let loadAttempts = 0;
 
-      if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Recharts === 'undefined') {
+    const maxLoadAttempts = 3;
 
-        document.getElementById('root').innerHTML = `
 
-          <div class="flex items-center justify-center min-h-screen">
 
-            <div class="glass rounded-3xl p-8 max-w-md text-center">
+    function checkDependencies() {
 
-              <h2 class="text-xl font-bold text-white mb-4">Dependencies Failed to Load</h2>
+      return typeof React !== 'undefined' && 
 
-              <p class="text-slate-400 mb-4">Please check your internet connection and refresh the page.</p>
+             typeof ReactDOM !== 'undefined' && 
 
-              <button onclick="window.location.reload()" class="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-2xl transition-colors">
+             typeof Recharts !== 'undefined';
 
-                Retry
+    }
 
-              </button>
 
-            </div>
 
-          </div>
+    function loadDependencies() {
 
-        `;
+      loadAttempts++;
+
+      
+
+      if (checkDependencies()) {
+
+        dependenciesLoaded = true;
+
+        initializeApp();
 
         return;
 
       }
 
-      // Now that dependencies are loaded, execute the React app
+
+
+      if (loadAttempts >= maxLoadAttempts) {
+
+        showError();
+
+        return;
+
+      }
+
+
+
+      // Retry after 1 second
+
+      setTimeout(loadDependencies, 1000);
+
+    }
+
+
+
+    function showError() {
+
+      document.getElementById('root').innerHTML = `
+
+        <div class="flex items-center justify-center min-h-screen">
+
+          <div class="glass rounded-3xl p-8 max-w-md text-center">
+
+            <h2 class="text-xl font-bold text-white mb-4">Dependencies Failed to Load</h2>
+
+            <p class="text-slate-400 mb-4">This may be due to network restrictions or ad blockers.</p>
+
+            <div class="space-y-3">
+
+              <button onclick="window.location.reload()" class="w-full bg-sky-500 hover:bg-sky-600 text-white px-4 py-3 rounded-2xl transition-colors font-medium">
+
+                Retry Loading
+
+              </button>
+
+              <p class="text-xs text-slate-500">If this persists, check your network connection or try opening in a different browser.</p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+
+    function initializeApp() {
 
       const script = document.createElement('script');
 
       script.type = 'text/babel';
 
-      script.dataset.presets = 'react';
+      script.textContent = `
 
-      script.textContent = document.getElementById('react-app-code').textContent;
+        // Destructure Recharts components
 
-      document.body.appendChild(script);
+        const {
 
-    }
+          ResponsiveContainer,
 
-    // Initialize when page loads
+          LineChart, Line,
 
-    if (document.readyState === 'loading') {
+          AreaChart, Area,
 
-      document.addEventListener('DOMContentLoaded', initApp);
+          BarChart, Bar,
 
-    } else {
+          RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 
-      initApp();
+          XAxis, YAxis, Tooltip, CartesianGrid,
 
-    }
+          ReferenceLine, ReferenceArea,
 
-  </script>
+          Cell
 
-  <!-- React application code -->
+        } = Recharts;
 
-  <script id="react-app-code" type="text/babel">
 
-    // Destructure Recharts components
 
-    const {
+        // Utility functions
 
-      ResponsiveContainer,
-
-      LineChart, Line,
-
-      AreaChart, Area,
-
-      BarChart, Bar,
-
-      RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-
-      XAxis, YAxis, Tooltip, CartesianGrid,
-
-      ReferenceLine, ReferenceArea,
-
-      Cell
-
-    } = Recharts;
-
-    // Utility functions
-
-    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-
-    
-
-    const computeZone = (hr) => {
-
-      if (hr < 100) return { zone: 1, weight: 0.2 };
-
-      if (hr < 120) return { zone: 2, weight: 0.4 };
-
-      if (hr < 140) return { zone: 3, weight: 0.7 };
-
-      if (hr < 160) return { zone: 4, weight: 1.0 };
-
-      return { zone: 5, weight: 1.3 };
-
-    };
-
-    
-
-    const computeEffort = (hr, acc, focusMode) => {
-
-      const { weight } = computeZone(hr);
-
-      const movementFactor = clamp(0.2 + 0.25 * acc, 0.0, 1.2);
-
-      
-
-      let hrWeight = weight;
-
-      let movementWeight = movementFactor;
-
-      
-
-      // Apply focus mode multipliers
-
-      if (focusMode === 'cardio') {
-
-        hrWeight *= 1.15;
-
-        movementWeight *= 0.9;
-
-      } else if (focusMode === 'strength') {
-
-        movementWeight *= 1.15;
-
-        hrWeight *= 0.9;
-
-      }
-
-      
-
-      return clamp(hrWeight * movementWeight * 100, 0, 100);
-
-    };
-
-    
-
-    const formatDuration = (seconds) => {
-
-      const hrs = Math.floor(seconds / 3600);
-
-      const mins = Math.floor((seconds % 3600) / 60);
-
-      const secs = seconds % 60;
-
-      
-
-      if (hrs > 0) {
-
-        return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-
-      }
-
-      return `${mins}:${secs.toString().padStart(2, '0')}`;
-
-    };
-
-    
-
-    const createCsv = (data) => {
-
-      const headers = 'timestamp_iso,hr,acc,zone,effort_instant,effort_ema\n';
-
-      const rows = data.map(d => 
-
-        `${d.timestamp.toISOString()},${d.hr},${d.acc},${d.zone},${d.effortInstant},${d.effortEma}`
-
-      ).join('\n');
-
-      return headers + rows;
-
-    };
-
-    
-
-    const createSeed = () => Math.floor(Math.random() * 10000);
-
-    // Custom hook for effort stream
-
-    const useEffortStream = () => {
-
-      const [isPlaying, setIsPlaying] = React.useState(false);
-
-      const [speed, setSpeed] = React.useState(1);
-
-      const [focusMode, setFocusMode] = React.useState('mixed');
-
-      const [data, setData] = React.useState([]);
-
-      const [metrics, setMetrics] = React.useState({
-
-        effortScore: 0,
-
-        calories: 0,
-
-        duration: 0,
-
-        status: 'Paused'
-
-      });
-
-      const [showHelper, setShowHelper] = React.useState(true);
-
-      const [activeTab, setActiveTab] = React.useState('live');
-
-      const [hrOverride, setHrOverride] = React.useState(null);
-
-      const [accOverride, setAccOverride] = React.useState(null);
-
-      const [seed, setSeed] = React.useState(createSeed());
-
-      
-
-      const dataRef = React.useRef([]);
-
-      const tickRef = React.useRef(0);
-
-      const intervalRef = React.useRef(null);
-
-      const hrPhaseRef = React.useRef(0);
-
-      const accPhaseRef = React.useRef(0);
-
-      const sprintRef = React.useRef({ active: false, duration: 0, progress: 0 });
-
-      const hrOverrideRef = React.useRef(null);
-
-      const accOverrideRef = React.useRef(null);
-
-      
-
-      const BASE_INTERVAL_MS = 500;
-
-      const MAX_BUFFER = 1200;
-
-      
-
-      // Generate heart rate data
-
-      const generateHr = () => {
-
-        // Base pattern with some randomness
-
-        const baseHr = 120 + 32 * Math.sin(hrPhaseRef.current) + 10 * Math.sin(hrPhaseRef.current * 0.27);
+        const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
         
 
-        // Add sprint effect if active
+        const computeZone = (hr) => {
 
-        let sprintEffect = 0;
+          if (hr < 100) return { zone: 1, weight: 0.2 };
 
-        if (sprintRef.current.active) {
+          if (hr < 120) return { zone: 2, weight: 0.4 };
 
-          sprintEffect = 18 * Math.sin(sprintRef.current.progress * Math.PI);
+          if (hr < 140) return { zone: 3, weight: 0.7 };
 
-          sprintRef.current.progress += 0.02 * speed;
+          if (hr < 160) return { zone: 4, weight: 1.0 };
 
-          sprintRef.current.duration--;
-
-          
-
-          if (sprintRef.current.duration <= 0) {
-
-            sprintRef.current.active = false;
-
-          }
-
-        } else {
-
-          // 1.5% chance to start a sprint
-
-          if (Math.random() < 0.015) {
-
-            sprintRef.current = {
-
-              active: true,
-
-              duration: Math.floor(Math.random() * 120) + 180, // 3-5 minutes
-
-              progress: 0
-
-            };
-
-          }
-
-        }
-
-        
-
-        // Add some noise
-
-        const noise = (Math.random() - 0.5) * 8;
-
-        
-
-        hrPhaseRef.current += 0.02 * speed;
-
-        
-
-        return clamp(baseHr + sprintEffect + noise, 60, 190);
-
-      };
-
-      
-
-      // Generate acceleration data
-
-      const generateAcc = () => {
-
-        // Base pattern
-
-        const baseAcc = 0.5 + 0.9 * Math.abs(Math.sin(accPhaseRef.current)) + 
-
-                        0.4 * Math.abs(Math.sin(accPhaseRef.current * 1.7));
-
-        
-
-        // Boost during sprints
-
-        const sprintBoost = sprintRef.current.active ? 0.8 : 0;
-
-        
-
-        // Add some noise
-
-        const noise = (Math.random() - 0.5) * 0.3;
-
-        
-
-        accPhaseRef.current += 0.035 * speed;
-
-        
-
-        return clamp(baseAcc + sprintBoost + noise, 0, 4);
-
-      };
-
-      
-
-      // Process one tick of data
-
-      const processTick = () => {
-
-        tickRef.current++;
-
-        
-
-        // Generate or use override values
-
-        let hr = hrOverrideRef.current !== null ? hrOverrideRef.current.value : generateHr();
-
-        let acc = accOverrideRef.current !== null ? accOverrideRef.current.value : generateAcc();
-
-        
-
-        // Calculate effort
-
-        const effortInstant = computeEffort(hr, acc, focusMode);
-
-        
-
-        // Calculate EMA for effort score (α=0.08)
-
-        const previousEma = dataRef.current.length > 0 
-
-          ? dataRef.current[dataRef.current.length - 1].effortEma 
-
-          : effortInstant;
-
-        const effortEma = previousEma + 0.08 * (effortInstant - previousEma);
-
-        
-
-        // Create new data point
-
-        const newPoint = {
-
-          timestamp: new Date(),
-
-          hr,
-
-          acc,
-
-          zone: computeZone(hr).zone,
-
-          effortInstant,
-
-          effortEma: clamp(effortEma, 0, 100)
+          return { zone: 5, weight: 1.3 };
 
         };
 
         
 
-        // Update data buffer
+        const computeEffort = (hr, acc, focusMode) => {
 
-        dataRef.current = [...dataRef.current, newPoint].slice(-MAX_BUFFER);
+          const { weight } = computeZone(hr);
 
-        setData(dataRef.current);
+          const movementFactor = clamp(0.2 + 0.25 * acc, 0.0, 1.2);
 
-        
+          
 
-        // Update metrics
+          let hrWeight = weight;
 
-        const kcalPerMinute = 0.06 * hr + 0.5 * acc;
+          let movementWeight = movementFactor;
 
-        setMetrics(prev => ({
+          
 
-          effortScore: newPoint.effortEma,
+          // Apply focus mode multipliers
 
-          calories: prev.calories + (kcalPerMinute / 120), // Half-second increment
+          if (focusMode === 'cardio') {
 
-          duration: prev.duration + 0.5,
+            hrWeight *= 1.15;
 
-          status: 'Streaming'
+            movementWeight *= 0.9;
 
-        }));
+          } else if (focusMode === 'strength') {
 
-        
+            movementWeight *= 1.15;
 
-        // Hide helper text after first data point
-
-        if (showHelper) {
-
-          setShowHelper(false);
-
-        }
-
-        
-
-        // Handle override expiration
-
-        if (hrOverrideRef.current !== null && tickRef.current >= hrOverrideRef.current.expiresAt) {
-
-          hrOverrideRef.current = null;
-
-          setHrOverride(null);
-
-        }
-
-        
-
-        if (accOverrideRef.current !== null && tickRef.current >= accOverrideRef.current.expiresAt) {
-
-          accOverrideRef.current = null;
-
-          setAccOverride(null);
-
-        }
-
-      };
-
-      
-
-      // Start/stop interval
-
-      React.useEffect(() => {
-
-        if (isPlaying) {
-
-          const interval = BASE_INTERVAL_MS / speed;
-
-          intervalRef.current = setInterval(processTick, interval);
-
-          return () => clearInterval(intervalRef.current);
-
-        } else {
-
-          if (intervalRef.current) {
-
-            clearInterval(intervalRef.current);
-
-            intervalRef.current = null;
-
-          }
-
-          setMetrics(prev => ({ ...prev, status: 'Paused' }));
-
-        }
-
-      }, [isPlaying, speed]);
-
-      
-
-      // Handle HR override
-
-      const triggerHr = (value) => {
-
-        const hrValue = parseFloat(value);
-
-        hrOverrideRef.current = {
-
-          value: hrValue,
-
-          expiresAt: tickRef.current + 6 // 3 seconds at 0.5s intervals
-
-        };
-
-        setHrOverride(hrValue);
-
-        
-
-        if (!isPlaying) {
-
-          setIsPlaying(true);
-
-        }
-
-      };
-
-      
-
-      // Handle acceleration override
-
-      const triggerAcc = (value) => {
-
-        const accValue = parseFloat(value);
-
-        accOverrideRef.current = {
-
-          value: accValue,
-
-          expiresAt: tickRef.current + 6 // 3 seconds at 0.5s intervals
-
-        };
-
-        setAccOverride(accValue);
-
-        
-
-        if (!isPlaying) {
-
-          setIsPlaying(true);
-
-        }
-
-      };
-
-      
-
-      // Reset all data
-
-      const reset = () => {
-
-        dataRef.current = [];
-
-        setData([]);
-
-        tickRef.current = 0;
-
-        hrPhaseRef.current = 0;
-
-        accPhaseRef.current = 0;
-
-        sprintRef.current = { active: false, duration: 0, progress: 0 };
-
-        hrOverrideRef.current = null;
-
-        accOverrideRef.current = null;
-
-        setHrOverride(null);
-
-        setAccOverride(null);
-
-        setMetrics({
-
-          effortScore: 0,
-
-          calories: 0,
-
-          duration: 0,
-
-          status: 'Paused'
-
-        });
-
-        setShowHelper(true);
-
-        setIsPlaying(false);
-
-      };
-
-      
-
-      // Randomize seed
-
-      const randomize = () => {
-
-        setSeed(createSeed());
-
-        // Reset to apply new seed
-
-        reset();
-
-      };
-
-      
-
-      return {
-
-        isPlaying,
-
-        setIsPlaying,
-
-        speed,
-
-        setSpeed,
-
-        focusMode,
-
-        setFocusMode,
-
-        data,
-
-        metrics,
-
-        showHelper,
-
-        activeTab,
-
-        setActiveTab,
-
-        hrOverride,
-
-        accOverride,
-
-        triggerHr,
-
-        triggerAcc,
-
-        reset,
-
-        randomize
-
-      };
-
-    };
-
-    // Main App Component
-
-    const App = () => {
-
-      const {
-
-        isPlaying,
-
-        setIsPlaying,
-
-        speed,
-
-        setSpeed,
-
-        focusMode,
-
-        setFocusMode,
-
-        data,
-
-        metrics,
-
-        showHelper,
-
-        activeTab,
-
-        setActiveTab,
-
-        hrOverride,
-
-        accOverride,
-
-        triggerHr,
-
-        triggerAcc,
-
-        reset,
-
-        randomize
-
-      } = useEffortStream();
-
-      
-
-      const [showInfoModal, setShowInfoModal] = React.useState(false);
-
-      const [toast, setToast] = React.useState({ show: false, message: '', type: '' });
-
-      
-
-      // Show toast notification
-
-      const showToast = (message, type = 'success') => {
-
-        setToast({ show: true, message, type });
-
-        setTimeout(() => setToast({ show: false, message: '', type: '' }), 3000);
-
-      };
-
-      
-
-      // Copy effort timeline as CSV
-
-      const copyEffortTimeline = () => {
-
-        try {
-
-          const recentData = data.slice(-120); // Last 120 samples
-
-          if (recentData.length === 0) {
-
-            showToast('No data available to copy', 'error');
-
-            return;
+            hrWeight *= 0.9;
 
           }
 
           
 
-          const csv = createCsv(recentData);
+          return clamp(hrWeight * movementWeight * 100, 0, 100);
 
-          navigator.clipboard.writeText(csv)
-
-            .then(() => showToast('Effort timeline copied to clipboard!'))
-
-            .catch(() => showToast('Failed to copy to clipboard', 'error'));
-
-        } catch (error) {
-
-          showToast('Error copying data', 'error');
-
-        }
-
-      };
-
-      
-
-      // Get data for current tab view
-
-      const getDisplayData = () => {
-
-        if (activeTab === 'live') {
-
-          return data.slice(-160); // Last 80 seconds
-
-        } else if (activeTab === 'last5') {
-
-          return data.slice(-600); // Last 5 minutes
-
-        }
-
-        return data; // Summary uses all data
-
-      };
-
-      
-
-      // Calculate zone distribution for summary
-
-      const getZoneDistribution = () => {
-
-        if (data.length === 0) return Array(5).fill(0);
+        };
 
         
 
-        const zoneCounts = [0, 0, 0, 0, 0];
+        const formatDuration = (seconds) => {
 
-        data.forEach(d => {
+          const hrs = Math.floor(seconds / 3600);
 
-          if (d.zone >= 1 && d.zone <= 5) {
+          const mins = Math.floor((seconds % 3600) / 60);
 
-            zoneCounts[d.zone - 1]++;
-
-          }
-
-        });
-
-        
-
-        return zoneCounts.map(count => (count / data.length) * 100);
-
-      };
-
-      
-
-      // Calculate radar metrics for summary
-
-      const getRadarMetrics = () => {
-
-        if (data.length === 0) {
-
-          return [
-
-            { subject: 'Cardio', value: 0, fullMark: 100 },
-
-            { subject: 'Strength', value: 0, fullMark: 100 },
-
-            { subject: 'Consistency', value: 0, fullMark: 100 },
-
-            { subject: 'Recovery', value: 0, fullMark: 100 }
-
-          ];
-
-        }
-
-        
-
-        const recentData = data.slice(-600); // Last 5 minutes
-
-        const avgHR = recentData.reduce((sum, d) => sum + d.hr, 0) / recentData.length;
-
-        const avgAcc = recentData.reduce((sum, d) => sum + d.acc, 0) / recentData.length;
-
-        
-
-        // Calculate time above 70 effort for consistency
-
-        const highEffortTime = recentData.filter(d => d.effortEma > 70).length / recentData.length;
-
-        
-
-        // Calculate recovery metric based on mix of high/low effort
-
-        const effortVariance = Math.min(
-
-          recentData.reduce((sum, d) => sum + Math.abs(d.effortEma - 50), 0) / recentData.length / 50,
-
-          1
-
-        );
-
-        
-
-        return [
-
-          { subject: 'Cardio', value: Math.min((avgHR / 170) * 100, 100), fullMark: 100 },
-
-          { subject: 'Strength', value: Math.min((avgAcc / 3.5) * 100, 100), fullMark: 100 },
-
-          { subject: 'Consistency', value: highEffortTime * 100, fullMark: 100 },
-
-          { subject: 'Recovery', value: (1 - effortVariance) * 100, fullMark: 100 }
-
-        ];
-
-      };
-
-      
-
-      // Get factors affecting score with highlighting
-
-      const getScoreFactors = () => {
-
-        const recentData = data.slice(-20); // Last 10 seconds
-
-        const hasHighEffort = recentData.some(d => d.effortInstant > 85);
-
-        const hasConsistentEffort = recentData.some(d => d.effortInstant > 60);
-
-        
-
-        return [
-
-          { name: 'HR bias', active: focusMode === 'cardio' },
-
-          { name: 'Movement bias', active: focusMode === 'strength' },
-
-          { name: 'Consistency', active: hasConsistentEffort },
-
-          { name: 'Sprint spikes', active: hasHighEffort }
-
-        ];
-
-      };
-
-      
-
-      const displayData = getDisplayData();
-
-      const zoneDistribution = getZoneDistribution();
-
-      const radarData = getRadarMetrics();
-
-      const scoreFactors = getScoreFactors();
-
-      
-
-      return (
-
-        <div className="min-h-screen p-4 md:p-6">
-
-          {/* Header */}
-
-          <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-
-            <div>
-
-              <h1 className="text-2xl md:text-3xl font-bold text-white">Effort Score Demo</h1>
-
-              <p className="text-slate-400 mt-1">Interactive simulation of Apple Watch effort tracking</p>
-
-            </div>
-
-            <div className="flex gap-3">
-
-              <button
-
-                onClick={copyEffortTimeline}
-
-                className="glass rounded-2xl px-4 py-2 text-sm font-medium text-sky-400 hover:bg-sky-400/10 transition-colors flex items-center gap-2"
-
-              >
-
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-
-                </svg>
-
-                Copy Effort Timeline
-
-              </button>
-
-              <button
-
-                onClick={() => setShowInfoModal(true)}
-
-                className="glass rounded-2xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/5 transition-colors flex items-center gap-2"
-
-              >
-
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-
-                </svg>
-
-                Info
-
-              </button>
-
-            </div>
-
-          </header>
+          const secs = seconds % 60;
 
           
 
-          {/* Main Content Grid */}
+          if (hrs > 0) {
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            return \`\${hrs}:\${mins.toString().padStart(2, '0')}:\${secs.toString().padStart(2, '0')}\`;
 
-            {/* Left Column - Controls & KPIs */}
+          }
 
-            <div className="lg:col-span-1 space-y-6">
+          return \`\${mins}:\${secs.toString().padStart(2, '0')}\`;
 
-              {/* KPI Dashboard */}
+        };
 
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
+        
 
-                {/* Effort Score Card */}
+        const createCsv = (data) => {
 
-                <div className={`glass rounded-3xl p-5 ${metrics.effortScore >= 80 ? 'kpi-pulse' : ''}`}>
+          const headers = 'timestamp_iso,hr,acc,zone,effort_instant,effort_ema\\n';
 
-                  <div className="flex justify-between items-start mb-3">
+          const rows = data.map(d => 
 
-                    <h3 className="text-slate-400 text-sm font-medium">Effort Score</h3>
+            \`\${d.timestamp.toISOString()},\${d.hr},\${d.acc},\${d.zone},\${d.effortInstant},\${d.effortEma}\`
 
-                    <div className="flex gap-1">
+          ).join('\\n');
 
-                      <span className="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-1 rounded-full">Cardio load</span>
+          return headers + rows;
 
-                      <span className="bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded-full">Strength load</span>
+        };
 
-                    </div>
+        
 
-                  </div>
+        const createSeed = () => Math.floor(Math.random() * 10000);
 
-                  <div className="flex items-end justify-between">
 
-                    <div className="text-3xl font-bold text-white">
 
-                      {metrics.effortScore.toFixed(1)}
+        // Custom hook for effort stream
 
-                    </div>
+        const useEffortStream = () => {
 
-                    <div className="w-20 h-8">
+          const [isPlaying, setIsPlaying] = React.useState(false);
 
-                      {displayData.length > 0 && (
+          const [speed, setSpeed] = React.useState(1);
 
-                        <ResponsiveContainer width="100%" height="100%">
+          const [focusMode, setFocusMode] = React.useState('mixed');
 
-                          <AreaChart data={displayData.slice(-80)}>
+          const [data, setData] = React.useState([]);
 
-                            <Area 
+          const [metrics, setMetrics] = React.useState({
 
-                              type="monotone" 
+            effortScore: 0,
 
-                              dataKey="effortEma" 
+            calories: 0,
 
-                              stroke={metrics.effortScore >= 80 ? "#10b981" : "#38bdf8"} 
+            duration: 0,
 
-                              fill={metrics.effortScore >= 80 ? "rgba(16,185,129,0.2)" : "rgba(56,189,248,0.2)"} 
+            status: 'Paused'
 
-                              strokeWidth={1.5}
+          });
 
-                              isAnimationActive={false}
+          const [showHelper, setShowHelper] = React.useState(true);
 
-                            />
+          const [activeTab, setActiveTab] = React.useState('live');
 
-                          </AreaChart>
+          const [hrOverride, setHrOverride] = React.useState(null);
 
-                        </ResponsiveContainer>
+          const [accOverride, setAccOverride] = React.useState(null);
 
-                      )}
+          const [seed, setSeed] = React.useState(createSeed());
 
-                    </div>
+          
 
-                  </div>
+          const dataRef = React.useRef([]);
 
-                </div>
+          const tickRef = React.useRef(0);
 
-                
+          const intervalRef = React.useRef(null);
 
-                {/* Calories Card */}
+          const hrPhaseRef = React.useRef(0);
 
-                <div className="glass rounded-3xl p-5">
+          const accPhaseRef = React.useRef(0);
 
-                  <h3 className="text-slate-400 text-sm font-medium mb-3">Calories Burned</h3>
+          const sprintRef = React.useRef({ active: false, duration: 0, progress: 0 });
 
-                  <div className="text-2xl font-bold text-white">
+          const hrOverrideRef = React.useRef(null);
 
-                    {metrics.calories.toFixed(1)}
+          const accOverrideRef = React.useRef(null);
 
-                  </div>
+          
 
-                  <div className="text-xs text-slate-400 mt-1">kcal</div>
+          const BASE_INTERVAL_MS = 500;
 
-                </div>
+          const MAX_BUFFER = 1200;
 
-                
+          
 
-                {/* Duration Card */}
+          // Generate heart rate data
 
-                <div className="glass rounded-3xl p-5">
+          const generateHr = () => {
 
-                  <h3 className="text-slate-400 text-sm font-medium mb-3">Session Duration</h3>
+            // Base pattern with some randomness
 
-                  <div className="text-2xl font-bold text-white">
-
-                    {formatDuration(metrics.duration)}
-
-                  </div>
-
-                  <div className="text-xs text-slate-400 mt-1">HH:MM:SS</div>
-
-                </div>
-
-              </div>
-
-              
-
-              {/* Control Panel */}
-
-              <div className="glass rounded-3xl p-6">
-
-                <div className="flex items-center justify-between mb-6">
-
-                  <h2 className="text-lg font-semibold text-white">Controls</h2>
-
-                  <div className="flex items-center gap-2">
-
-                    <div className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-emerald-500' : 'bg-slate-500'}`}></div>
-
-                    <span className="text-sm text-slate-400">{metrics.status}</span>
-
-                  </div>
-
-                </div>
-
-                
-
-                <div className="space-y-5">
-
-                  {/* Heart Rate Override */}
-
-                  <div>
-
-                    <div className="flex justify-between items-center mb-2">
-
-                      <label className="text-sm font-medium text-slate-300">Heart Rate Override</label>
-
-                      <span className="text-sm text-sky-400">{hrOverride || 'Auto'}</span>
-
-                    </div>
-
-                    <input
-
-                      type="range"
-
-                      min="60"
-
-                      max="190"
-
-                      step="1"
-
-                      value={hrOverride || 120}
-
-                      onChange={(e) => triggerHr(e.target.value)}
-
-                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-sky-500"
-
-                    />
-
-                    <div className="flex justify-between text-xs text-slate-500 mt-1">
-
-                      <span>60 bpm</span>
-
-                      <span>190 bpm</span>
-
-                    </div>
-
-                  </div>
-
-                  
-
-                  {/* Movement Override */}
-
-                  <div>
-
-                    <div className="flex justify-between items-center mb-2">
-
-                      <label className="text-sm font-medium text-slate-300">Movement Override</label>
-
-                      <span className="text-sm text-orange-400">{accOverride ? accOverride.toFixed(2) : 'Auto'}g</span>
-
-                    </div>
-
-                    <input
-
-                      type="range"
-
-                      min="0"
-
-                      max="4"
-
-                      step="0.05"
-
-                      value={accOverride || 1.0}
-
-                      onChange={(e) => triggerAcc(e.target.value)}
-
-                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-500"
-
-                    />
-
-                    <div className="flex justify-between text-xs text-slate-500 mt-1">
-
-                      <span>0g</span>
-
-                      <span>4g</span>
-
-                    </div>
-
-                  </div>
-
-                  
-
-                  {/* Focus Mode */}
-
-                  <div>
-
-                    <label className="text-sm font-medium text-slate-300 block mb-2">Focus Mode</label>
-
-                    <select
-
-                      value={focusMode}
-
-                      onChange={(e) => setFocusMode(e.target.value)}
-
-                      className="w-full glass rounded-2xl px-4 py-2.5 text-slate-300 border border-slate-700 focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-
-                    >
-
-                      <option value="mixed">Mixed</option>
-
-                      <option value="cardio">Cardio bias</option>
-
-                      <option value="strength">Strength bias</option>
-
-                    </select>
-
-                  </div>
-
-                  
-
-                  {/* Action Buttons */}
-
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-
-                    <button
-
-                      onClick={() => setIsPlaying(!isPlaying)}
-
-                      className="glass rounded-2xl px-4 py-3 font-medium flex items-center justify-center gap-2 transition-colors hover:bg-white/5"
-
-                    >
-
-                      {isPlaying ? (
-
-                        <>
-
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-
-                          </svg>
-
-                          Pause
-
-                        </>
-
-                      ) : (
-
-                        <>
-
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-
-                          </svg>
-
-                          Play
-
-                        </>
-
-                      )}
-
-                    </button>
-
-                    <button
-
-                      onClick={reset}
-
-                      className="glass rounded-2xl px-4 py-3 font-medium flex items-center justify-center gap-2 transition-colors hover:bg-white/5"
-
-                    >
-
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-
-                      </svg>
-
-                      Reset
-
-                    </button>
-
-                  </div>
-
-                  
-
-                  {/* Speed & Randomize */}
-
-                  <div className="grid grid-cols-2 gap-3">
-
-                    <div>
-
-                      <label className="text-sm font-medium text-slate-300 block mb-2">Speed</label>
-
-                      <select
-
-                        value={speed}
-
-                        onChange={(e) => setSpeed(parseFloat(e.target.value))}
-
-                        className="w-full glass rounded-2xl px-4 py-2.5 text-slate-300 border border-slate-700 focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-
-                      >
-
-                        <option value="0.5">0.5x</option>
-
-                        <option value="1">1x</option>
-
-                        <option value="2">2x</option>
-
-                      </select>
-
-                    </div>
-
-                    <div className="flex items-end">
-
-                      <button
-
-                        onClick={randomize}
-
-                        className="w-full glass rounded-2xl px-4 py-2.5 font-medium flex items-center justify-center gap-2 transition-colors hover:bg-white/5"
-
-                      >
-
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-
-                        </svg>
-
-                        Randomize
-
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                
-
-                {/* Helper Text */}
-
-                {showHelper && (
-
-                  <div className="mt-6 p-4 bg-slate-800/50 rounded-2xl border border-slate-700">
-
-                    <p className="text-sm text-slate-400 text-center">
-
-                      Press <span className="text-sky-400">Play</span> or drag a slider to start the stream.
-
-                    </p>
-
-                  </div>
-
-                )}
-
-              </div>
-
-              
-
-              {/* Score Factors */}
-
-              <div className="glass rounded-3xl p-6">
-
-                <h2 className="text-lg font-semibold text-white mb-4">What affects the score</h2>
-
-                <div className="space-y-3">
-
-                  {scoreFactors.map((factor, index) => (
-
-                    <div 
-
-                      key={index}
-
-                      className={`flex items-center gap-3 p-3 rounded-2xl transition-colors ${
-
-                        factor.active ? 'bg-sky-500/10 border border-sky-500/30' : 'bg-slate-800/30'
-
-                      }`}
-
-                    >
-
-                      <div className={`w-2 h-2 rounded-full ${factor.active ? 'bg-sky-500' : 'bg-slate-600'}`}></div>
-
-                      <span className={`text-sm ${factor.active ? 'text-sky-400' : 'text-slate-400'}`}>
-
-                        {factor.name}
-
-                      </span>
-
-                    </div>
-
-                  ))}
-
-                </div>
-
-              </div>
-
-            </div>
+            const baseHr = 120 + 32 * Math.sin(hrPhaseRef.current) + 10 * Math.sin(hrPhaseRef.current * 0.27);
 
             
 
-            {/* Right Column - Visualizations */}
+            // Add sprint effect if active
 
-            <div className="lg:col-span-2">
+            let sprintEffect = 0;
 
-              <div className="glass rounded-3xl p-6 h-full">
+            if (sprintRef.current.active) {
 
-                {/* Tab Navigation */}
+              sprintEffect = 18 * Math.sin(sprintRef.current.progress * Math.PI);
 
-                <div className="flex border-b border-slate-700 mb-6">
+              sprintRef.current.progress += 0.02 * speed;
 
-                  {['live', 'last5', 'summary'].map((tab) => (
+              sprintRef.current.duration--;
 
-                    <button
+              
 
-                      key={tab}
+              if (sprintRef.current.duration <= 0) {
 
-                      onClick={() => setActiveTab(tab)}
+                sprintRef.current.active = false;
 
-                      className={`px-4 py-2 font-medium text-sm transition-colors relative ${
+              }
 
-                        activeTab === tab 
+            } else {
 
-                          ? 'text-sky-400' 
+              // 1.5% chance to start a sprint
 
-                          : 'text-slate-500 hover:text-slate-300'
+              if (Math.random() < 0.015) {
 
-                      }`}
+                sprintRef.current = {
 
-                    >
+                  active: true,
 
-                      {tab === 'live' && 'Live'}
+                  duration: Math.floor(Math.random() * 120) + 180, // 3-5 minutes
 
-                      {tab === 'last5' && 'Last 5 min'}
+                  progress: 0
 
-                      {tab === 'summary' && 'Summary'}
+                };
 
-                      {activeTab === tab && (
+              }
 
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500"></div>
+            }
 
-                      )}
+            
 
-                    </button>
+            // Add some noise
 
-                  ))}
+            const noise = (Math.random() - 0.5) * 8;
+
+            
+
+            hrPhaseRef.current += 0.02 * speed;
+
+            
+
+            return clamp(baseHr + sprintEffect + noise, 60, 190);
+
+          };
+
+          
+
+          // Generate acceleration data
+
+          const generateAcc = () => {
+
+            // Base pattern
+
+            const baseAcc = 0.5 + 0.9 * Math.abs(Math.sin(accPhaseRef.current)) + 
+
+                            0.4 * Math.abs(Math.sin(accPhaseRef.current * 1.7));
+
+            
+
+            // Boost during sprints
+
+            const sprintBoost = sprintRef.current.active ? 0.8 : 0;
+
+            
+
+            // Add some noise
+
+            const noise = (Math.random() - 0.5) * 0.3;
+
+            
+
+            accPhaseRef.current += 0.035 * speed;
+
+            
+
+            return clamp(baseAcc + sprintBoost + noise, 0, 4);
+
+          };
+
+          
+
+          // Process one tick of data
+
+          const processTick = () => {
+
+            tickRef.current++;
+
+            
+
+            // Generate or use override values
+
+            let hr = hrOverrideRef.current !== null ? hrOverrideRef.current.value : generateHr();
+
+            let acc = accOverrideRef.current !== null ? accOverrideRef.current.value : generateAcc();
+
+            
+
+            // Calculate effort
+
+            const effortInstant = computeEffort(hr, acc, focusMode);
+
+            
+
+            // Calculate EMA for effort score (α=0.08)
+
+            const previousEma = dataRef.current.length > 0 
+
+              ? dataRef.current[dataRef.current.length - 1].effortEma 
+
+              : effortInstant;
+
+            const effortEma = previousEma + 0.08 * (effortInstant - previousEma);
+
+            
+
+            // Create new data point
+
+            const newPoint = {
+
+              timestamp: new Date(),
+
+              hr,
+
+              acc,
+
+              zone: computeZone(hr).zone,
+
+              effortInstant,
+
+              effortEma: clamp(effortEma, 0, 100)
+
+            };
+
+            
+
+            // Update data buffer
+
+            dataRef.current = [...dataRef.current, newPoint].slice(-MAX_BUFFER);
+
+            setData(dataRef.current);
+
+            
+
+            // Update metrics
+
+            const kcalPerMinute = 0.06 * hr + 0.5 * acc;
+
+            setMetrics(prev => ({
+
+              effortScore: newPoint.effortEma,
+
+              calories: prev.calories + (kcalPerMinute / 120), // Half-second increment
+
+              duration: prev.duration + 0.5,
+
+              status: 'Streaming'
+
+            }));
+
+            
+
+            // Hide helper text after first data point
+
+            if (showHelper) {
+
+              setShowHelper(false);
+
+            }
+
+            
+
+            // Handle override expiration
+
+            if (hrOverrideRef.current !== null && tickRef.current >= hrOverrideRef.current.expiresAt) {
+
+              hrOverrideRef.current = null;
+
+              setHrOverride(null);
+
+            }
+
+            
+
+            if (accOverrideRef.current !== null && tickRef.current >= accOverrideRef.current.expiresAt) {
+
+              accOverrideRef.current = null;
+
+              setAccOverride(null);
+
+            }
+
+          };
+
+          
+
+          // Start/stop interval
+
+          React.useEffect(() => {
+
+            if (isPlaying) {
+
+              const interval = BASE_INTERVAL_MS / speed;
+
+              intervalRef.current = setInterval(processTick, interval);
+
+              return () => clearInterval(intervalRef.current);
+
+            } else {
+
+              if (intervalRef.current) {
+
+                clearInterval(intervalRef.current);
+
+                intervalRef.current = null;
+
+              }
+
+              setMetrics(prev => ({ ...prev, status: 'Paused' }));
+
+            }
+
+          }, [isPlaying, speed]);
+
+          
+
+          // Handle HR override
+
+          const triggerHr = (value) => {
+
+            const hrValue = parseFloat(value);
+
+            hrOverrideRef.current = {
+
+              value: hrValue,
+
+              expiresAt: tickRef.current + 6 // 3 seconds at 0.5s intervals
+
+            };
+
+            setHrOverride(hrValue);
+
+            
+
+            if (!isPlaying) {
+
+              setIsPlaying(true);
+
+            }
+
+          };
+
+          
+
+          // Handle acceleration override
+
+          const triggerAcc = (value) => {
+
+            const accValue = parseFloat(value);
+
+            accOverrideRef.current = {
+
+              value: accValue,
+
+              expiresAt: tickRef.current + 6 // 3 seconds at 0.5s intervals
+
+            };
+
+            setAccOverride(accValue);
+
+            
+
+            if (!isPlaying) {
+
+              setIsPlaying(true);
+
+            }
+
+          };
+
+          
+
+          // Reset all data
+
+          const reset = () => {
+
+            dataRef.current = [];
+
+            setData([]);
+
+            tickRef.current = 0;
+
+            hrPhaseRef.current = 0;
+
+            accPhaseRef.current = 0;
+
+            sprintRef.current = { active: false, duration: 0, progress: 0 };
+
+            hrOverrideRef.current = null;
+
+            accOverrideRef.current = null;
+
+            setHrOverride(null);
+
+            setAccOverride(null);
+
+            setMetrics({
+
+              effortScore: 0,
+
+              calories: 0,
+
+              duration: 0,
+
+              status: 'Paused'
+
+            });
+
+            setShowHelper(true);
+
+            setIsPlaying(false);
+
+          };
+
+          
+
+          // Randomize seed
+
+          const randomize = () => {
+
+            setSeed(createSeed());
+
+            // Reset to apply new seed
+
+            reset();
+
+          };
+
+          
+
+          return {
+
+            isPlaying,
+
+            setIsPlaying,
+
+            speed,
+
+            setSpeed,
+
+            focusMode,
+
+            setFocusMode,
+
+            data,
+
+            metrics,
+
+            showHelper,
+
+            activeTab,
+
+            setActiveTab,
+
+            hrOverride,
+
+            accOverride,
+
+            triggerHr,
+
+            triggerAcc,
+
+            reset,
+
+            randomize
+
+          };
+
+        };
+
+
+
+        // Main App Component
+
+        const App = () => {
+
+          const {
+
+            isPlaying,
+
+            setIsPlaying,
+
+            speed,
+
+            setSpeed,
+
+            focusMode,
+
+            setFocusMode,
+
+            data,
+
+            metrics,
+
+            showHelper,
+
+            activeTab,
+
+            setActiveTab,
+
+            hrOverride,
+
+            accOverride,
+
+            triggerHr,
+
+            triggerAcc,
+
+            reset,
+
+            randomize
+
+          } = useEffortStream();
+
+          
+
+          const [showInfoModal, setShowInfoModal] = React.useState(false);
+
+          const [toast, setToast] = React.useState({ show: false, message: '', type: '' });
+
+          
+
+          // Show toast notification
+
+          const showToast = (message, type = 'success') => {
+
+            setToast({ show: true, message, type });
+
+            setTimeout(() => setToast({ show: false, message: '', type: '' }), 3000);
+
+          };
+
+          
+
+          // Copy effort timeline as CSV
+
+          const copyEffortTimeline = () => {
+
+            try {
+
+              const recentData = data.slice(-120); // Last 120 samples
+
+              if (recentData.length === 0) {
+
+                showToast('No data available to copy', 'error');
+
+                return;
+
+              }
+
+              
+
+              const csv = createCsv(recentData);
+
+              navigator.clipboard.writeText(csv)
+
+                .then(() => showToast('Effort timeline copied to clipboard!'))
+
+                .catch(() => showToast('Failed to copy to clipboard', 'error'));
+
+            } catch (error) {
+
+              showToast('Error copying data', 'error');
+
+            }
+
+          };
+
+          
+
+          // Get data for current tab view
+
+          const getDisplayData = () => {
+
+            if (activeTab === 'live') {
+
+              return data.slice(-160); // Last 80 seconds
+
+            } else if (activeTab === 'last5') {
+
+              return data.slice(-600); // Last 5 minutes
+
+            }
+
+            return data; // Summary uses all data
+
+          };
+
+          
+
+          // Calculate zone distribution for summary
+
+          const getZoneDistribution = () => {
+
+            if (data.length === 0) return Array(5).fill(0);
+
+            
+
+            const zoneCounts = [0, 0, 0, 0, 0];
+
+            data.forEach(d => {
+
+              if (d.zone >= 1 && d.zone <= 5) {
+
+                zoneCounts[d.zone - 1]++;
+
+              }
+
+            });
+
+            
+
+            return zoneCounts.map(count => (count / data.length) * 100);
+
+          };
+
+          
+
+          // Calculate radar metrics for summary
+
+          const getRadarMetrics = () => {
+
+            if (data.length === 0) {
+
+              return [
+
+                { subject: 'Cardio', value: 0, fullMark: 100 },
+
+                { subject: 'Strength', value: 0, fullMark: 100 },
+
+                { subject: 'Consistency', value: 0, fullMark: 100 },
+
+                { subject: 'Recovery', value: 0, fullMark: 100 }
+
+              ];
+
+            }
+
+            
+
+            const recentData = data.slice(-600); // Last 5 minutes
+
+            const avgHR = recentData.reduce((sum, d) => sum + d.hr, 0) / recentData.length;
+
+            const avgAcc = recentData.reduce((sum, d) => sum + d.acc, 0) / recentData.length;
+
+            
+
+            // Calculate time above 70 effort for consistency
+
+            const highEffortTime = recentData.filter(d => d.effortEma > 70).length / recentData.length;
+
+            
+
+            // Calculate recovery metric based on mix of high/low effort
+
+            const effortVariance = Math.min(
+
+              recentData.reduce((sum, d) => sum + Math.abs(d.effortEma - 50), 0) / recentData.length / 50,
+
+              1
+
+            );
+
+            
+
+            return [
+
+              { subject: 'Cardio', value: Math.min((avgHR / 170) * 100, 100), fullMark: 100 },
+
+              { subject: 'Strength', value: Math.min((avgAcc / 3.5) * 100, 100), fullMark: 100 },
+
+              { subject: 'Consistency', value: highEffortTime * 100, fullMark: 100 },
+
+              { subject: 'Recovery', value: (1 - effortVariance) * 100, fullMark: 100 }
+
+            ];
+
+          };
+
+          
+
+          // Get factors affecting score with highlighting
+
+          const getScoreFactors = () => {
+
+            const recentData = data.slice(-20); // Last 10 seconds
+
+            const hasHighEffort = recentData.some(d => d.effortInstant > 85);
+
+            const hasConsistentEffort = recentData.some(d => d.effortInstant > 60);
+
+            
+
+            return [
+
+              { name: 'HR bias', active: focusMode === 'cardio' },
+
+              { name: 'Movement bias', active: focusMode === 'strength' },
+
+              { name: 'Consistency', active: hasConsistentEffort },
+
+              { name: 'Sprint spikes', active: hasHighEffort }
+
+            ];
+
+          };
+
+          
+
+          const displayData = getDisplayData();
+
+          const zoneDistribution = getZoneDistribution();
+
+          const radarData = getRadarMetrics();
+
+          const scoreFactors = getScoreFactors();
+
+          
+
+          return (
+
+            <div className="min-h-screen p-4 md:p-6">
+
+              {/* Header */}
+
+              <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+
+                <div>
+
+                  <h1 className="text-2xl md:text-3xl font-bold text-white">Effort Score Demo</h1>
+
+                  <p className="text-slate-400 mt-1">Interactive simulation of Apple Watch effort tracking</p>
 
                 </div>
 
-                
+                <div className="flex gap-3">
 
-                {/* Chart Content */}
+                  <button
 
-                <div className="h-[500px]">
+                    onClick={copyEffortTimeline}
 
-                  {activeTab !== 'summary' ? (
+                    className="glass rounded-2xl px-4 py-2 text-sm font-medium text-sky-400 hover:bg-sky-400/10 transition-colors flex items-center gap-2"
 
-                    // Live and Last 5 min views
+                  >
 
-                    <div className="h-full flex flex-col">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                      {/* Heart Rate Chart */}
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
 
-                      <div className="flex-1 mb-6">
+                    </svg>
 
-                        <h3 className="text-slate-300 font-medium mb-2">Heart Rate</h3>
+                    Copy Effort Timeline
 
-                        {displayData.length > 0 ? (
+                  </button>
 
-                          <ResponsiveContainer width="100%" height="100%">
+                  <button
 
-                            <LineChart data={displayData} syncId="effortSync">
+                    onClick={() => setShowInfoModal(true)}
 
-                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+                    className="glass rounded-2xl px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/5 transition-colors flex items-center gap-2"
 
-                              <XAxis 
+                  >
 
-                                dataKey="timestamp" 
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                                tickFormatter={(ts) => {
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 
-                                  const date = new Date(ts);
+                    </svg>
 
-                                  return `${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                    Info
 
-                                }}
+                  </button>
 
-                                stroke="rgba(148,163,184,0.5)"
+                </div>
 
-                                fontSize={12}
+              </header>
 
-                              />
+              
 
-                              <YAxis 
+              {/* Main Content Grid */}
 
-                                domain={[60, 190]} 
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                                stroke="rgba(148,163,184,0.5)"
+                {/* Left Column - Controls & KPIs */}
 
-                                fontSize={12}
+                <div className="lg:col-span-1 space-y-6">
 
-                              />
+                  {/* KPI Dashboard */}
 
-                              <Tooltip
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
 
-                                content={({ active, payload, label }) => {
+                    {/* Effort Score Card */}
 
-                                  if (active && payload && payload.length) {
+                    <div className={\`glass rounded-3xl p-5 \${metrics.effortScore >= 80 ? 'kpi-pulse' : ''}\`}>
 
-                                    const data = payload[0].payload;
+                      <div className="flex justify-between items-start mb-3">
 
-                                    return (
+                        <h3 className="text-slate-400 text-sm font-medium">Effort Score</h3>
 
-                                      <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
+                        <div className="flex gap-1">
 
-                                        <p className="text-slate-400 text-sm">
+                          <span className="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-1 rounded-full">Cardio load</span>
 
-                                          {new Date(label).toLocaleTimeString()}
+                          <span className="bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded-full">Strength load</span>
 
-                                        </p>
+                        </div>
 
-                                        <p className="text-sky-400 font-medium">
+                      </div>
 
-                                          HR: {data.hr.toFixed(0)} bpm
+                      <div className="flex items-end justify-between">
 
-                                        </p>
+                        <div className="text-3xl font-bold text-white">
 
-                                        <p className="text-slate-300">
+                          {metrics.effortScore.toFixed(1)}
 
-                                          Effort: {data.effortInstant.toFixed(1)}
+                        </div>
 
-                                        </p>
+                        <div className="w-20 h-8">
 
-                                      </div>
+                          {displayData.length > 0 && (
 
-                                    );
+                            <ResponsiveContainer width="100%" height="100%">
 
-                                  }
+                              <AreaChart data={displayData.slice(-80)}>
 
-                                  return null;
+                                <Area 
 
-                                }}
+                                  type="monotone" 
 
-                              />
+                                  dataKey="effortEma" 
 
-                              <ReferenceArea y1={60} y2={100} fill="rgba(56,189,248,0.10)" />
+                                  stroke={metrics.effortScore >= 80 ? "#10b981" : "#38bdf8"} 
 
-                              <ReferenceArea y1={100} y2={120} fill="rgba(34,197,94,0.12)" />
+                                  fill={metrics.effortScore >= 80 ? "rgba(16,185,129,0.2)" : "rgba(56,189,248,0.2)"} 
 
-                              <ReferenceArea y1={120} y2={140} fill="rgba(250,204,21,0.14)" />
+                                  strokeWidth={1.5}
 
-                              <ReferenceArea y1={140} y2={160} fill="rgba(249,115,22,0.16)" />
+                                  isAnimationActive={false}
 
-                              <ReferenceArea y1={160} y2={190} fill="rgba(239,68,68,0.18)" />
+                                />
 
-                              <Line 
+                              </AreaChart>
 
-                                type="monotone" 
+                            </ResponsiveContainer>
 
-                                dataKey="hr" 
+                          )}
 
-                                stroke="#38bdf8" 
+                        </div>
 
-                                strokeWidth={2}
+                      </div>
 
-                                dot={false}
+                    </div>
 
-                                isAnimationActive={false}
+                    
 
-                              />
+                    {/* Calories Card */}
 
-                            </LineChart>
+                    <div className="glass rounded-3xl p-5">
 
-                          </ResponsiveContainer>
+                      <h3 className="text-slate-400 text-sm font-medium mb-3">Calories Burned</h3>
 
-                        ) : (
+                      <div className="text-2xl font-bold text-white">
 
-                          <div className="h-full flex items-center justify-center text-slate-500">
+                        {metrics.calories.toFixed(1)}
 
-                            No data available. Press Play to start streaming.
+                      </div>
 
-                          </div>
+                      <div className="text-xs text-slate-400 mt-1">kcal</div>
 
-                        )}
+                    </div>
+
+                    
+
+                    {/* Duration Card */}
+
+                    <div className="glass rounded-3xl p-5">
+
+                      <h3 className="text-slate-400 text-sm font-medium mb-3">Session Duration</h3>
+
+                      <div className="text-2xl font-bold text-white">
+
+                        {formatDuration(metrics.duration)}
+
+                      </div>
+
+                      <div className="text-xs text-slate-400 mt-1">HH:MM:SS</div>
+
+                    </div>
+
+                  </div>
+
+                  
+
+                  {/* Control Panel */}
+
+                  <div className="glass rounded-3xl p-6">
+
+                    <div className="flex items-center justify-between mb-6">
+
+                      <h2 className="text-lg font-semibold text-white">Controls</h2>
+
+                      <div className="flex items-center gap-2">
+
+                        <div className={\`w-2 h-2 rounded-full \${isPlaying ? 'bg-emerald-500' : 'bg-slate-500'}\`}></div>
+
+                        <span className="text-sm text-slate-400">{metrics.status}</span>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div className="space-y-5">
+
+                      {/* Heart Rate Override */}
+
+                      <div>
+
+                        <div className="flex justify-between items-center mb-2">
+
+                          <label className="text-sm font-medium text-slate-300">Heart Rate Override</label>
+
+                          <span className="text-sm text-sky-400">{hrOverride || 'Auto'}</span>
+
+                        </div>
+
+                        <input
+
+                          type="range"
+
+                          min="60"
+
+                          max="190"
+
+                          step="1"
+
+                          value={hrOverride || 120}
+
+                          onChange={(e) => triggerHr(e.target.value)}
+
+                          className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider-thumb"
+
+                        />
+
+                        <div className="flex justify-between text-xs text-slate-500 mt-1">
+
+                          <span>60 bpm</span>
+
+                          <span>190 bpm</span>
+
+                        </div>
 
                       </div>
 
                       
 
-                      {/* Movement Chart */}
+                      {/* Movement Override */}
 
-                      <div className="flex-1">
+                      <div>
 
-                        <h3 className="text-slate-300 font-medium mb-2">Movement</h3>
+                        <div className="flex justify-between items-center mb-2">
 
-                        {displayData.length > 0 ? (
+                          <label className="text-sm font-medium text-slate-300">Movement Override</label>
 
-                          <ResponsiveContainer width="100%" height="100%">
+                          <span className="text-sm text-orange-400">{accOverride ? accOverride.toFixed(2) : 'Auto'}g</span>
 
-                            <AreaChart data={displayData} syncId="effortSync">
+                        </div>
 
-                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+                        <input
 
-                              <XAxis 
+                          type="range"
 
-                                dataKey="timestamp" 
+                          min="0"
 
-                                tickFormatter={(ts) => {
+                          max="4"
 
-                                  const date = new Date(ts);
+                          step="0.05"
 
-                                  return `${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+                          value={accOverride || 1.0}
 
-                                }}
+                          onChange={(e) => triggerAcc(e.target.value)}
 
-                                stroke="rgba(148,163,184,0.5)"
+                          className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer slider-thumb slider-thumb-orange"
 
-                                fontSize={12}
+                        />
 
-                              />
+                        <div className="flex justify-between text-xs text-slate-500 mt-1">
 
-                              <YAxis 
+                          <span>0g</span>
 
-                                domain={[0, 4.5]} 
+                          <span>4g</span>
 
-                                stroke="rgba(148,163,184,0.5)"
+                        </div>
 
-                                fontSize={12}
+                      </div>
 
-                              />
+                      
 
-                              <Tooltip
+                      {/* Focus Mode */}
 
-                                content={({ active, payload, label }) => {
+                      <div>
 
-                                  if (active && payload && payload.length) {
+                        <label className="text-sm font-medium text-slate-300 block mb-2">Focus Mode</label>
 
-                                    const data = payload[0].payload;
+                        <select
 
-                                    return (
+                          value={focusMode}
 
-                                      <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
+                          onChange={(e) => setFocusMode(e.target.value)}
 
-                                        <p className="text-slate-400 text-sm">
+                          className="w-full glass rounded-2xl px-4 py-2.5 text-slate-300 border border-slate-700 focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
 
-                                          {new Date(label).toLocaleTimeString()}
+                        >
 
-                                        </p>
+                          <option value="mixed">Mixed</option>
 
-                                        <p className="text-orange-400 font-medium">
+                          <option value="cardio">Cardio bias</option>
 
-                                          Movement: {data.acc.toFixed(2)}g
+                          <option value="strength">Strength bias</option>
 
-                                        </p>
+                        </select>
 
-                                        <p className="text-slate-300">
+                      </div>
 
-                                          Effort: {data.effortInstant.toFixed(1)}
+                      
 
-                                        </p>
+                      {/* Action Buttons */}
 
-                                      </div>
+                      <div className="grid grid-cols-2 gap-3 pt-2">
 
-                                    );
+                        <button
 
-                                  }
+                          onClick={() => setIsPlaying(!isPlaying)}
 
-                                  return null;
+                          className="glass rounded-2xl px-4 py-3 font-medium flex items-center justify-center gap-2 transition-colors hover:bg-white/5"
 
-                                }}
+                        >
 
-                              />
+                          {isPlaying ? (
 
-                              <defs>
+                            <>
 
-                                <linearGradient id="movementGradient" x1="0" y1="0" x2="0" y2="1">
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
 
-                                  <stop offset="5%" stopColor="#f97316" stopOpacity={0.8}/>
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
 
-                                  <stop offset="95%" stopColor="#f97316" stopOpacity={0.1}/>
+                              </svg>
 
-                                </linearGradient>
+                              Pause
 
-                              </defs>
+                            </>
 
-                              <Area 
+                          ) : (
 
-                                type="monotone" 
+                            <>
 
-                                dataKey="acc" 
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
 
-                                stroke="#f97316" 
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
 
-                                fill="url(#movementGradient)"
+                              </svg>
 
-                                strokeWidth={1.5}
+                              Play
 
-                                isAnimationActive={false}
+                            </>
 
-                              />
+                          )}
 
-                            </AreaChart>
+                        </button>
 
-                          </ResponsiveContainer>
+                        <button
 
-                        ) : (
+                          onClick={reset}
 
-                          <div className="h-full flex items-center justify-center text-slate-500">
+                          className="glass rounded-2xl px-4 py-3 font-medium flex items-center justify-center gap-2 transition-colors hover:bg-white/5"
 
-                            No data available. Press Play to start streaming.
+                        >
 
-                          </div>
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 
-                        )}
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+
+                          </svg>
+
+                          Reset
+
+                        </button>
+
+                      </div>
+
+                      
+
+                      {/* Speed & Randomize */}
+
+                      <div className="grid grid-cols-2 gap-3">
+
+                        <div>
+
+                          <label className="text-sm font-medium text-slate-300 block mb-2">Speed</label>
+
+                          <select
+
+                            value={speed}
+
+                            onChange={(e) => setSpeed(parseFloat(e.target.value))}
+
+                            className="w-full glass rounded-2xl px-4 py-2.5 text-slate-300 border border-slate-700 focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+
+                          >
+
+                            <option value="0.5">0.5x</option>
+
+                            <option value="1">1x</option>
+
+                            <option value="2">2x</option>
+
+                          </select>
+
+                        </div>
+
+                        <div className="flex items-end">
+
+                          <button
+
+                            onClick={randomize}
+
+                            className="w-full glass rounded-2xl px-4 py-2.5 font-medium flex items-center justify-center gap-2 transition-colors hover:bg-white/5"
+
+                          >
+
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+
+                            </svg>
+
+                            Randomize
+
+                          </button>
+
+                        </div>
 
                       </div>
 
                     </div>
 
-                  ) : (
+                    
 
-                    // Summary View
+                    {/* Helper Text */}
 
-                    <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {showHelper && (
 
-                      {/* Zone Distribution */}
+                      <div className="mt-6 p-4 bg-slate-800/50 rounded-2xl border border-slate-700">
 
-                      <div>
+                        <p className="text-sm text-slate-400 text-center">
 
-                        <h3 className="text-slate-300 font-medium mb-4 text-center">Zone Distribution</h3>
+                          Press <span className="text-sky-400">Play</span> or drag a slider to start the stream.
 
-                        {data.length > 0 ? (
+                        </p>
 
-                          <ResponsiveContainer width="100%" height="100%">
+                      </div>
 
-                            <BarChart data={[
+                    )}
 
-                              { name: 'Zone 1', value: zoneDistribution[0] },
+                  </div>
 
-                              { name: 'Zone 2', value: zoneDistribution[1] },
+                  
 
-                              { name: 'Zone 3', value: zoneDistribution[2] },
+                  {/* Score Factors */}
 
-                              { name: 'Zone 4', value: zoneDistribution[3] },
+                  <div className="glass rounded-3xl p-6">
 
-                              { name: 'Zone 5', value: zoneDistribution[4] }
+                    <h2 className="text-lg font-semibold text-white mb-4">What affects the score</h2>
 
-                            ]}>
+                    <div className="space-y-3">
 
-                              <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+                      {scoreFactors.map((factor, index) => (
 
-                              <XAxis dataKey="name" stroke="rgba(148,163,184,0.5)" fontSize={12} />
+                        <div 
 
-                              <YAxis stroke="rgba(148,163,184,0.5)" fontSize={12} />
+                          key={index}
 
-                              <Tooltip 
+                          className={\`flex items-center gap-3 p-3 rounded-2xl transition-colors \${
 
-                                formatter={(value) => [`${value.toFixed(1)}%`, 'Time in Zone']}
+                            factor.active ? 'bg-sky-500/10 border border-sky-500/30' : 'bg-slate-800/30'
 
-                                contentStyle={{ 
+                          }\`}
 
-                                  background: 'rgba(15, 23, 42, 0.9)', 
+                        >
 
-                                  border: '1px solid rgba(148,163,184,0.2)',
+                          <div className={\`w-2 h-2 rounded-full \${factor.active ? 'bg-sky-500' : 'bg-slate-600'}\`}></div>
 
-                                  borderRadius: '12px'
+                          <span className={\`text-sm \${factor.active ? 'text-sky-400' : 'text-slate-400'}\`}>
 
-                                }}
+                            {factor.name}
 
-                              />
+                          </span>
 
-                              <Bar 
+                        </div>
 
-                                dataKey="value" 
+                      ))}
 
-                                fill="#38bdf8"
+                    </div>
 
-                                radius={[4, 4, 0, 0]}
+                  </div>
 
-                              >
+                </div>
 
-                                {[
+                
+
+                {/* Right Column - Visualizations */}
+
+                <div className="lg:col-span-2">
+
+                  <div className="glass rounded-3xl p-6 h-full">
+
+                    {/* Tab Navigation */}
+
+                    <div className="flex border-b border-slate-700 mb-6">
+
+                      {['live', 'last5', 'summary'].map((tab) => (
+
+                        <button
+
+                          key={tab}
+
+                          onClick={() => setActiveTab(tab)}
+
+                          className={\`px-4 py-2 font-medium text-sm transition-colors relative \${
+
+                            activeTab === tab 
+
+                              ? 'text-sky-400' 
+
+                              : 'text-slate-500 hover:text-slate-300'
+
+                          }\`}
+
+                        >
+
+                          {tab === 'live' && 'Live'}
+
+                          {tab === 'last5' && 'Last 5 min'}
+
+                          {tab === 'summary' && 'Summary'}
+
+                          {activeTab === tab && (
+
+                            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500"></div>
+
+                          )}
+
+                        </button>
+
+                      ))}
+
+                    </div>
+
+                    
+
+                    {/* Chart Content */}
+
+                    <div className="h-[500px]">
+
+                      {activeTab !== 'summary' ? (
+
+                        // Live and Last 5 min views
+
+                        <div className="h-full flex flex-col">
+
+                          {/* Heart Rate Chart */}
+
+                          <div className="flex-1 mb-6">
+
+                            <h3 className="text-slate-300 font-medium mb-2">Heart Rate</h3>
+
+                            {displayData.length > 0 ? (
+
+                              <ResponsiveContainer width="100%" height="100%">
+
+                                <LineChart data={displayData} syncId="effortSync">
+
+                                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+
+                                  <XAxis 
+
+                                    dataKey="timestamp" 
+
+                                    tickFormatter={(ts) => {
+
+                                      const date = new Date(ts);
+
+                                      return \`\${date.getMinutes().toString().padStart(2, '0')}:\${date.getSeconds().toString().padStart(2, '0')}\`;
+
+                                    }}
+
+                                    stroke="rgba(148,163,184,0.5)"
+
+                                    fontSize={12}
+
+                                  />
+
+                                  <YAxis 
+
+                                    domain={[60, 190]} 
+
+                                    stroke="rgba(148,163,184,0.5)"
+
+                                    fontSize={12}
+
+                                  />
+
+                                  <Tooltip
+
+                                    content={({ active, payload, label }) => {
+
+                                      if (active && payload && payload.length) {
+
+                                        const data = payload[0].payload;
+
+                                        return (
+
+                                          <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
+
+                                            <p className="text-slate-400 text-sm">
+
+                                              {new Date(label).toLocaleTimeString()}
+
+                                            </p>
+
+                                            <p className="text-sky-400 font-medium">
+
+                                              HR: {data.hr.toFixed(0)} bpm
+
+                                            </p>
+
+                                            <p className="text-slate-300">
+
+                                              Effort: {data.effortInstant.toFixed(1)}
+
+                                            </p>
+
+                                          </div>
+
+                                        );
+
+                                      }
+
+                                      return null;
+
+                                    }}
+
+                                  />
+
+                                  <ReferenceArea y1={60} y2={100} fill="rgba(56,189,248,0.10)" />
+
+                                  <ReferenceArea y1={100} y2={120} fill="rgba(34,197,94,0.12)" />
+
+                                  <ReferenceArea y1={120} y2={140} fill="rgba(250,204,21,0.14)" />
+
+                                  <ReferenceArea y1={140} y2={160} fill="rgba(249,115,22,0.16)" />
+
+                                  <ReferenceArea y1={160} y2={190} fill="rgba(239,68,68,0.18)" />
+
+                                  <Line 
+
+                                    type="monotone" 
+
+                                    dataKey="hr" 
+
+                                    stroke="#38bdf8" 
+
+                                    strokeWidth={2}
+
+                                    dot={false}
+
+                                    isAnimationActive={false}
+
+                                  />
+
+                                </LineChart>
+
+                              </ResponsiveContainer>
+
+                            ) : (
+
+                              <div className="h-full flex items-center justify-center text-slate-500">
+
+                                No data available. Press Play to start streaming.
+
+                              </div>
+
+                            )}
+
+                          </div>
+
+                          
+
+                          {/* Movement Chart */}
+
+                          <div className="flex-1">
+
+                            <h3 className="text-slate-300 font-medium mb-2">Movement</h3>
+
+                            {displayData.length > 0 ? (
+
+                              <ResponsiveContainer width="100%" height="100%">
+
+                                <AreaChart data={displayData} syncId="effortSync">
+
+                                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
+
+                                  <XAxis 
+
+                                    dataKey="timestamp" 
+
+                                    tickFormatter={(ts) => {
+
+                                      const date = new Date(ts);
+
+                                      return \`\${date.getMinutes().toString().padStart(2, '0')}:\${date.getSeconds().toString().padStart(2, '0')}\`;
+
+                                    }}
+
+                                    stroke="rgba(148,163,184,0.5)"
+
+                                    fontSize={12}
+
+                                  />
+
+                                  <YAxis 
+
+                                    domain={[0, 4.5]} 
+
+                                    stroke="rgba(148,163,184,0.5)"
+
+                                    fontSize={12}
+
+                                  />
+
+                                  <Tooltip
+
+                                    content={({ active, payload, label }) => {
+
+                                      if (active && payload && payload.length) {
+
+                                        const data = payload[0].payload;
+
+                                        return (
+
+                                          <div className="glass rounded-2xl p-3 border border-slate-700 shadow-lg">
+
+                                            <p className="text-slate-400 text-sm">
+
+                                              {new Date(label).toLocaleTimeString()}
+
+                                            </p>
+
+                                            <p className="text-orange-400 font-medium">
+
+                                              Movement: {data.acc.toFixed(2)}g
+
+                                            </p>
+
+                                            <p className="text-slate-300">
+
+                                              Effort: {data.effortInstant.toFixed(1)}
+
+                                            </p>
+
+                                          </div>
+
+                                        );
+
+                                      }
+
+                                      return null;
+
+                                    }}
+
+                                  />
+
+                                  <defs>
+
+                                    <linearGradient id="movementGradient" x1="0" y1="0" x2="0" y2="1">
+
+                                      <stop offset="5%" stopColor="#f97316" stopOpacity={0.8}/>
+
+                                      <stop offset="95%" stopColor="#f97316" stopOpacity={0.1}/>
+
+                                    </linearGradient>
+
+                                  </defs>
+
+                                  <Area 
+
+                                    type="monotone" 
+
+                                    dataKey="acc" 
+
+                                    stroke="#f97316" 
+
+                                    fill="url(#movementGradient)"
+
+                                    strokeWidth={1.5}
+
+                                    isAnimationActive={false}
+
+                                  />
+
+                                </AreaChart>
+
+                              </ResponsiveContainer>
+
+                            ) : (
+
+                              <div className="h-full flex items-center justify-center text-slate-500">
+
+                                No data available. Press Play to start streaming.
+
+                              </div>
+
+                            )}
+
+                          </div>
+
+                        </div>
+
+                      ) : (
+
+                        // Summary View
+
+                        <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                          {/* Zone Distribution */}
+
+                          <div>
+
+                            <h3 className="text-slate-300 font-medium mb-4 text-center">Zone Distribution</h3>
+
+                            {data.length > 0 ? (
+
+                              <ResponsiveContainer width="100%" height="100%">
+
+                                <BarChart data={[
 
                                   { name: 'Zone 1', value: zoneDistribution[0] },
 
@@ -1962,285 +1940,345 @@
 
                                   { name: 'Zone 5', value: zoneDistribution[4] }
 
-                                ].map((entry, index) => (
+                                ]}>
 
-                                  <Cell key={`cell-${index}`} fill="#38bdf8" />
+                                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
 
-                                ))}
+                                  <XAxis dataKey="name" stroke="rgba(148,163,184,0.5)" fontSize={12} />
 
-                              </Bar>
+                                  <YAxis stroke="rgba(148,163,184,0.5)" fontSize={12} />
 
-                            </BarChart>
+                                  <Tooltip 
 
-                          </ResponsiveContainer>
+                                    formatter={(value) => [\`\${value.toFixed(1)}%\`, 'Time in Zone']}
 
-                        ) : (
+                                    contentStyle={{ 
 
-                          <div className="h-full flex items-center justify-center text-slate-500">
+                                      background: 'rgba(15, 23, 42, 0.9)', 
 
-                            No data available
+                                      border: '1px solid rgba(148,163,184,0.2)',
+
+                                      borderRadius: '12px'
+
+                                    }}
+
+                                  />
+
+                                  <Bar 
+
+                                    dataKey="value" 
+
+                                    fill="#38bdf8"
+
+                                    radius={[4, 4, 0, 0]}
+
+                                  >
+
+                                    {[
+
+                                      { name: 'Zone 1', value: zoneDistribution[0] },
+
+                                      { name: 'Zone 2', value: zoneDistribution[1] },
+
+                                      { name: 'Zone 3', value: zoneDistribution[2] },
+
+                                      { name: 'Zone 4', value: zoneDistribution[3] },
+
+                                      { name: 'Zone 5', value: zoneDistribution[4] }
+
+                                    ].map((entry, index) => (
+
+                                      <Cell key={\`cell-\${index}\`} fill="#38bdf8" />
+
+                                    ))}
+
+                                  </Bar>
+
+                                </BarChart>
+
+                              </ResponsiveContainer>
+
+                            ) : (
+
+                              <div className="h-full flex items-center justify-center text-slate-500">
+
+                                No data available
+
+                              </div>
+
+                            )}
 
                           </div>
 
-                        )}
+                          
+
+                          {/* Intensity Radar */}
+
+                          <div>
+
+                            <h3 className="text-slate-300 font-medium mb-4 text-center">Intensity Profile</h3>
+
+                            {data.length > 0 ? (
+
+                              <ResponsiveContainer width="100%" height="100%">
+
+                                <RadarChart data={radarData}>
+
+                                  <PolarGrid stroke="rgba(148,163,184,0.2)" />
+
+                                  <PolarAngleAxis 
+
+                                    dataKey="subject" 
+
+                                    tick={{ fill: 'rgba(148,163,184,0.8)', fontSize: 12 }}
+
+                                  />
+
+                                  <PolarRadiusAxis 
+
+                                    angle={90} 
+
+                                    domain={[0, 100]}
+
+                                    tick={{ fill: 'rgba(148,163,184,0.5)', fontSize: 10 }}
+
+                                  />
+
+                                  <Radar
+
+                                    name="Intensity"
+
+                                    dataKey="value"
+
+                                    stroke="#f472b6"
+
+                                    fill="#f472b6"
+
+                                    fillOpacity={0.35}
+
+                                  />
+
+                                </RadarChart>
+
+                              </ResponsiveContainer>
+
+                            ) : (
+
+                              <div className="h-full flex items-center justify-center text-slate-500">
+
+                                No data available
+
+                              </div>
+
+                            )}
+
+                          </div>
+
+                        </div>
+
+                      )}
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              
+
+              {/* Info Modal */}
+
+              {showInfoModal && (
+
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+
+                  <div className="glass rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+
+                    <div className="flex justify-between items-center mb-6">
+
+                      <h2 className="text-xl font-bold text-white">About Effort Score</h2>
+
+                      <button
+
+                        onClick={() => setShowInfoModal(false)}
+
+                        className="text-slate-400 hover:text-white transition-colors"
+
+                      >
+
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+
+                        </svg>
+
+                      </button>
+
+                    </div>
+
+                    
+
+                    <div className="space-y-4 text-slate-300">
+
+                      <p>
+
+                        The Effort Score algorithm combines heart rate and movement data to calculate
+
+                        a comprehensive measure of physical exertion during exercise.
+
+                      </p>
+
+                      
+
+                      <div className="bg-slate-800/50 rounded-2xl p-4">
+
+                        <h3 className="font-semibold text-white mb-2">Formula</h3>
+
+                        <p className="font-mono text-sm bg-slate-900/50 p-3 rounded-xl">
+
+                          eₜ = 100 × smooth_avg₁₀(zoneWeight × movementFactor)
+
+                        </p>
 
                       </div>
 
                       
 
-                      {/* Intensity Radar */}
+                      <div>
+
+                        <h3 className="font-semibold text-white mb-2">Heart Rate Zones</h3>
+
+                        <ul className="space-y-2 text-sm">
+
+                          <li className="flex justify-between">
+
+                            <span>Zone 1: &lt;100 bpm</span>
+
+                            <span className="text-sky-400">Weight: 0.2</span>
+
+                          </li>
+
+                          <li className="flex justify-between">
+
+                            <span>Zone 2: 100-119 bpm</span>
+
+                            <span className="text-sky-400">Weight: 0.4</span>
+
+                          </li>
+
+                          <li className="flex justify-between">
+
+                            <span>Zone 3: 120-139 bpm</span>
+
+                            <span className="text-sky-400">Weight: 0.7</span>
+
+                          </li>
+
+                          <li className="flex justify-between">
+
+                            <span>Zone 4: 140-159 bpm</span>
+
+                            <span className="text-sky-400">Weight: 1.0</span>
+
+                          </li>
+
+                          <li className="flex justify-between">
+
+                            <span>Zone 5: ≥160 bpm</span>
+
+                            <span className="text-sky-400">Weight: 1.3</span>
+
+                          </li>
+
+                        </ul>
+
+                      </div>
+
+                      
 
                       <div>
 
-                        <h3 className="text-slate-300 font-medium mb-4 text-center">Intensity Profile</h3>
+                        <h3 className="font-semibold text-white mb-2">Movement Factor</h3>
 
-                        {data.length > 0 ? (
+                        <p className="text-sm">
 
-                          <ResponsiveContainer width="100%" height="100%">
+                          Based on g-force (0-1.2 range): clamp(0.2 + 0.25 × acceleration, 0.0, 1.2)
 
-                            <RadarChart data={radarData}>
+                        </p>
 
-                              <PolarGrid stroke="rgba(148,163,184,0.2)" />
+                      </div>
 
-                              <PolarAngleAxis 
+                      
 
-                                dataKey="subject" 
+                      <div>
 
-                                tick={{ fill: 'rgba(148,163,184,0.8)', fontSize: 12 }}
+                        <h3 className="font-semibold text-white mb-2">Focus Mode Multipliers</h3>
 
-                              />
+                        <ul className="space-y-2 text-sm">
 
-                              <PolarRadiusAxis 
+                          <li><span className="text-sky-400">Cardio bias</span>: HR weight × 1.15, Movement × 0.9</li>
 
-                                angle={90} 
+                          <li><span className="text-orange-400">Strength bias</span>: Movement × 1.15, HR weight × 0.9</li>
 
-                                domain={[0, 100]}
+                          <li><span className="text-slate-400">Mixed</span>: No adjustment</li>
 
-                                tick={{ fill: 'rgba(148,163,184,0.5)', fontSize: 10 }}
-
-                              />
-
-                              <Radar
-
-                                name="Intensity"
-
-                                dataKey="value"
-
-                                stroke="#f472b6"
-
-                                fill="#f472b6"
-
-                                fillOpacity={0.35}
-
-                              />
-
-                            </RadarChart>
-
-                          </ResponsiveContainer>
-
-                        ) : (
-
-                          <div className="h-full flex items-center justify-center text-slate-500">
-
-                            No data available
-
-                          </div>
-
-                        )}
+                        </ul>
 
                       </div>
 
                     </div>
 
-                  )}
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          
-
-          {/* Info Modal */}
-
-          {showInfoModal && (
-
-            <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-
-              <div className="glass rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-
-                <div className="flex justify-between items-center mb-6">
-
-                  <h2 className="text-xl font-bold text-white">About Effort Score</h2>
-
-                  <button
-
-                    onClick={() => setShowInfoModal(false)}
-
-                    className="text-slate-400 hover:text-white transition-colors"
-
-                  >
-
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-
-                    </svg>
-
-                  </button>
-
-                </div>
-
-                
-
-                <div className="space-y-4 text-slate-300">
-
-                  <p>
-
-                    The Effort Score algorithm combines heart rate and movement data to calculate
-
-                    a comprehensive measure of physical exertion during exercise.
-
-                  </p>
-
-                  
-
-                  <div className="bg-slate-800/50 rounded-2xl p-4">
-
-                    <h3 className="font-semibold text-white mb-2">Formula</h3>
-
-                    <p className="font-mono text-sm bg-slate-900/50 p-3 rounded-xl">
-
-                      eₜ = 100 × smooth_avg₁₀(zoneWeight × movementFactor)
-
-                    </p>
-
-                  </div>
-
-                  
-
-                  <div>
-
-                    <h3 className="font-semibold text-white mb-2">Heart Rate Zones</h3>
-
-                    <ul className="space-y-2 text-sm">
-
-                      <li className="flex justify-between">
-
-                        <span>Zone 1: &lt;100 bpm</span>
-
-                        <span className="text-sky-400">Weight: 0.2</span>
-
-                      </li>
-
-                      <li className="flex justify-between">
-
-                        <span>Zone 2: 100-119 bpm</span>
-
-                        <span className="text-sky-400">Weight: 0.4</span>
-
-                      </li>
-
-                      <li className="flex justify-between">
-
-                        <span>Zone 3: 120-139 bpm</span>
-
-                        <span className="text-sky-400">Weight: 0.7</span>
-
-                      </li>
-
-                      <li className="flex justify-between">
-
-                        <span>Zone 4: 140-159 bpm</span>
-
-                        <span className="text-sky-400">Weight: 1.0</span>
-
-                      </li>
-
-                      <li className="flex justify-between">
-
-                        <span>Zone 5: ≥160 bpm</span>
-
-                        <span className="text-sky-400">Weight: 1.3</span>
-
-                      </li>
-
-                    </ul>
-
-                  </div>
-
-                  
-
-                  <div>
-
-                    <h3 className="font-semibold text-white mb-2">Movement Factor</h3>
-
-                    <p className="text-sm">
-
-                      Based on g-force (0-1.2 range): clamp(0.2 + 0.25 × acceleration, 0.0, 1.2)
-
-                    </p>
-
-                  </div>
-
-                  
-
-                  <div>
-
-                    <h3 className="font-semibold text-white mb-2">Focus Mode Multipliers</h3>
-
-                    <ul className="space-y-2 text-sm">
-
-                      <li><span className="text-sky-400">Cardio bias</span>: HR weight × 1.15, Movement × 0.9</li>
-
-                      <li><span className="text-orange-400">Strength bias</span>: Movement × 1.15, HR weight × 0.9</li>
-
-                      <li><span className="text-slate-400">Mixed</span>: No adjustment</li>
-
-                    </ul>
-
                   </div>
 
                 </div>
 
-              </div>
+              )}
+
+              
+
+              {/* Toast Notification */}
+
+              {toast.show && (
+
+                <div className={\`fixed bottom-6 right-6 glass rounded-2xl px-4 py-3 flex items-center gap-3 transition-all duration-300 \${
+
+                  toast.type === 'error' ? 'border-l-4 border-red-500' : 'border-l-4 border-emerald-500'
+
+                }\`}>
+
+                  <div className={\`w-2 h-2 rounded-full \${toast.type === 'error' ? 'bg-red-500' : 'bg-emerald-500'}\`}></div>
+
+                  <span className="text-sm font-medium">{toast.message}</span>
+
+                </div>
+
+              )}
 
             </div>
 
-          )}
+          );
 
-          
+        };
 
-          {/* Toast Notification */}
 
-          {toast.show && (
 
-            <div className={`fixed bottom-6 right-6 glass rounded-2xl px-4 py-3 flex items-center gap-3 transition-all duration-300 ${
+        // Render the app
 
-              toast.type === 'error' ? 'border-l-4 border-red-500' : 'border-l-4 border-emerald-500'
+        ReactDOM.render(<App />, document.getElementById('root'));
 
-            }`}>
+      `;
 
-              <div className={`w-2 h-2 rounded-full ${toast.type === 'error' ? 'bg-red-500' : 'bg-emerald-500'}`}></div>
+      document.body.appendChild(script);
 
-              <span className="text-sm font-medium">{toast.message}</span>
+    }
 
-            </div>
 
-          )}
 
-        </div>
+    // Start loading dependencies
 
-      );
-
-    };
-
-    // Render the app
-
-    ReactDOM.render(<App />, document.getElementById('root'));
+    setTimeout(loadDependencies, 100);
 
   </script>
 
