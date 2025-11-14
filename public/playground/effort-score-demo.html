@@ -673,21 +673,7 @@
 <body>
 
   <div id="root">
-
-    <div class="flex flex-col items-center justify-center min-h-screen">
-
-      <div class="glass rounded-3xl p-8 max-w-md text-center">
-
-        <div class="loading-spinner mx-auto mb-4"></div>
-
-        <h2 class="text-xl font-bold text-white mb-2">Starting Smart Workout Tracker</h2>
-
-        <p class="text-slate-400">Loading your fitness journey...</p>
-
-      </div>
-
-    </div>
-
+    <!-- Content will be rendered here immediately -->
   </div>
 
 
@@ -988,17 +974,33 @@
 
       const BASE_INTERVAL_MS = 1000;
 
+      // Cache for exercise lookups to improve performance
+      const exerciseCache = new Map();
+      function getExerciseById(exerciseId) {
+        if (exerciseCache.has(exerciseId)) {
+          return exerciseCache.get(exerciseId);
+        }
+        const exercise = Object.values(exercises)
+          .flatMap(group => Object.entries(group.exercises))
+          .find(([id]) => id === exerciseId)?.[1];
+        if (exercise) {
+          exerciseCache.set(exerciseId, exercise);
+        }
+        return exercise;
+      }
 
+      // Pre-populate cache on initialization
+      Object.values(exercises).forEach(group => {
+        Object.entries(group.exercises).forEach(([id, exercise]) => {
+          exerciseCache.set(id, exercise);
+        });
+      });
 
       // Data generation for active workout
 
       function generateExerciseData(exerciseId, intensity) {
 
-        const exercise = Object.values(exercises)
-
-          .flatMap(group => Object.entries(group.exercises))
-
-          .find(([id]) => id === exerciseId)?.[1];
+        const exercise = getExerciseById(exerciseId);
 
         
 
@@ -1113,7 +1115,15 @@
 
         
 
-        renderApp();
+        // Throttle rendering during active workout to improve performance
+        // Only render once per animation frame (max 60fps)
+        if (!state.currentSession._renderPending) {
+          state.currentSession._renderPending = true;
+          requestAnimationFrame(() => {
+            renderApp();
+            state.currentSession._renderPending = false;
+          });
+        }
 
       }
 
@@ -1291,31 +1301,31 @@
 
         state.selectedExercises = template.exercises.map(exerciseId => {
 
-          // Find exercise details
+          // Find exercise details using cached lookup
 
-          const exercise = Object.values(exercises)
-
-            .flatMap(group => Object.entries(group.exercises))
-
-            .find(([id]) => id === exerciseId)?.[1];
+          const exercise = getExerciseById(exerciseId);
 
           
 
-          return exercise ? {
-
+          if (!exercise) return null;
+          
+          // Find category efficiently
+          let category = null;
+          for (const cat of Object.keys(exercises)) {
+            if (exercises[cat].exercises[exerciseId]) {
+              category = cat;
+              break;
+            }
+          }
+          
+          return {
             id: exerciseId,
-
             name: exercise.name,
-
-            category: Object.keys(exercises).find(cat => exercises[cat].exercises[exerciseId]),
-
+            category: category,
             type: exercise.type,
-
             intensity: '2RepsFromFailure',
-
             duration: 10
-
-          } : null;
+          };
 
         }).filter(Boolean);
 
@@ -1975,9 +1985,14 @@
 
 
 
-    // Start the application
-
-    setTimeout(initializeApp, 100);
+    // Start the application immediately
+    // Use DOMContentLoaded or immediate execution for faster loading
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeApp);
+    } else {
+      // DOM already loaded, execute immediately
+      initializeApp();
+    }
 
   </script>
 
