@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Effort Score Demo</title>
+  <title>Smart Workout Tracker</title>
 
   <style>
 
@@ -39,6 +39,10 @@
       --orange-400: #fb923c;
 
       --orange-500: #f97316;
+
+      --purple-400: #a78bfa;
+
+      --purple-500: #8b5cf6;
 
       --slate-300: #cbd5e1;
 
@@ -146,6 +150,8 @@
 
 
 
+    .space-y-2 > * + * { margin-top: 0.5rem; }
+
     .space-y-3 > * + * { margin-top: 0.75rem; }
 
     .space-y-4 > * + * { margin-top: 1rem; }
@@ -154,6 +160,8 @@
 
 
 
+    .p-3 { padding: 0.75rem; }
+
     .p-4 { padding: 1rem; }
 
     .p-5 { padding: 1.25rem; }
@@ -161,6 +169,8 @@
     .p-6 { padding: 1.5rem; }
 
     .p-8 { padding: 2rem; }
+
+    .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
 
     .px-4 { padding-left: 1rem; padding-right: 1rem; }
 
@@ -186,6 +196,8 @@
 
     .mt-4 { margin-top: 1rem; }
 
+    .mt-6 { margin-top: 1.5rem; }
+
 
 
     .w-full { width: 100%; }
@@ -202,8 +214,6 @@
 
     .h-20 { height: 5rem; }
 
-    .h-\[500px\] { height: 500px; }
-
     .min-h-screen { min-height: 100vh; }
 
 
@@ -218,6 +228,8 @@
 
     .text-emerald-400 { color: var(--emerald-400); }
 
+    .text-purple-400 { color: var(--purple-400); }
+
     .text-slate-300 { color: var(--slate-300); }
 
     .text-slate-400 { color: var(--slate-400); }
@@ -230,17 +242,21 @@
 
     .bg-orange-500 { background-color: var(--orange-500); }
 
+    .bg-purple-500 { background-color: var(--purple-500); }
+
     .bg-slate-700 { background-color: var(--slate-700); }
 
     .bg-slate-800 { background-color: var(--slate-800); }
 
-    .bg-slate-800\\/50 { background-color: rgba(30, 41, 59, 0.5); }
+    .bg-slate-800-50 { background-color: rgba(30, 41, 59, 0.5); }
 
-    .bg-sky-500\\/20 { background-color: rgba(14, 165, 233, 0.2); }
+    .bg-sky-500-20 { background-color: rgba(14, 165, 233, 0.2); }
 
-    .bg-emerald-500\\/20 { background-color: rgba(16, 185, 129, 0.2); }
+    .bg-emerald-500-20 { background-color: rgba(16, 185, 129, 0.2); }
 
-    .bg-orange-500\\/20 { background-color: rgba(249, 115, 22, 0.2); }
+    .bg-orange-500-20 { background-color: rgba(249, 115, 22, 0.2); }
+
+    .bg-purple-500-20 { background-color: rgba(139, 92, 246, 0.2); }
 
 
 
@@ -249,6 +265,8 @@
     .border-slate-700 { border-color: var(--slate-700); }
 
     .border-emerald-500 { border-color: var(--emerald-500); }
+
+    .border-sky-500 { border-color: var(--sky-500); }
 
 
 
@@ -284,6 +302,8 @@
 
     .z-50 { z-index: 50; }
 
+    .mx-auto { margin-left: auto; margin-right: auto; }
+
 
 
     .max-w-md { max-width: 28rem; }
@@ -295,6 +315,8 @@
 
 
     .overflow-y-auto { overflow-y: auto; }
+
+    .overflow-x-auto { overflow-x: auto; }
 
 
 
@@ -410,6 +432,26 @@
 
 
 
+    select {
+
+      background: rgba(15, 23, 42, 0.75);
+
+      border: 1px solid var(--slate-700);
+
+      border-radius: 0.5rem;
+
+      color: var(--slate-300);
+
+      padding: 0.5rem;
+
+      cursor: pointer;
+
+      outline: none;
+
+    }
+
+
+
     .workout-card {
 
       transition: all 0.3s ease;
@@ -514,6 +556,90 @@
 
 
 
+    .exercise-group {
+
+      border-left: 3px solid var(--slate-700);
+
+      padding-left: 1rem;
+
+      margin-left: 0.5rem;
+
+    }
+
+
+
+    .exercise-item {
+
+      padding: 0.75rem;
+
+      border-radius: 0.75rem;
+
+      background: rgba(30, 41, 59, 0.3);
+
+      margin-bottom: 0.5rem;
+
+      cursor: pointer;
+
+      transition: all 0.2s ease;
+
+    }
+
+
+
+    .exercise-item:hover {
+
+      background: rgba(30, 41, 59, 0.5);
+
+    }
+
+
+
+    .exercise-item.selected {
+
+      background: rgba(14, 165, 233, 0.2);
+
+      border: 1px solid var(--sky-500);
+
+    }
+
+
+
+    .effort-badge {
+
+      padding: 0.25rem 0.75rem;
+
+      border-radius: 1rem;
+
+      font-size: 0.75rem;
+
+      font-weight: 600;
+
+    }
+
+
+
+    .effort-low { background: var(--emerald-500); color: white; }
+
+    .effort-medium { background: var(--orange-500); color: white; }
+
+    .effort-high { background: #ef4444; color: white; }
+
+
+
+    .workout-session {
+
+      border-left: 4px solid var(--sky-500);
+
+      padding: 1rem;
+
+      margin-bottom: 1rem;
+
+      background: rgba(30, 41, 59, 0.3);
+
+    }
+
+
+
     @media (min-width: 768px) {
 
       .md\\:p-6 { padding: 1.5rem; }
@@ -536,6 +662,8 @@
 
       .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
+      .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
     }
 
   </style>
@@ -552,9 +680,9 @@
 
         <div class="loading-spinner mx-auto mb-4"></div>
 
-        <h2 class="text-xl font-bold text-white mb-2">Starting Workout Tracker</h2>
+        <h2 class="text-xl font-bold text-white mb-2">Starting Smart Workout Tracker</h2>
 
-        <p class="text-slate-400">Loading application...</p>
+        <p class="text-slate-400">Loading your fitness journey...</p>
 
       </div>
 
@@ -640,45 +768,141 @@
 
 
 
+      const getEffortLevel = (score) => {
+
+        if (score < 30) return { level: 'Low', description: 'Light activity - great for recovery days', color: 'effort-low' };
+
+        if (score < 60) return { level: 'Medium', description: 'Moderate effort - ideal for consistent training', color: 'effort-medium' };
+
+        return { level: 'High', description: 'High intensity - excellent for pushing limits', color: 'effort-high' };
+
+      };
+
+
+
       // Application state
 
       const state = {
 
-        // Workout selection
+        currentView: 'dashboard', // 'dashboard', 'logWorkout', 'activeWorkout', 'history'
 
-        selectedWorkout: null,
+        selectedExercises: [],
 
-        selectedIntensity: 'medium',
+        workoutSessions: [],
 
-        workoutDuration: 20, // minutes
+        currentSession: null
 
-        workoutProgress: 0,
+      };
 
-        
 
-        // Active workout
 
-        isActive: false,
+      // Exercise database with subgroups
 
-        isPaused: false,
+      const exercises = {
 
-        elapsedTime: 0,
+        cardio: {
 
-        
+          name: "Cardio",
 
-        // Data
+          icon: "🏃",
 
-        data: [],
+          exercises: {
 
-        metrics: {
+            running: { name: "Running", baseHR: 140, baseAcc: 0.8, type: "cardio" },
 
-          effortScore: 0,
+            cycling: { name: "Cycling", baseHR: 130, baseAcc: 0.6, type: "cardio" },
 
-          calories: 0,
+            rowing: { name: "Rowing", baseHR: 135, baseAcc: 1.1, type: "cardio" },
 
-          currentHeartRate: 0,
+            swimming: { name: "Swimming", baseHR: 125, baseAcc: 0.7, type: "cardio" },
 
-          currentMovement: 0
+            jumpRope: { name: "Jump Rope", baseHR: 145, baseAcc: 1.4, type: "cardio" }
+
+          }
+
+        },
+
+        upperBody: {
+
+          name: "Upper Body",
+
+          icon: "💪", 
+
+          exercises: {
+
+            benchPress: { name: "Bench Press", baseHR: 110, baseAcc: 1.3, type: "strength" },
+
+            shoulderPress: { name: "Shoulder Press", baseHR: 105, baseAcc: 1.1, type: "strength" },
+
+            bicepCurls: { name: "Bicep Curls", baseHR: 95, baseAcc: 0.8, type: "strength" },
+
+            tricepExtensions: { name: "Tricep Extensions", baseHR: 98, baseAcc: 0.9, type: "strength" },
+
+            pullUps: { name: "Pull-ups", baseHR: 115, baseAcc: 1.2, type: "strength" }
+
+          }
+
+        },
+
+        lowerBody: {
+
+          name: "Lower Body",
+
+          icon: "🦵",
+
+          exercises: {
+
+            squats: { name: "Squats", baseHR: 120, baseAcc: 1.6, type: "strength" },
+
+            deadlifts: { name: "Deadlifts", baseHR: 125, baseAcc: 1.8, type: "strength" },
+
+            lunges: { name: "Lunges", baseHR: 110, baseAcc: 1.2, type: "strength" },
+
+            legPress: { name: "Leg Press", baseHR: 115, baseAcc: 1.4, type: "strength" },
+
+            calfRaises: { name: "Calf Raises", baseHR: 90, baseAcc: 0.7, type: "strength" }
+
+          }
+
+        },
+
+        core: {
+
+          name: "Core",
+
+          icon: "🎯",
+
+          exercises: {
+
+            planks: { name: "Planks", baseHR: 100, baseAcc: 0.5, type: "strength" },
+
+            crunches: { name: "Crunches", baseHR: 102, baseAcc: 0.6, type: "strength" },
+
+            russianTwists: { name: "Russian Twists", baseHR: 105, baseAcc: 0.8, type: "strength" },
+
+            legRaises: { name: "Leg Raises", baseHR: 98, baseAcc: 0.7, type: "strength" },
+
+            mountainClimbers: { name: "Mountain Climbers", baseHR: 125, baseAcc: 1.3, type: "cardio" }
+
+          }
+
+        },
+
+        flexibility: {
+
+          name: "Flexibility",
+
+          icon: "🧘",
+
+          exercises: {
+
+            yoga: { name: "Yoga Flow", baseHR: 90, baseAcc: 0.3, type: "mixed" },
+
+            stretching: { name: "Stretching", baseHR: 85, baseAcc: 0.2, type: "mixed" },
+
+            pilates: { name: "Pilates", baseHR: 100, baseAcc: 0.6, type: "mixed" }
+
+          }
 
         }
 
@@ -686,103 +910,47 @@
 
 
 
-      // Workout definitions
+      // Workout templates
 
-      const workouts = {
+      const workoutTemplates = {
 
-        running: {
+        pushDay: {
 
-          name: "Running",
+          name: "Push Day",
 
-          type: "cardio",
-
-          icon: "🏃",
-
-          description: "Steady pace running",
-
-          baseHR: 140,
-
-          baseAcc: 0.8
+          exercises: ['benchPress', 'shoulderPress', 'tricepExtensions', 'mountainClimbers']
 
         },
 
-        cycling: {
+        pullDay: {
 
-          name: "Cycling", 
+          name: "Pull Day", 
 
-          type: "cardio",
-
-          icon: "🚴",
-
-          description: "Stationary cycling",
-
-          baseHR: 130,
-
-          baseAcc: 0.6
+          exercises: ['pullUps', 'bicepCurls']
 
         },
 
-        weights: {
+        legDay: {
 
-          name: "Weight Training",
+          name: "Leg Day",
 
-          type: "strength", 
-
-          icon: "🏋️",
-
-          description: "Free weights & machines",
-
-          baseHR: 110,
-
-          baseAcc: 1.2
+          exercises: ['squats', 'deadlifts', 'lunges', 'calfRaises']
 
         },
 
-        hiit: {
+        fullBody: {
 
-          name: "HIIT",
+          name: "Full Body",
 
-          type: "mixed",
-
-          icon: "⚡", 
-
-          description: "High intensity intervals",
-
-          baseHR: 150,
-
-          baseAcc: 1.5
+          exercises: ['squats', 'benchPress', 'pullUps', 'planks', 'running']
 
         },
 
-        yoga: {
+        cardioDay: {
 
-          name: "Yoga",
+          name: "Cardio Focus",
 
-          type: "mixed",
-
-          icon: "🧘",
-
-          description: "Flow & holding poses",
-
-          baseHR: 90,
-
-          baseAcc: 0.3
-
-        },
-
-        boxing: {
-
-          name: "Boxing",
-
-          type: "strength",
-
-          icon: "🥊",
-
-          description: "Punching combinations",
-
-          baseHR: 135,
-
-          baseAcc: 1.8
+          exercises: ['running', 'cycling', 'jumpRope', 'mountainClimbers']
 
         }
 
@@ -804,87 +972,67 @@
 
 
 
-      // Internal state
+      // Internal state for active workout
 
-      let dataBuffer = [];
+      let activeWorkoutData = [];
 
-      let intervalId = null;
+      let workoutIntervalId = null;
 
       let hrPhase = 0;
 
       let accPhase = 0;
 
-
-
-      const BASE_INTERVAL_MS = 1000; // 1 second updates
-
-      const MAX_BUFFER = 600; // 10 minutes of data
+      let elapsedTime = 0;
 
 
 
-      // Data generation based on selected workout
+      const BASE_INTERVAL_MS = 1000;
 
-      function generateWorkoutData() {
 
-        if (!state.selectedWorkout) return { hr: 0, acc: 0 };
 
-        
+      // Data generation for active workout
 
-        const workout = workouts[state.selectedWorkout];
+      function generateExerciseData(exerciseId, intensity) {
 
-        const intensity = intensityMultipliers[state.selectedIntensity];
+        const exercise = Object.values(exercises)
+
+          .flatMap(group => Object.entries(group.exercises))
+
+          .find(([id]) => id === exerciseId)?.[1];
 
         
 
-        // Base values from workout definition
-
-        let baseHr = workout.baseHR * intensity.hr;
-
-        let baseAcc = workout.baseAcc * intensity.acc;
+        if (!exercise) return { hr: 0, acc: 0 };
 
         
 
-        // Add variation based on workout type
+        const multiplier = intensityMultipliers[intensity];
 
-        if (workout.type === 'cardio') {
+        let baseHr = exercise.baseHR * multiplier.hr;
 
-          baseHr += 20 * Math.sin(hrPhase);
-
-          baseAcc += 0.3 * Math.sin(accPhase);
-
-        } else if (workout.type === 'strength') {
-
-          // Simulate sets and reps - bursts of activity
-
-          const inSet = Math.sin(hrPhase * 2) > 0.5;
-
-          baseHr += inSet ? 25 : 5;
-
-          baseAcc += inSet ? 0.8 : 0.2;
-
-        } else {
-
-          // Mixed workouts
-
-          baseHr += 15 * Math.sin(hrPhase * 1.5);
-
-          baseAcc += 0.5 * Math.sin(accPhase * 2);
-
-        }
+        let baseAcc = exercise.baseAcc * multiplier.acc;
 
         
 
-        // Add some random noise
+        // Add realistic variation
 
-        baseHr += (Math.random() - 0.5) * 10;
+        baseHr += (Math.random() - 0.5) * 15;
 
-        baseAcc += (Math.random() - 0.5) * 0.2;
+        baseAcc += (Math.random() - 0.5) * 0.3;
 
         
 
-        hrPhase += 0.05;
+        // Add some phase-based variation for realism
 
-        accPhase += 0.1;
+        baseHr += 10 * Math.sin(hrPhase);
+
+        baseAcc += 0.2 * Math.sin(accPhase);
+
+        
+
+        hrPhase += 0.1;
+
+        accPhase += 0.15;
 
         
 
@@ -900,27 +1048,27 @@
 
 
 
-      function processTick() {
+      function processWorkoutTick() {
 
-        if (!state.selectedWorkout || state.isPaused) return;
-
-        
-
-        const { hr, acc } = generateWorkoutData();
-
-        const workout = workouts[state.selectedWorkout];
-
-        const effortInstant = computeEffort(hr, acc, workout.type);
+        if (!state.currentSession) return;
 
         
 
-        const previousEma = dataBuffer.length > 0 
+        elapsedTime++;
 
-          ? dataBuffer[dataBuffer.length - 1].effortEma 
+        
 
-          : effortInstant;
+        // Generate data for current exercise (simulate switching between exercises)
 
-        const effortEma = previousEma + 0.08 * (effortInstant - previousEma);
+        const exerciseIndex = Math.floor(elapsedTime / 300) % state.currentSession.exercises.length; // Switch every 5 minutes
+
+        const currentExercise = state.currentSession.exercises[exerciseIndex];
+
+        const { hr, acc } = generateExerciseData(currentExercise.id, currentExercise.intensity);
+
+        
+
+        const effortInstant = computeEffort(hr, acc, currentExercise.type);
 
         
 
@@ -932,57 +1080,101 @@
 
           acc,
 
-          zone: computeZone(hr).zone,
+          exercise: currentExercise.name,
 
           effortInstant,
 
-          effortEma: clamp(effortEma, 0, 100)
+          effortEma: effortInstant // Simplified for demo
 
         };
 
         
 
-        dataBuffer = [...dataBuffer, newPoint].slice(-MAX_BUFFER);
-
-        state.data = dataBuffer;
+        activeWorkoutData.push(newPoint);
 
         
 
-        // Update metrics
+        // Update session metrics
 
-        const kcalPerMinute = 0.06 * hr + 0.5 * acc;
+        state.currentSession.currentHeartRate = hr;
 
-        state.metrics = {
+        state.currentSession.currentMovement = acc;
 
-          effortScore: newPoint.effortEma,
+        state.currentSession.currentEffort = effortInstant;
 
-          calories: state.metrics.calories + (kcalPerMinute / 60),
+        state.currentSession.elapsedTime = elapsedTime;
 
-          currentHeartRate: hr,
-
-          currentMovement: acc
-
-        };
+        state.currentSession.calories += (0.06 * hr + 0.5 * acc) / 60;
 
         
 
-        // Update progress
+        renderApp();
 
-        state.elapsedTime += 1;
+      }
 
-        state.workoutProgress = (state.elapsedTime / (state.workoutDuration * 60)) * 100;
+
+
+      // Workout management functions
+
+      function startNewWorkout() {
+
+        state.currentView = 'logWorkout';
+
+        state.selectedExercises = [];
+
+        renderApp();
+
+      }
+
+
+
+      function selectExercise(category, exerciseId) {
+
+        const exercise = exercises[category].exercises[exerciseId];
+
+        const existingIndex = state.selectedExercises.findIndex(e => e.id === exerciseId);
 
         
 
-        // Check if workout is complete
+        if (existingIndex >= 0) {
 
-        if (state.elapsedTime >= state.workoutDuration * 60) {
+          state.selectedExercises.splice(existingIndex, 1);
 
-          completeWorkout();
+        } else {
+
+          state.selectedExercises.push({
+
+            id: exerciseId,
+
+            name: exercise.name,
+
+            category: category,
+
+            type: exercise.type,
+
+            intensity: 'medium',
+
+            duration: 10 // minutes
+
+          });
 
         }
 
-        
+        renderApp();
+
+      }
+
+
+
+      function setExerciseIntensity(exerciseId, intensity) {
+
+        const exercise = state.selectedExercises.find(e => e.id === exerciseId);
+
+        if (exercise) {
+
+          exercise.intensity = intensity;
+
+        }
 
         renderApp();
 
@@ -990,43 +1182,11 @@
 
 
 
-      // Workout control functions
+      function startWorkoutSession() {
 
-      function selectWorkout(workoutId) {
+        if (state.selectedExercises.length === 0) {
 
-        state.selectedWorkout = workoutId;
-
-        renderApp();
-
-      }
-
-
-
-      function setIntensity(intensity) {
-
-        state.selectedIntensity = intensity;
-
-        renderApp();
-
-      }
-
-
-
-      function setDuration(minutes) {
-
-        state.workoutDuration = minutes;
-
-        renderApp();
-
-      }
-
-
-
-      function startWorkout() {
-
-        if (!state.selectedWorkout) {
-
-          alert("Please select a workout first!");
+          alert("Please add at least one exercise to your workout!");
 
           return;
 
@@ -1034,47 +1194,43 @@
 
         
 
-        // Reset state for new workout
+        state.currentSession = {
 
-        dataBuffer = [];
+          id: Date.now(),
 
-        state.data = [];
+          date: new Date(),
 
-        state.elapsedTime = 0;
+          exercises: [...state.selectedExercises],
 
-        state.workoutProgress = 0;
+          totalEffort: 0,
 
-        state.metrics = {
+          totalCalories: 0,
 
-          effortScore: 0,
-
-          calories: 0,
+          totalTime: 0,
 
           currentHeartRate: 0,
 
-          currentMovement: 0
+          currentMovement: 0,
+
+          currentEffort: 0,
+
+          elapsedTime: 0,
+
+          calories: 0
 
         };
 
         
 
-        state.isActive = true;
+        activeWorkoutData = [];
 
-        state.isPaused = false;
+        elapsedTime = 0;
+
+        state.currentView = 'activeWorkout';
 
         
 
-        intervalId = setInterval(processTick, BASE_INTERVAL_MS);
-
-        renderApp();
-
-      }
-
-
-
-      function togglePause() {
-
-        state.isPaused = !state.isPaused;
+        workoutIntervalId = setInterval(processWorkoutTick, BASE_INTERVAL_MS);
 
         renderApp();
 
@@ -1084,29 +1240,39 @@
 
       function completeWorkout() {
 
-        state.isActive = false;
+        if (state.currentSession) {
 
-        state.isPaused = false;
+          // Calculate final metrics
 
-        if (intervalId) {
+          const avgEffort = activeWorkoutData.reduce((sum, point) => sum + point.effortInstant, 0) / activeWorkoutData.length;
 
-          clearInterval(intervalId);
+          state.currentSession.totalEffort = avgEffort;
 
-          intervalId = null;
+          state.currentSession.totalCalories = state.currentSession.calories;
+
+          state.currentSession.totalTime = elapsedTime;
+
+          
+
+          state.workoutSessions.unshift(state.currentSession);
+
+          state.currentSession = null;
 
         }
 
         
 
-        // Show completion message
+        if (workoutIntervalId) {
 
-        setTimeout(() => {
+          clearInterval(workoutIntervalId);
 
-          alert(`Workout complete! 🎉\n\nEffort Score: ${state.metrics.effortScore.toFixed(1)}\nCalories: ${state.metrics.calories.toFixed(0)}\nDuration: ${formatDuration(state.elapsedTime)}`);
+          workoutIntervalId = null;
 
-        }, 500);
+        }
 
         
+
+        state.currentView = 'dashboard';
 
         renderApp();
 
@@ -1114,41 +1280,39 @@
 
 
 
-      function resetWorkout() {
+      function loadWorkoutTemplate(templateId) {
 
-        state.isActive = false;
+        const template = workoutTemplates[templateId];
 
-        state.isPaused = false;
+        state.selectedExercises = template.exercises.map(exerciseId => {
 
-        state.elapsedTime = 0;
+          // Find exercise details
 
-        state.workoutProgress = 0;
+          const exercise = Object.values(exercises)
 
-        state.metrics = {
+            .flatMap(group => Object.entries(group.exercises))
 
-          effortScore: 0,
+            .find(([id]) => id === exerciseId)?.[1];
 
-          calories: 0,
+          
 
-          currentHeartRate: 0,
+          return exercise ? {
 
-          currentMovement: 0
+            id: exerciseId,
 
-        };
+            name: exercise.name,
 
-        dataBuffer = [];
+            category: Object.keys(exercises).find(cat => exercises[cat].exercises[exerciseId]),
 
-        state.data = [];
+            type: exercise.type,
 
-        
+            intensity: 'medium',
 
-        if (intervalId) {
+            duration: 10
 
-          clearInterval(intervalId);
+          } : null;
 
-          intervalId = null;
-
-        }
+        }).filter(Boolean);
 
         
 
@@ -1162,61 +1326,323 @@
 
       function renderApp() {
 
-        const workout = state.selectedWorkout ? workouts[state.selectedWorkout] : null;
-
-        const currentData = state.data[state.data.length - 1] || { hr: 0, acc: 0, effortEma: 0 };
-
-
-
         const root = document.getElementById('root');
 
         
 
-        if (!state.isActive) {
+        switch (state.currentView) {
 
-          // Workout selection screen
+          case 'dashboard':
 
-          root.innerHTML = `
+            renderDashboard(root);
 
-            <div class="min-h-screen p-4 md:p-6">
+            break;
 
-              <header class="text-center mb-8">
+          case 'logWorkout':
 
-                <h1 class="text-3xl font-bold text-white mb-2">Workout Tracker</h1>
+            renderLogWorkout(root);
 
-                <p class="text-slate-400">Choose your workout and intensity</p>
+            break;
 
-              </header>
+          case 'activeWorkout':
+
+            renderActiveWorkout(root);
+
+            break;
+
+        }
+
+      }
+
+
+
+      function renderDashboard(root) {
+
+        const recentSessions = state.workoutSessions.slice(0, 5);
+
+        const totalEffort = state.workoutSessions.reduce((sum, session) => sum + session.totalEffort, 0) / state.workoutSessions.length || 0;
+
+        const effortLevel = getEffortLevel(totalEffort);
+
+        
+
+        root.innerHTML = `
+
+          <div class="min-h-screen p-4 md:p-6">
+
+            <header class="text-center mb-8">
+
+              <h1 class="text-3xl font-bold text-white mb-2">Smart Workout Tracker</h1>
+
+              <p class="text-slate-400">Track your effort, not just your reps</p>
+
+            </header>
+
+            
+
+            <!-- Health Notice -->
+
+            <div class="glass rounded-3xl p-4 mb-6 bg-purple-500-20 border border-purple-500">
+
+              <p class="text-sm text-purple-400 text-center">
+
+                💡 Remember: Every effort level is an achievement. Listen to your body and celebrate all activity!
+
+              </p>
+
+            </div>
+
+            
+
+            <!-- Overview Stats -->
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+
+              <div class="glass rounded-3xl p-4 text-center">
+
+                <div class="text-2xl font-bold text-white">${state.workoutSessions.length}</div>
+
+                <div class="text-slate-400 text-sm">Workouts</div>
+
+              </div>
+
+              <div class="glass rounded-3xl p-4 text-center">
+
+                <div class="text-2xl font-bold text-emerald-400">${totalEffort.toFixed(1)}</div>
+
+                <div class="text-slate-400 text-sm">Avg Effort</div>
+
+              </div>
+
+              <div class="glass rounded-3xl p-4 text-center">
+
+                <div class="text-2xl font-bold text-orange-400">${effortLevel.level}</div>
+
+                <div class="text-slate-400 text-sm">Level</div>
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Quick Start -->
+
+            <div class="glass rounded-3xl p-6 mb-6">
+
+              <h2 class="text-xl font-semibold text-white mb-4">Quick Start</h2>
+
+              <button class="primary w-full py-4 mb-4" onclick="app.startNewWorkout()">
+
+                🏋️ Start New Workout
+
+              </button>
 
               
 
-              <!-- Workout Selection -->
+              <div class="grid grid-cols-2 gap-3">
+
+                ${Object.entries(workoutTemplates).map(([id, template]) => `
+
+                  <button class="py-3 text-sm" onclick="app.loadWorkoutTemplate('${id}')">
+
+                    ${template.name}
+
+                  </button>
+
+                `).join('')}
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Recent Workouts -->
+
+            <div class="glass rounded-3xl p-6">
+
+              <h2 class="text-xl font-semibold text-white mb-4">Recent Workouts</h2>
+
+              ${recentSessions.length > 0 ? `
+
+                <div class="space-y-3">
+
+                  ${recentSessions.map(session => {
+
+                    const effort = getEffortLevel(session.totalEffort);
+
+                    return `
+
+                      <div class="workout-session">
+
+                        <div class="flex justify-between items-start mb-2">
+
+                          <div>
+
+                            <div class="font-semibold text-white">${session.exercises.map(e => e.name).join(', ')}</div>
+
+                            <div class="text-slate-400 text-sm">${session.date.toLocaleDateString()} • ${formatDuration(session.totalTime)}</div>
+
+                          </div>
+
+                          <span class="effort-badge ${effort.color}">${session.totalEffort.toFixed(1)}</span>
+
+                        </div>
+
+                        <div class="text-sm text-slate-400">${session.totalCalories.toFixed(0)} calories • ${effort.level} Effort</div>
+
+                      </div>
+
+                    `;
+
+                  }).join('')}
+
+                </div>
+
+              ` : `
+
+                <p class="text-slate-400 text-center py-4">No workouts yet. Start your first one!</p>
+
+              `}
+
+            </div>
+
+            
+
+            <!-- Effort Guide -->
+
+            <div class="glass rounded-3xl p-6 mt-6">
+
+              <h2 class="text-xl font-semibold text-white mb-4">Understanding Effort Scores</h2>
+
+              <div class="space-y-3">
+
+                <div class="flex items-center gap-3">
+
+                  <span class="effort-badge effort-low">0-29</span>
+
+                  <div>
+
+                    <div class="text-white text-sm">Low Effort</div>
+
+                    <div class="text-slate-400 text-xs">Perfect for recovery, beginners, or active rest days</div>
+
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-3">
+
+                  <span class="effort-badge effort-medium">30-59</span>
+
+                  <div>
+
+                    <div class="text-white text-sm">Medium Effort</div>
+
+                    <div class="text-slate-400 text-xs">Ideal for consistent training and fitness maintenance</div>
+
+                  </div>
+
+                </div>
+
+                <div class="flex items-center gap-3">
+
+                  <span class="effort-badge effort-high">60-100</span>
+
+                  <div>
+
+                    <div class="text-white text-sm">High Effort</div>
+
+                    <div class="text-slate-400 text-xs">Great for pushing limits - listen to your body's signals</div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+
+
+
+      function renderLogWorkout(root) {
+
+        root.innerHTML = `
+
+          <div class="min-h-screen p-4 md:p-6">
+
+            <header class="flex items-center justify-between mb-6">
+
+              <div>
+
+                <h1 class="text-2xl font-bold text-white">Log Workout</h1>
+
+                <p class="text-slate-400">Select exercises for your session</p>
+
+              </div>
+
+              <button onclick="app.setState({ currentView: 'dashboard' })" class="px-4 py-2">
+
+                ← Back
+
+              </button>
+
+            </header>
+
+            
+
+            <!-- Selected Exercises -->
+
+            ${state.selectedExercises.length > 0 ? `
 
               <div class="glass rounded-3xl p-6 mb-6">
 
-                <h2 class="text-xl font-semibold text-white mb-4">Choose Workout</h2>
+                <h2 class="text-xl font-semibold text-white mb-4">Selected Exercises (${state.selectedExercises.length})</h2>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="space-y-3">
 
-                  ${Object.entries(workouts).map(([id, workout]) => `
+                  ${state.selectedExercises.map(exercise => `
 
-                    <div 
+                    <div class="flex items-center justify-between p-3 bg-slate-800-50 rounded-2xl">
 
-                      class="workout-card glass rounded-2xl p-4 text-center cursor-pointer transition-all ${
+                      <div>
 
-                        state.selectedWorkout === id ? 'selected' : ''
+                        <div class="font-semibold text-white">${exercise.name}</div>
 
-                      }"
+                        <div class="text-slate-400 text-sm">${exercise.duration} min • ${exercise.intensity} intensity</div>
 
-                      onclick="app.selectWorkout('${id}')"
+                      </div>
 
-                    >
+                      <div class="flex gap-2">
 
-                      <div class="text-3xl mb-2">${workout.icon}</div>
+                        <select onchange="app.setExerciseIntensity('${exercise.id}', this.value)" 
 
-                      <div class="font-semibold text-white">${workout.name}</div>
+                                class="bg-slate-700 rounded-lg px-2 py-1 text-sm">
 
-                      <div class="text-xs text-slate-400 mt-1">${workout.description}</div>
+                          <option value="easy" ${exercise.intensity === 'easy' ? 'selected' : ''}>Easy</option>
+
+                          <option value="medium" ${exercise.intensity === 'medium' ? 'selected' : ''}>Medium</option>
+
+                          <option value="hard" ${exercise.intensity === 'hard' ? 'selected' : ''}>Hard</option>
+
+                        </select>
+
+                        <button onclick="app.selectExercise('${exercise.category}', '${exercise.id}')" 
+
+                                class="px-3 py-1 bg-slate-700 rounded-lg text-sm">
+
+                          Remove
+
+                        </button>
+
+                      </div>
 
                     </div>
 
@@ -1224,269 +1650,237 @@
 
                 </div>
 
+                <button class="primary w-full mt-4 py-4" onclick="app.startWorkoutSession()">
+
+                  Start Workout
+
+                </button>
+
               </div>
 
-              
+            ` : ''}
 
-              <!-- Intensity & Duration -->
+            
 
-              ${state.selectedWorkout ? `
+            <!-- Exercise Library -->
 
-                <div class="glass rounded-3xl p-6 mb-6">
+            <div class="glass rounded-3xl p-6">
 
-                  <h2 class="text-xl font-semibold text-white mb-4">Workout Settings</h2>
+              <h2 class="text-xl font-semibold text-white mb-4">Exercise Library</h2>
 
-                  
+              <div class="space-y-6">
 
-                  <!-- Intensity -->
-
-                  <div class="mb-6">
-
-                    <h3 class="text-slate-400 mb-3">Intensity</h3>
-
-                    <div class="flex gap-3 justify-center">
-
-                      <button 
-
-                        class="intensity-btn easy ${state.selectedIntensity === 'easy' ? 'selected' : ''}"
-
-                        onclick="app.setIntensity('easy')"
-
-                      >
-
-                        Easy
-
-                      </button>
-
-                      <button 
-
-                        class="intensity-btn medium ${state.selectedIntensity === 'medium' ? 'selected' : ''}"
-
-                        onclick="app.setIntensity('medium')"
-
-                      >
-
-                        Medium
-
-                      </button>
-
-                      <button 
-
-                        class="intensity-btn hard ${state.selectedIntensity === 'hard' ? 'selected' : ''}"
-
-                        onclick="app.setIntensity('hard')"
-
-                      >
-
-                        Hard
-
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                  
-
-                  <!-- Duration -->
+                ${Object.entries(exercises).map(([category, group]) => `
 
                   <div>
 
-                    <h3 class="text-slate-400 mb-3">Duration: ${state.workoutDuration} minutes</h3>
+                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
 
-                    <div class="flex gap-3 justify-center">
+                      <span>${group.icon}</span>
 
-                      ${[10, 20, 30, 45, 60].map(minutes => `
+                      ${group.name}
 
-                        <button 
+                    </h3>
 
-                          class="intensity-btn ${state.workoutDuration === minutes ? 'selected' : ''}"
+                    <div class="exercise-group">
 
-                          onclick="app.setDuration(${minutes})"
+                      ${Object.entries(group.exercises).map(([id, exercise]) => {
 
-                        >
+                        const isSelected = state.selectedExercises.some(e => e.id === id);
 
-                          ${minutes}m
+                        return `
 
-                        </button>
+                          <div class="exercise-item ${isSelected ? 'selected' : ''}" 
 
-                      `).join('')}
+                               onclick="app.selectExercise('${category}', '${id}')">
+
+                            <div class="font-medium text-white">${exercise.name}</div>
+
+                            <div class="text-slate-400 text-sm">${exercise.type} • Base HR: ${exercise.baseHR}</div>
+
+                          </div>
+
+                        `;
+
+                      }).join('')}
 
                     </div>
 
                   </div>
 
-                </div>
+                `).join('')}
 
-                
+              </div>
 
-                <!-- Start Button -->
+            </div>
+
+          </div>
+
+        `;
+
+      }
+
+
+
+      function renderActiveWorkout(root) {
+
+        if (!state.currentSession) return;
+
+        
+
+        const currentEffortLevel = getEffortLevel(state.currentSession.currentEffort);
+
+        const progress = (state.currentSession.elapsedTime / (state.currentSession.exercises.length * 300)) * 100;
+
+        
+
+        root.innerHTML = `
+
+          <div class="min-h-screen p-4 md:p-6">
+
+            <header class="flex justify-between items-center mb-6">
+
+              <div>
+
+                <h1 class="text-2xl font-bold text-white">Active Workout</h1>
+
+                <p class="text-slate-400">${formatDuration(state.currentSession.elapsedTime)} elapsed</p>
+
+              </div>
+
+              <button onclick="app.completeWorkout()" class="px-4 py-2 bg-emerald-500 text-white">
+
+                Complete
+
+              </button>
+
+            </header>
+
+            
+
+            <!-- Progress -->
+
+            <div class="glass rounded-3xl p-6 mb-6">
+
+              <div class="flex justify-between items-center mb-3">
+
+                <span class="text-slate-400">Workout Progress</span>
+
+                <span class="text-white font-semibold">${Math.round(progress)}%</span>
+
+              </div>
+
+              <div class="progress-bar">
+
+                <div class="progress-fill" style="width: ${progress}%"></div>
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Live Metrics -->
+
+            <div class="grid grid-cols-2 gap-4 mb-6">
+
+              <div class="glass rounded-3xl p-6 text-center">
+
+                <div class="text-3xl font-bold text-emerald-400 mb-2">${state.currentSession.currentEffort.toFixed(1)}</div>
+
+                <div class="text-slate-400">Effort Score</div>
+
+                <div class="text-sm mt-1 ${currentEffortLevel.color}">${currentEffortLevel.level}</div>
+
+              </div>
+
+              <div class="glass rounded-3xl p-6 text-center">
+
+                <div class="text-3xl font-bold text-orange-400 mb-2">${state.currentSession.calories.toFixed(0)}</div>
+
+                <div class="text-slate-400">Calories</div>
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Current Stats -->
+
+            <div class="glass rounded-3xl p-6 mb-6">
+
+              <h2 class="text-xl font-semibold text-white mb-4">Live Data</h2>
+
+              <div class="grid grid-cols-2 gap-4">
 
                 <div class="text-center">
 
-                  <button class="primary w-full max-w-md py-4 text-lg" onclick="app.startWorkout()">
+                  <div class="text-2xl font-bold text-sky-400">${state.currentSession.currentHeartRate.toFixed(0)}</div>
 
-                    Start ${workout.name} Workout
-
-                  </button>
+                  <div class="text-slate-400 text-sm">Heart Rate</div>
 
                 </div>
 
-              ` : `
+                <div class="text-center">
 
-                <div class="glass rounded-3xl p-8 text-center">
+                  <div class="text-2xl font-bold text-orange-400">${state.currentSession.currentMovement.toFixed(2)}</div>
 
-                  <p class="text-slate-400">Select a workout to begin</p>
-
-                </div>
-
-              `}
-
-            </div>
-
-          `;
-
-        } else {
-
-          // Active workout screen
-
-          root.innerHTML = `
-
-            <div class="min-h-screen p-4 md:p-6">
-
-              <header class="flex justify-between items-center mb-6">
-
-                <div>
-
-                  <h1 class="text-2xl font-bold text-white">${workout.name}</h1>
-
-                  <p class="text-slate-400">${state.selectedIntensity} intensity • ${state.workoutDuration} minutes</p>
+                  <div class="text-slate-400 text-sm">Movement</div>
 
                 </div>
-
-                <div class="text-right">
-
-                  <div class="text-slate-400 text-sm">Time</div>
-
-                  <div class="text-xl font-bold text-white">${formatDuration(state.elapsedTime)}</div>
-
-                </div>
-
-              </header>
-
-              
-
-              <!-- Progress Bar -->
-
-              <div class="glass rounded-3xl p-6 mb-6">
-
-                <div class="flex justify-between items-center mb-3">
-
-                  <span class="text-slate-400">Workout Progress</span>
-
-                  <span class="text-white font-semibold">${Math.round(state.workoutProgress)}%</span>
-
-                </div>
-
-                <div class="progress-bar">
-
-                  <div class="progress-fill" style="width: ${state.workoutProgress}%"></div>
-
-                </div>
-
-              </div>
-
-              
-
-              <!-- Main Metrics -->
-
-              <div class="grid grid-cols-2 gap-4 mb-6">
-
-                <div class="glass rounded-3xl p-6 text-center">
-
-                  <div class="text-3xl font-bold text-emerald-400 mb-2">${state.metrics.effortScore.toFixed(1)}</div>
-
-                  <div class="text-slate-400">Effort Score</div>
-
-                </div>
-
-                <div class="glass rounded-3xl p-6 text-center">
-
-                  <div class="text-3xl font-bold text-orange-400 mb-2">${state.metrics.calories.toFixed(0)}</div>
-
-                  <div class="text-slate-400">Calories</div>
-
-                </div>
-
-              </div>
-
-              
-
-              <!-- Live Data -->
-
-              <div class="glass rounded-3xl p-6 mb-6">
-
-                <h2 class="text-xl font-semibold text-white mb-4">Live Data</h2>
-
-                <div class="grid grid-cols-2 gap-4">
-
-                  <div class="text-center">
-
-                    <div class="text-2xl font-bold text-sky-400">${state.metrics.currentHeartRate.toFixed(0)}</div>
-
-                    <div class="text-slate-400 text-sm">Heart Rate</div>
-
-                  </div>
-
-                  <div class="text-center">
-
-                    <div class="text-2xl font-bold text-orange-400">${state.metrics.currentMovement.toFixed(2)}</div>
-
-                    <div class="text-slate-400 text-sm">Movement (g)</div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              
-
-              <!-- Workout Controls -->
-
-              <div class="flex gap-4">
-
-                <button 
-
-                  class="flex-1 py-4 ${state.isPaused ? 'primary' : ''}"
-
-                  onclick="app.togglePause()"
-
-                >
-
-                  ${state.isPaused ? 'Resume' : 'Pause'}
-
-                </button>
-
-                <button 
-
-                  class="flex-1 py-4 bg-slate-700"
-
-                  onclick="app.completeWorkout()"
-
-                >
-
-                  Complete
-
-                </button>
 
               </div>
 
             </div>
 
-          `;
+            
 
-        }
+            <!-- Exercise List -->
+
+            <div class="glass rounded-3xl p-6">
+
+              <h2 class="text-xl font-semibold text-white mb-4">Workout Plan</h2>
+
+              <div class="space-y-3">
+
+                ${state.currentSession.exercises.map((exercise, index) => {
+
+                  const currentIndex = Math.floor(elapsedTime / 300) % state.currentSession.exercises.length;
+
+                  return `
+
+                    <div class="flex items-center justify-between p-3 bg-slate-800-50 rounded-2xl">
+
+                      <div class="flex items-center gap-3">
+
+                        <div class="w-3 h-3 rounded-full ${index === currentIndex ? 'bg-emerald-500' : 'bg-slate-600'}"></div>
+
+                        <div>
+
+                          <div class="font-semibold text-white">${exercise.name}</div>
+
+                          <div class="text-slate-400 text-sm">${exercise.intensity} intensity</div>
+
+                        </div>
+
+                      </div>
+
+                      <span class="text-slate-400">${exercise.duration}m</span>
+
+                    </div>
+
+                  `;
+
+                }).join('')}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
 
       }
 
@@ -1496,19 +1890,19 @@
 
       window.app = {
 
-        selectWorkout,
+        startNewWorkout,
 
-        setIntensity,
+        selectExercise,
 
-        setDuration,
+        setExerciseIntensity,
 
-        startWorkout,
-
-        togglePause,
+        startWorkoutSession,
 
         completeWorkout,
 
-        resetWorkout
+        loadWorkoutTemplate,
+
+        setState: (newState) => Object.assign(state, newState)
 
       };
 
