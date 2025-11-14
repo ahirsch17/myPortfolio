@@ -97,7 +97,6 @@
             this.setupMotionObserver();
             this.setupTaglineAnimation();
             this.setupHeroField();
-            this.setupFloatingToolbar();
             this.setupCarousel();
             this.setupScrollTargets();
             this.setupTiltCards();
@@ -262,26 +261,6 @@
                 ctx.fillStyle = 'rgba(109, 123, 255, 0.15)';
                 ctx.fillRect(0, 0, state.width, state.height);
             }
-        },
-        setupFloatingToolbar() {
-            const toolbar = document.getElementById('floatingToolbar');
-            if (!toolbar) return;
-
-            let ticking = false;
-            window.addEventListener(
-                'scroll',
-                () => {
-                    if (!ticking) {
-                        window.requestAnimationFrame(() => {
-                            const shouldShow = window.scrollY > 120;
-                            toolbar.classList.toggle('is-visible', shouldShow);
-                            ticking = false;
-                        });
-                        ticking = true;
-                    }
-                },
-                { passive: true }
-            );
         },
         setupCarousel() {
             const track = document.getElementById('projectCarousel');

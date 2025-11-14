@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="theme-sandbox.js" defer></script>
     <script src="page-transitions.js" defer></script>
     <script src="home-interactions.js" defer></script>
 </head>
@@ -32,21 +31,6 @@
         <section class="hero motion-section" data-section="hero">
             <canvas id="heroCanvas" aria-hidden="true"></canvas>
             <div class="hero-overlay">
-                <div class="floating-toolbar" id="floatingToolbar" aria-label="Quick Links">
-                    <a href="https://www.linkedin.com/in/alexis-j-hirsch" target="_blank" rel="noopener" class="toolbar-link" aria-label="LinkedIn">
-                        <span class="toolbar-icon">in</span>
-                        <span class="toolbar-text">LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/ahirsch17" target="_blank" rel="noopener" class="toolbar-link" aria-label="GitHub">
-                        <span class="toolbar-icon">{ }</span>
-                        <span class="toolbar-text">GitHub</span>
-                    </a>
-                    <a href="Images/Resume.pdf" target="_blank" rel="noopener" class="toolbar-link" aria-label="Resume">
-                        <span class="toolbar-icon">CV</span>
-                        <span class="toolbar-text">Resume</span>
-                    </a>
-                </div>
-
                 <div class="hero-content">
                     <div class="hero-intro">
                         <div class="hero-intro-text">
@@ -73,7 +57,20 @@
                         <figure class="hero-portrait" data-tilt>
                             <span class="portrait-glow"></span>
                             <img src="Images/AlexPic.jpg" alt="Portrait of Alexis Hirsch" loading="lazy">
-
+                            <div class="portrait-links">
+                                <a href="https://www.linkedin.com/in/alexis-j-hirsch" target="_blank" rel="noopener" class="portrait-link" aria-label="LinkedIn">
+                                    <span class="portrait-link-icon">in</span>
+                                    <span class="portrait-link-text">LinkedIn</span>
+                                </a>
+                                <a href="https://github.com/ahirsch17" target="_blank" rel="noopener" class="portrait-link" aria-label="GitHub">
+                                    <span class="portrait-link-icon">{ }</span>
+                                    <span class="portrait-link-text">GitHub</span>
+                                </a>
+                                <a href="Images/Resume.pdf" target="_blank" rel="noopener" class="portrait-link" aria-label="Resume">
+                                    <span class="portrait-link-icon">CV</span>
+                                    <span class="portrait-link-text">Resume</span>
+                                </a>
+                            </div>
                         </figure>
                     </div>
                 </div>
@@ -224,7 +221,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Alexis Hirsch. Built with passion for web development.</p>
+            <p>&copy; 2025 Alexis Hirsch. Built with passion for UI/UX.</p>
         </div>
     </footer>
 </body>

@@ -732,6 +732,14 @@
 
           hrWeight *= 0.9;
 
+        } else if (workoutType === 'isometric') {
+
+          // Isometric exercises: lower movement factor, maintain HR weighting
+
+          movementWeight *= 0.8;
+
+          hrWeight *= 1.1;
+
         }
 
         
@@ -800,9 +808,9 @@
 
             rowing: { name: "Rowing", baseHR: 135, baseAcc: 1.1, type: "cardio" },
 
-            swimming: { name: "Swimming", baseHR: 125, baseAcc: 0.7, type: "cardio" },
+            swimming: { name: "Swimming", baseHR: 130, baseAcc: 0.7, type: "cardio" },
 
-            jumpRope: { name: "Jump Rope", baseHR: 145, baseAcc: 1.4, type: "cardio" }
+            jumpRope: { name: "Jump Rope", baseHR: 150, baseAcc: 1.4, type: "cardio" }
 
           }
 
@@ -824,7 +832,11 @@
 
             tricepExtensions: { name: "Tricep Extensions", baseHR: 98, baseAcc: 0.9, type: "strength" },
 
-            pullUps: { name: "Pull-ups", baseHR: 115, baseAcc: 1.2, type: "strength" }
+            pullUps: { name: "Pull-ups", baseHR: 115, baseAcc: 1.2, type: "strength" },
+
+            seatedRow: { name: "Seated Row", baseHR: 115, baseAcc: 1.3, type: "strength" },
+
+            chestFly: { name: "Chest Fly", baseHR: 105, baseAcc: 1.0, type: "strength" }
 
           }
 
@@ -846,7 +858,9 @@
 
             legPress: { name: "Leg Press", baseHR: 115, baseAcc: 1.4, type: "strength" },
 
-            calfRaises: { name: "Calf Raises", baseHR: 90, baseAcc: 0.7, type: "strength" }
+            calfRaises: { name: "Calf Raises", baseHR: 90, baseAcc: 0.7, type: "strength" },
+
+            hipThrust: { name: "Hip Thrust", baseHR: 115, baseAcc: 1.4, type: "strength" }
 
           }
 
@@ -860,7 +874,7 @@
 
           exercises: {
 
-            planks: { name: "Planks", baseHR: 100, baseAcc: 0.5, type: "strength" },
+            planks: { name: "Planks", baseHR: 100, baseAcc: 0.5, type: "isometric" },
 
             crunches: { name: "Crunches", baseHR: 102, baseAcc: 0.6, type: "strength" },
 
@@ -868,7 +882,9 @@
 
             legRaises: { name: "Leg Raises", baseHR: 98, baseAcc: 0.7, type: "strength" },
 
-            mountainClimbers: { name: "Mountain Climbers", baseHR: 125, baseAcc: 1.3, type: "cardio" }
+            mountainClimbers: { name: "Mountain Climbers", baseHR: 125, baseAcc: 1.3, type: "cardio" },
+
+            sidePlank: { name: "Side Plank", baseHR: 100, baseAcc: 0.4, type: "isometric" }
 
           }
 
@@ -944,9 +960,10 @@
 
 
 
-      // Intensity multipliers (based on proximity to failure - Reps in Reserve/RIR)
+      // Intensity multipliers by exercise type
 
-      const intensityMultipliers = {
+      // Strength exercises: Proximity to failure (Reps in Reserve/RIR)
+      const strengthIntensityMultipliers = {
 
         '4RepsFromFailure': { hr: 0.75, acc: 0.7, label: '4 Reps From Failure' },
 
@@ -955,6 +972,105 @@
         'toFailure': { hr: 1.4, acc: 1.5, label: 'To Failure' }
 
       };
+
+      // Cardio exercises: Easy / Moderate / Hard
+      const cardioIntensityMultipliers = {
+
+        'easy': { hr: 0.75, acc: 0.7, label: 'Easy' },
+
+        'moderate': { hr: 1.0, acc: 1.0, label: 'Moderate' },
+
+        'hard': { hr: 1.3, acc: 1.4, label: 'Hard' }
+
+      };
+
+      // Isometric exercises: Hold difficulty
+      const isometricIntensityMultipliers = {
+
+        'steadyHold': { hr: 0.8, acc: 0.5, label: 'Steady Hold' },
+
+        'challengingHold': { hr: 1.0, acc: 0.6, label: 'Challenging Hold' },
+
+        'maxEffortHold': { hr: 1.3, acc: 0.7, label: 'Max Effort Hold' }
+
+      };
+
+      // Helper function to get intensity multiplier based on exercise type
+      function getIntensityMultiplier(exerciseType, intensityKey) {
+
+        if (exerciseType === 'strength') {
+
+          return strengthIntensityMultipliers[intensityKey] || strengthIntensityMultipliers['2RepsFromFailure'];
+
+        } else if (exerciseType === 'cardio') {
+
+          return cardioIntensityMultipliers[intensityKey] || cardioIntensityMultipliers['moderate'];
+
+        } else if (exerciseType === 'isometric') {
+
+          return isometricIntensityMultipliers[intensityKey] || isometricIntensityMultipliers['challengingHold'];
+
+        } else if (exerciseType === 'mixed') {
+
+          // Mixed exercises use cardio-style intensity
+          return cardioIntensityMultipliers[intensityKey] || cardioIntensityMultipliers['moderate'];
+
+        }
+
+        // Default fallback
+        return strengthIntensityMultipliers['2RepsFromFailure'];
+
+      }
+
+      // Helper function to get default duration (in seconds) based on exercise type
+      function getDefaultDuration(exerciseType) {
+
+        if (exerciseType === 'strength') {
+
+          return 120; // 2 minutes of active work (multiple sets)
+
+        } else if (exerciseType === 'cardio') {
+
+          return 300; // 5 minutes of continuous work
+
+        } else if (exerciseType === 'isometric') {
+
+          return 90; // 1.5 minutes (1-2 minutes range)
+
+        } else if (exerciseType === 'mixed') {
+
+          return 210; // 3.5 minutes (3-4 minutes range)
+
+        }
+
+        return 120; // Default fallback
+
+      }
+
+      // Helper function to get default intensity based on exercise type
+      function getDefaultIntensity(exerciseType) {
+
+        if (exerciseType === 'strength') {
+
+          return '2RepsFromFailure';
+
+        } else if (exerciseType === 'cardio') {
+
+          return 'moderate';
+
+        } else if (exerciseType === 'isometric') {
+
+          return 'challengingHold';
+
+        } else if (exerciseType === 'mixed') {
+
+          return 'moderate';
+
+        }
+
+        return '2RepsFromFailure'; // Default fallback
+
+      }
 
 
 
@@ -1008,7 +1124,7 @@
 
         
 
-        const multiplier = intensityMultipliers[intensity] || intensityMultipliers['2RepsFromFailure'];
+        const multiplier = getIntensityMultiplier(exercise.type, intensity);
 
         let baseHr = exercise.baseHR * multiplier.hr;
 
@@ -1060,12 +1176,49 @@
 
         
 
-        // Generate data for current exercise (simulate switching between exercises)
-        // Note: Rest periods are implied but not tracked - only actual work time counts
+        // Determine current exercise based on cumulative exercise durations
+        // Exercises have different durations: strength ~2 min, cardio ~5 min, isometric ~1.5 min, mixed ~3.5 min
 
-        const exerciseIndex = Math.floor(elapsedTime / 300) % state.currentSession.exercises.length; // Switch every 5 minutes (work time only)
+        let exerciseStartTime = 0;
 
-        const currentExercise = state.currentSession.exercises[exerciseIndex];
+        let exerciseIndex = 0;
+
+        let currentExercise = null;
+
+        
+
+        for (let i = 0; i < state.currentSession.exercises.length; i++) {
+
+          const exercise = state.currentSession.exercises[i];
+
+          const exerciseDuration = (exercise.durationSeconds || getDefaultDuration(exercise.type));
+
+          if (elapsedTime < exerciseStartTime + exerciseDuration) {
+
+            exerciseIndex = i;
+
+            currentExercise = exercise;
+
+            break;
+
+          }
+
+          exerciseStartTime += exerciseDuration;
+
+        }
+
+        
+
+        // If we've completed all exercises, use the last one
+
+        if (!currentExercise) {
+
+          exerciseIndex = state.currentSession.exercises.length - 1;
+
+          currentExercise = state.currentSession.exercises[exerciseIndex];
+
+        }
+
         
         // Store current exercise info for display
         state.currentSession.currentExerciseIndex = exerciseIndex;
@@ -1112,6 +1265,22 @@
         state.currentSession.elapsedTime = elapsedTime;
 
         state.currentSession.calories += (0.06 * hr + 0.5 * acc) / 60;
+
+        
+
+        // Accumulate total effort (effort integrated over time)
+
+        state.currentSession.totalEffort += effortInstant / 60;
+
+        
+
+        // Track hard seconds (effort >= 60)
+
+        if (effortInstant >= 60) {
+
+          state.currentSession.hardSeconds = (state.currentSession.hardSeconds || 0) + 1;
+
+        }
 
         
 
@@ -1167,9 +1336,9 @@
 
             type: exercise.type,
 
-            intensity: '2RepsFromFailure',
+            intensity: getDefaultIntensity(exercise.type),
 
-            duration: 10 // minutes
+            duration: getDefaultDuration(exercise.type) / 60 // Convert seconds to minutes for display
 
           });
 
@@ -1209,19 +1378,35 @@
 
         
 
+        // Convert duration from minutes to seconds and store for each exercise
+
+        const exercisesWithDurations = state.selectedExercises.map(ex => ({
+
+          ...ex,
+
+          durationSeconds: (ex.duration || getDefaultDuration(ex.type) / 60) * 60
+
+        }));
+
+        
+
         state.currentSession = {
 
           id: Date.now(),
 
           date: new Date(),
 
-          exercises: [...state.selectedExercises],
+          exercises: exercisesWithDurations,
 
           totalEffort: 0,
 
           totalCalories: 0,
 
           totalTime: 0,
+
+          hardSeconds: 0,
+
+          hardMinutes: 0,
 
           currentHeartRate: 0,
 
@@ -1258,14 +1443,15 @@
         if (state.currentSession) {
 
           // Calculate final metrics
-
-          const avgEffort = activeWorkoutData.reduce((sum, point) => sum + point.effortInstant, 0) / activeWorkoutData.length;
-
-          state.currentSession.totalEffort = avgEffort;
+          // totalEffort is already accumulated (effort integrated over time)
 
           state.currentSession.totalCalories = state.currentSession.calories;
 
           state.currentSession.totalTime = elapsedTime;
+
+          // Calculate hard minutes from hard seconds
+
+          state.currentSession.hardMinutes = (state.currentSession.hardSeconds || 0) / 60;
 
           
 
@@ -1323,8 +1509,8 @@
             name: exercise.name,
             category: category,
             type: exercise.type,
-            intensity: '2RepsFromFailure',
-            duration: 10
+            intensity: getDefaultIntensity(exercise.type),
+            duration: getDefaultDuration(exercise.type) / 60
           };
 
         }).filter(Boolean);
@@ -1375,7 +1561,10 @@
 
         const recentSessions = state.workoutSessions.slice(0, 5);
 
-        const totalEffort = state.workoutSessions.reduce((sum, session) => sum + session.totalEffort, 0) / state.workoutSessions.length || 0;
+        // Calculate average total effort across all sessions
+        const totalEffort = state.workoutSessions.length > 0 
+          ? state.workoutSessions.reduce((sum, session) => sum + (session.totalEffort || 0), 0) / state.workoutSessions.length 
+          : 0;
 
         const effortLevel = getEffortLevel(totalEffort);
 
@@ -1499,7 +1688,7 @@
 
                   ${recentSessions.map(session => {
 
-                    const effort = getEffortLevel(session.totalEffort);
+                    const effort = getEffortLevel(session.totalEffort || 0);
 
                     return `
 
@@ -1511,15 +1700,15 @@
 
                             <div class="font-semibold text-white">${session.exercises.map(e => e.name).join(', ')}</div>
 
-                            <div class="text-slate-400 text-sm">${session.date.toLocaleDateString()} • ${formatDuration(session.totalTime)}</div>
+                            <div class="text-slate-400 text-sm">${session.date.toLocaleDateString()} • ${formatDuration(session.totalTime || 0)}</div>
 
                           </div>
 
-                          <span class="effort-badge ${effort.color}">${session.totalEffort.toFixed(1)}</span>
+                          <span class="effort-badge ${effort.color}">${(session.totalEffort || 0).toFixed(1)}</span>
 
                         </div>
 
-                        <div class="text-sm text-slate-400">${session.totalCalories.toFixed(0)} calories • ${effort.level} Effort</div>
+                        <div class="text-sm text-slate-400">${(session.totalCalories || 0).toFixed(0)} calories • ${effort.level} Effort${session.hardMinutes ? ` • ${session.hardMinutes.toFixed(1)} min hard` : ''}</div>
 
                       </div>
 
@@ -1659,7 +1848,7 @@
 
                         <div class="font-semibold text-white">${exercise.name}</div>
 
-                        <div class="text-slate-400 text-sm">${exercise.duration} min work • ${intensityMultipliers[exercise.intensity]?.label || '2 Reps From Failure'}</div>
+                        <div class="text-slate-400 text-sm">${exercise.duration.toFixed(1)} min work • ${getIntensityMultiplier(exercise.type, exercise.intensity).label}</div>
 
                       </div>
 
@@ -1669,11 +1858,19 @@
 
                                 class="bg-slate-700 rounded-lg px-2 py-1 text-sm">
 
-                          <option value="4RepsFromFailure" ${exercise.intensity === '4RepsFromFailure' ? 'selected' : ''}>4 Reps From Failure</option>
-
-                          <option value="2RepsFromFailure" ${exercise.intensity === '2RepsFromFailure' ? 'selected' : ''}>2 Reps From Failure</option>
-
-                          <option value="toFailure" ${exercise.intensity === 'toFailure' ? 'selected' : ''}>To Failure</option>
+                          ${exercise.type === 'strength' ? `
+                            <option value="4RepsFromFailure" ${exercise.intensity === '4RepsFromFailure' ? 'selected' : ''}>4 Reps From Failure</option>
+                            <option value="2RepsFromFailure" ${exercise.intensity === '2RepsFromFailure' ? 'selected' : ''}>2 Reps From Failure</option>
+                            <option value="toFailure" ${exercise.intensity === 'toFailure' ? 'selected' : ''}>To Failure</option>
+                          ` : exercise.type === 'isometric' ? `
+                            <option value="steadyHold" ${exercise.intensity === 'steadyHold' ? 'selected' : ''}>Steady Hold</option>
+                            <option value="challengingHold" ${exercise.intensity === 'challengingHold' ? 'selected' : ''}>Challenging Hold</option>
+                            <option value="maxEffortHold" ${exercise.intensity === 'maxEffortHold' ? 'selected' : ''}>Max Effort Hold</option>
+                          ` : `
+                            <option value="easy" ${exercise.intensity === 'easy' ? 'selected' : ''}>Easy</option>
+                            <option value="moderate" ${exercise.intensity === 'moderate' ? 'selected' : ''}>Moderate</option>
+                            <option value="hard" ${exercise.intensity === 'hard' ? 'selected' : ''}>Hard</option>
+                          `}
 
                         </select>
 
@@ -1773,11 +1970,14 @@
 
         const currentEffortLevel = getEffortLevel(state.currentSession.currentEffort);
 
-        const progress = (state.currentSession.elapsedTime / (state.currentSession.exercises.length * 300)) * 100;
+        // Calculate progress based on cumulative exercise durations
+        const totalDuration = state.currentSession.exercises.reduce((sum, ex) => 
+          sum + (ex.durationSeconds || getDefaultDuration(ex.type)), 0);
+        const progress = Math.min((state.currentSession.elapsedTime / totalDuration) * 100, 100);
 
         const currentExercise = state.currentSession.exercises[state.currentSession.currentExerciseIndex || 0];
 
-        const intensityLabel = intensityMultipliers[currentExercise?.intensity]?.label || '2 Reps From Failure';
+        const intensityLabel = currentExercise ? getIntensityMultiplier(currentExercise.type, currentExercise.intensity).label : 'Moderate';
 
         
 
@@ -1913,9 +2113,9 @@
 
                 ${state.currentSession.exercises.map((exercise, index) => {
 
-                  const currentIndex = state.currentSession.currentExerciseIndex ?? Math.floor(elapsedTime / 300) % state.currentSession.exercises.length;
+                  const currentIndex = state.currentSession.currentExerciseIndex ?? 0;
 
-                  const intensityLabel = intensityMultipliers[exercise.intensity]?.label || '2 Reps From Failure';
+                  const intensityLabel = getIntensityMultiplier(exercise.type, exercise.intensity).label;
 
                   return `
 
@@ -1935,7 +2135,7 @@
 
                       </div>
 
-                      <span class="text-slate-400">${exercise.duration}m work</span>
+                      <span class="text-slate-400">${(exercise.durationSeconds || getDefaultDuration(exercise.type)) / 60} min work</span>
 
                     </div>
 
