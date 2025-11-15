@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Smart Workout Tracker</title>
+  <title>Science-Based Effort Tracker</title>
 
   <style>
 
@@ -110,8 +110,6 @@
 
     .text-3xl { font-size: 1.875rem; }
 
-    .text-4xl { font-size: 2.25rem; }
-
 
 
     .font-medium { font-weight: 500; }
@@ -130,7 +128,7 @@
 
     .items-center { align-items: center; }
 
-    .items-end { align-items: flex-end; }
+    .items-start { align-items: flex-start; }
 
     .justify-center { justify-content: center; }
 
@@ -174,8 +172,6 @@
 
     .px-4 { padding-left: 1rem; padding-right: 1rem; }
 
-    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-
     .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 
     .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
@@ -192,27 +188,19 @@
 
     .mb-6 { margin-bottom: 1.5rem; }
 
+    .mb-8 { margin-bottom: 2rem; }
+
     .mt-2 { margin-top: 0.5rem; }
 
     .mt-4 { margin-top: 1rem; }
 
     .mt-6 { margin-top: 1.5rem; }
 
+    .mx-auto { margin-left: auto; margin-right: auto; }
+
 
 
     .w-full { width: 100%; }
-
-    .w-12 { width: 3rem; }
-
-    .w-16 { width: 4rem; }
-
-    .w-20 { width: 5rem; }
-
-    .h-12 { height: 3rem; }
-
-    .h-16 { height: 4rem; }
-
-    .h-20 { height: 5rem; }
 
     .min-h-screen { min-height: 100vh; }
 
@@ -234,6 +222,8 @@
 
     .text-slate-400 { color: var(--slate-400); }
 
+    .text-red-400 { color: #f87171; }
+
 
 
     .bg-sky-500 { background-color: var(--sky-500); }
@@ -248,15 +238,7 @@
 
     .bg-slate-800 { background-color: var(--slate-800); }
 
-    .bg-slate-800-50 { background-color: rgba(30, 41, 59, 0.5); }
-
-    .bg-sky-500-20 { background-color: rgba(14, 165, 233, 0.2); }
-
-    .bg-emerald-500-20 { background-color: rgba(16, 185, 129, 0.2); }
-
-    .bg-orange-500-20 { background-color: rgba(249, 115, 22, 0.2); }
-
-    .bg-purple-500-20 { background-color: rgba(139, 92, 246, 0.2); }
+    .bg-slate-800\\/50 { background-color: rgba(30, 41, 59, 0.5); }
 
 
 
@@ -264,9 +246,7 @@
 
     .border-slate-700 { border-color: var(--slate-700); }
 
-    .border-emerald-500 { border-color: var(--emerald-500); }
-
-    .border-sky-500 { border-color: var(--sky-500); }
+    .border-t { border-top-width: 1px; }
 
 
 
@@ -280,12 +260,6 @@
 
     .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-
-
-    .col-span-2 { grid-column: span 2 / span 2; }
-
 
 
     .relative { position: relative; }
@@ -296,13 +270,7 @@
 
     .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
 
-    .bottom-6 { bottom: 1.5rem; }
-
-    .right-6 { right: 1.5rem; }
-
     .z-50 { z-index: 50; }
-
-    .mx-auto { margin-left: auto; margin-right: auto; }
 
 
 
@@ -315,34 +283,6 @@
 
 
     .overflow-y-auto { overflow-y: auto; }
-
-    .overflow-x-auto { overflow-x: auto; }
-
-
-
-    @keyframes kpiPulse {
-
-      0%, 100% { 
-
-        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.45); 
-
-      }
-
-      50% { 
-
-        box-shadow: 0 0 0 18px rgba(74, 222, 128, 0); 
-
-      }
-
-    }
-
-
-
-    .kpi-pulse {
-
-      animation: kpiPulse 2s infinite;
-
-    }
 
 
 
@@ -426,85 +366,71 @@
 
       background: var(--sky-400);
 
+    }
+
+
+
+    .workout-type-btn {
+
+      padding: 1.5rem;
+
+      border-radius: 1rem;
+
+      border: 2px solid var(--slate-700);
+
+      background: transparent;
+
+      transition: all 0.3s ease;
+
+      text-align: center;
+
+    }
+
+
+
+    .workout-type-btn:hover {
+
+      border-color: var(--sky-400);
+
       transform: translateY(-2px);
 
     }
 
 
 
-    select {
+    .workout-type-btn.selected {
 
-      background: rgba(15, 23, 42, 0.75);
+      border-color: var(--sky-500);
 
-      border: 1px solid var(--slate-700);
-
-      border-radius: 0.5rem;
-
-      color: var(--slate-300);
-
-      padding: 0.5rem;
-
-      cursor: pointer;
-
-      outline: none;
+      background: rgba(14, 165, 233, 0.1);
 
     }
 
 
 
-    .workout-card {
+    .rpe-btn {
 
-      transition: all 0.3s ease;
+      padding: 0.75rem 1rem;
 
-      cursor: pointer;
-
-    }
-
-
-
-    .workout-card:hover {
-
-      transform: translateY(-4px);
-
-      border-color: var(--sky-400);
-
-    }
-
-
-
-    .workout-card.selected {
-
-      border-color: var(--emerald-500);
-
-      background: rgba(16, 185, 129, 0.1);
-
-    }
-
-
-
-    .intensity-btn {
-
-      padding: 0.75rem 1.5rem;
-
-      border-radius: 2rem;
+      border-radius: 0.75rem;
 
       border: 2px solid var(--slate-700);
 
       background: transparent;
 
-      color: var(--slate-300);
-
       transition: all 0.3s ease;
+
+      text-align: center;
 
     }
 
 
 
-    .intensity-btn.selected {
+    .rpe-btn.selected {
 
-      border-color: var(--sky-500);
+      border-color: var(--emerald-500);
 
-      background: var(--sky-500);
+      background: var(--emerald-500);
 
       color: white;
 
@@ -512,19 +438,13 @@
 
 
 
-    .intensity-btn.easy { border-color: var(--emerald-500); }
+    .science-card {
 
-    .intensity-btn.medium { border-color: var(--orange-500); }
+      border-left: 4px solid var(--purple-500);
 
-    .intensity-btn.hard { border-color: #ef4444; }
+      background: rgba(139, 92, 246, 0.1);
 
-
-
-    .intensity-btn.easy.selected { background: var(--emerald-500); }
-
-    .intensity-btn.medium.selected { background: var(--orange-500); }
-
-    .intensity-btn.hard.selected { background: #ef4444; }
+    }
 
 
 
@@ -556,54 +476,6 @@
 
 
 
-    .exercise-group {
-
-      border-left: 3px solid var(--slate-700);
-
-      padding-left: 1rem;
-
-      margin-left: 0.5rem;
-
-    }
-
-
-
-    .exercise-item {
-
-      padding: 0.75rem;
-
-      border-radius: 0.75rem;
-
-      background: rgba(30, 41, 59, 0.3);
-
-      margin-bottom: 0.5rem;
-
-      cursor: pointer;
-
-      transition: all 0.2s ease;
-
-    }
-
-
-
-    .exercise-item:hover {
-
-      background: rgba(30, 41, 59, 0.5);
-
-    }
-
-
-
-    .exercise-item.selected {
-
-      background: rgba(14, 165, 233, 0.2);
-
-      border: 1px solid var(--sky-500);
-
-    }
-
-
-
     .effort-badge {
 
       padding: 0.25rem 0.75rem;
@@ -614,27 +486,95 @@
 
       font-weight: 600;
 
+      background: var(--slate-700);
+
+      color: var(--slate-300);
+
     }
 
 
 
-    .effort-low { background: var(--emerald-500); color: white; }
+    .effort-badge.high {
 
-    .effort-medium { background: var(--orange-500); color: white; }
+      background: #ef4444;
 
-    .effort-high { background: #ef4444; color: white; }
+      color: white;
+
+    }
 
 
 
-    .workout-session {
+    .effort-badge.medium {
 
-      border-left: 4px solid var(--sky-500);
+      background: var(--orange-500);
 
-      padding: 1rem;
+      color: white;
 
-      margin-bottom: 1rem;
+    }
 
-      background: rgba(30, 41, 59, 0.3);
+
+
+    .effort-badge.low {
+
+      background: var(--emerald-500);
+
+      color: white;
+
+    }
+
+
+
+    input[type="range"] {
+
+      width: 100%;
+
+      height: 6px;
+
+      border-radius: 3px;
+
+      background: var(--slate-700);
+
+      outline: none;
+
+      -webkit-appearance: none;
+
+    }
+
+
+
+    input[type="range"]::-webkit-slider-thumb {
+
+      -webkit-appearance: none;
+
+      appearance: none;
+
+      width: 20px;
+
+      height: 20px;
+
+      border-radius: 50%;
+
+      background: var(--sky-500);
+
+      cursor: pointer;
+
+    }
+
+
+
+    input[type="range"]::-moz-range-thumb {
+
+      width: 20px;
+
+      height: 20px;
+
+      border-radius: 50%;
+
+      background: var(--sky-500);
+
+      cursor: pointer;
+
+      border: none;
 
     }
 
@@ -646,23 +586,7 @@
 
       .md\\:text-3xl { font-size: 1.875rem; }
 
-      .md\\:flex-row { flex-direction: row; }
-
-      .md\\:items-center { align-items: center; }
-
       .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-      .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    }
-
-
-
-    @media (min-width: 1024px) {
-
-      .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-      .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     }
 
@@ -673,7 +597,21 @@
 <body>
 
   <div id="root">
-    <!-- Content will be rendered here immediately -->
+
+    <div class="flex flex-col items-center justify-center min-h-screen">
+
+      <div class="glass rounded-3xl p-8 max-w-md text-center">
+
+        <div class="loading-spinner mx-auto mb-4"></div>
+
+        <h2 class="text-xl font-bold text-white mb-2">Loading Science-Based Effort Tracker</h2>
+
+        <p class="text-slate-400">Initializing research-backed algorithms...</p>
+
+      </div>
+
+    </div>
+
   </div>
 
 
@@ -682,95 +620,133 @@
 
     function initializeApp() {
 
-      // Utility functions
-
-      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      // Science-based effort calculation algorithms
 
       
 
-      const computeZone = (hr) => {
+      // Cardio: TRIMP-based calculation (Banister, 1991)
 
-        if (hr < 100) return { zone: 1, weight: 0.2 };
+      function calculateCardioEffort(hrData, duration) {
 
-        if (hr < 120) return { zone: 2, weight: 0.4 };
+        // Simplified TRIMP: sum of zone weights × duration
 
-        if (hr < 140) return { zone: 3, weight: 0.7 };
+        const zoneWeights = {
 
-        if (hr < 160) return { zone: 4, weight: 1.0 };
+          zone1: 1,  // 50-60% HRmax - very light
 
-        return { zone: 5, weight: 1.3 };
+          zone2: 2,  // 60-70% HRmax - light
 
-      };
+          zone3: 3,  // 70-80% HRmax - moderate
+
+          zone4: 4,  // 80-90% HRmax - hard
+
+          zone5: 5   // 90-100% HRmax - maximum
+
+        };
+
+        
+
+        let totalEffort = 0;
+
+        hrData.forEach(minute => {
+
+          const zone = getHRZone(minute.hr);
+
+          totalEffort += zoneWeights[zone];
+
+        });
+
+        
+
+        return Math.min(totalEffort, 100); // Normalize to 0-100 scale
+
+      }
 
       
 
-      const computeEffort = (hr, acc, workoutType) => {
+      function getHRZone(hr) {
 
-        const { weight } = computeZone(hr);
+        // Simplified zones based on typical max HR of 190
 
-        const movementFactor = clamp(0.2 + 0.25 * acc, 0.0, 1.2);
+        if (hr < 114) return 'zone1';
 
-        
+        if (hr < 133) return 'zone2';
 
-        let hrWeight = weight;
+        if (hr < 152) return 'zone3';
 
-        let movementWeight = movementFactor;
+        if (hr < 171) return 'zone4';
 
-        
+        return 'zone5';
 
-        // Adjust weights based on workout type
-
-        if (workoutType === 'cardio') {
-
-          hrWeight *= 1.15;
-
-          movementWeight *= 0.9;
-
-        } else if (workoutType === 'strength') {
-
-          movementWeight *= 1.15;
-
-          hrWeight *= 0.9;
-
-        } else if (workoutType === 'isometric') {
-
-          // Isometric exercises: lower movement factor, maintain HR weighting
-
-          movementWeight *= 0.8;
-
-          hrWeight *= 1.1;
-
-        }
-
-        
-
-        return clamp(hrWeight * movementWeight * 100, 0, 100);
-
-      };
+      }
 
       
 
-      const formatDuration = (seconds) => {
+      // Strength: RPE-based calculation (Schoenfeld et al., 2017)
 
-        const mins = Math.floor(seconds / 60);
+      function calculateStrengthEffort(sets, rpeValues) {
 
-        const secs = seconds % 60;
+        // Based on research: volume × proximity to failure drives hypertrophy
 
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
+        const rpeMultipliers = {
 
-      };
+          6: 0.25,  // 4 reps in reserve
 
+          7: 0.5,   // 3 reps in reserve
 
+          8: 0.75,  // 2 reps in reserve
 
-      const getEffortLevel = (score) => {
+          9: 0.9,   // 1 rep in reserve
 
-        if (score < 30) return { level: 'Low', description: 'Light activity - great for recovery days', color: 'effort-low' };
+          10: 1.0   // Failure
 
-        if (score < 60) return { level: 'Medium', description: 'Moderate effort - ideal for consistent training', color: 'effort-medium' };
+        };
 
-        return { level: 'High', description: 'High intensity - excellent for pushing limits', color: 'effort-high' };
+        
 
-      };
+        let totalEffort = 0;
+
+        sets.forEach((set, index) => {
+
+          const rpe = rpeValues[index] || 6;
+
+          const setEffort = 10 * (rpeMultipliers[rpe] || 0.25); // Base 10 points per set
+
+          totalEffort += setEffort;
+
+        });
+
+        
+
+        return Math.min(totalEffort, 100); // Normalize to 0-100 scale
+
+      }
+
+      
+
+      // Acute:Chronic Workload Ratio (Gabbett, 2016)
+
+      function calculateACWR(recentEffort, historicalEffort) {
+
+        if (historicalEffort === 0) return 1.0;
+
+        return recentEffort / historicalEffort;
+
+      }
+
+      
+
+      function getACWRRecommendation(ratio) {
+
+        if (ratio < 0.8) return { level: 'low', message: 'Consider increasing training load', color: 'text-emerald-400' };
+
+        if (ratio <= 1.3) return { level: 'optimal', message: 'Ideal training zone', color: 'text-sky-400' };
+
+        if (ratio <= 1.5) return { level: 'caution', message: 'Moderate injury risk', color: 'text-orange-400' };
+
+        return { level: 'high', message: 'High injury risk - reduce load', color: 'text-red-400' };
+
+      }
 
 
 
@@ -778,133 +754,25 @@
 
       const state = {
 
-        currentView: 'dashboard', // 'dashboard', 'logWorkout', 'activeWorkout', 'history'
+        currentView: 'science',
 
-        selectedExercises: [],
+        workoutType: null,
 
-        workoutSessions: [],
+        workoutData: {
 
-        currentSession: null
+          cardio: { duration: 30, avgHR: 145, hrZones: { zone1: 5, zone2: 10, zone3: 10, zone4: 5, zone5: 0 } },
 
-      };
-
-
-
-      // Exercise database with subgroups
-
-      const exercises = {
-
-        cardio: {
-
-          name: "Cardio",
-
-          icon: "🏃",
-
-          exercises: {
-
-            running: { name: "Running", baseHR: 140, baseAcc: 0.8, type: "cardio" },
-
-            cycling: { name: "Cycling", baseHR: 130, baseAcc: 0.6, type: "cardio" },
-
-            rowing: { name: "Rowing", baseHR: 135, baseAcc: 1.1, type: "cardio" },
-
-            swimming: { name: "Swimming", baseHR: 130, baseAcc: 0.7, type: "cardio" },
-
-            jumpRope: { name: "Jump Rope", baseHR: 150, baseAcc: 1.4, type: "cardio" }
-
-          }
+          strength: { sets: 12, avgRPE: 8, muscleGroups: ['chest', 'back', 'legs'] }
 
         },
 
-        upperBody: {
+        trainingHistory: {
 
-          name: "Upper Body",
+          cardio: [45, 52, 38, 61, 48, 55, 42],
 
-          icon: "💪", 
+          strength: [68, 72, 65, 78, 70, 75, 68],
 
-          exercises: {
-
-            benchPress: { name: "Bench Press", baseHR: 110, baseAcc: 1.3, type: "strength" },
-
-            shoulderPress: { name: "Shoulder Press", baseHR: 105, baseAcc: 1.1, type: "strength" },
-
-            bicepCurls: { name: "Bicep Curls", baseHR: 95, baseAcc: 0.8, type: "strength" },
-
-            tricepExtensions: { name: "Tricep Extensions", baseHR: 98, baseAcc: 0.9, type: "strength" },
-
-            pullUps: { name: "Pull-ups", baseHR: 115, baseAcc: 1.2, type: "strength" },
-
-            seatedRow: { name: "Seated Row", baseHR: 115, baseAcc: 1.3, type: "strength" },
-
-            chestFly: { name: "Chest Fly", baseHR: 105, baseAcc: 1.0, type: "strength" }
-
-          }
-
-        },
-
-        lowerBody: {
-
-          name: "Lower Body",
-
-          icon: "🦵",
-
-          exercises: {
-
-            squats: { name: "Squats", baseHR: 120, baseAcc: 1.6, type: "strength" },
-
-            deadlifts: { name: "Deadlifts", baseHR: 125, baseAcc: 1.8, type: "strength" },
-
-            lunges: { name: "Lunges", baseHR: 110, baseAcc: 1.2, type: "strength" },
-
-            legPress: { name: "Leg Press", baseHR: 115, baseAcc: 1.4, type: "strength" },
-
-            calfRaises: { name: "Calf Raises", baseHR: 90, baseAcc: 0.7, type: "strength" },
-
-            hipThrust: { name: "Hip Thrust", baseHR: 115, baseAcc: 1.4, type: "strength" }
-
-          }
-
-        },
-
-        core: {
-
-          name: "Core",
-
-          icon: "🎯",
-
-          exercises: {
-
-            planks: { name: "Planks", baseHR: 100, baseAcc: 0.5, type: "isometric" },
-
-            crunches: { name: "Crunches", baseHR: 102, baseAcc: 0.6, type: "strength" },
-
-            russianTwists: { name: "Russian Twists", baseHR: 105, baseAcc: 0.8, type: "strength" },
-
-            legRaises: { name: "Leg Raises", baseHR: 98, baseAcc: 0.7, type: "strength" },
-
-            mountainClimbers: { name: "Mountain Climbers", baseHR: 125, baseAcc: 1.3, type: "cardio" },
-
-            sidePlank: { name: "Side Plank", baseHR: 100, baseAcc: 0.4, type: "isometric" }
-
-          }
-
-        },
-
-        flexibility: {
-
-          name: "Flexibility",
-
-          icon: "🧘",
-
-          exercises: {
-
-            yoga: { name: "Yoga Flow", baseHR: 90, baseAcc: 0.3, type: "mixed" },
-
-            stretching: { name: "Stretching", baseHR: 85, baseAcc: 0.2, type: "mixed" },
-
-            pilates: { name: "Pilates", baseHR: 100, baseAcc: 0.6, type: "mixed" }
-
-          }
+          dates: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7']
 
         }
 
@@ -912,612 +780,69 @@
 
 
 
-      // Workout templates
+      function calculateCurrentEffort() {
 
-      const workoutTemplates = {
+        if (state.workoutType === 'cardio') {
 
-        pushDay: {
+          const hrData = Array(state.workoutData.cardio.duration).fill().map(() => ({
 
-          name: "Push Day",
+            hr: state.workoutData.cardio.avgHR + (Math.random() - 0.5) * 20
 
-          exercises: ['benchPress', 'shoulderPress', 'tricepExtensions', 'mountainClimbers']
+          }));
 
-        },
-
-        pullDay: {
-
-          name: "Pull Day", 
-
-          exercises: ['pullUps', 'bicepCurls']
-
-        },
-
-        legDay: {
-
-          name: "Leg Day",
-
-          exercises: ['squats', 'deadlifts', 'lunges', 'calfRaises']
-
-        },
-
-        fullBody: {
-
-          name: "Full Body",
-
-          exercises: ['squats', 'benchPress', 'pullUps', 'planks', 'running']
-
-        },
-
-        cardioDay: {
-
-          name: "Cardio Focus",
-
-          exercises: ['running', 'cycling', 'jumpRope', 'mountainClimbers']
-
-        }
-
-      };
-
-
-
-      // Intensity multipliers by exercise type
-
-      // Strength exercises: Proximity to failure (Reps in Reserve/RIR)
-      const strengthIntensityMultipliers = {
-
-        '4RepsFromFailure': { hr: 0.75, acc: 0.7, label: '4 Reps From Failure' },
-
-        '2RepsFromFailure': { hr: 1.0, acc: 1.0, label: '2 Reps From Failure' },
-
-        'toFailure': { hr: 1.4, acc: 1.5, label: 'To Failure' }
-
-      };
-
-      // Cardio exercises: Easy / Moderate / Hard
-      const cardioIntensityMultipliers = {
-
-        'easy': { hr: 0.75, acc: 0.7, label: 'Easy' },
-
-        'moderate': { hr: 1.0, acc: 1.0, label: 'Moderate' },
-
-        'hard': { hr: 1.3, acc: 1.4, label: 'Hard' }
-
-      };
-
-      // Isometric exercises: Hold difficulty
-      const isometricIntensityMultipliers = {
-
-        'steadyHold': { hr: 0.8, acc: 0.5, label: 'Steady Hold' },
-
-        'challengingHold': { hr: 1.0, acc: 0.6, label: 'Challenging Hold' },
-
-        'maxEffortHold': { hr: 1.3, acc: 0.7, label: 'Max Effort Hold' }
-
-      };
-
-      // Helper function to get intensity multiplier based on exercise type
-      function getIntensityMultiplier(exerciseType, intensityKey) {
-
-        if (exerciseType === 'strength') {
-
-          return strengthIntensityMultipliers[intensityKey] || strengthIntensityMultipliers['2RepsFromFailure'];
-
-        } else if (exerciseType === 'cardio') {
-
-          return cardioIntensityMultipliers[intensityKey] || cardioIntensityMultipliers['moderate'];
-
-        } else if (exerciseType === 'isometric') {
-
-          return isometricIntensityMultipliers[intensityKey] || isometricIntensityMultipliers['challengingHold'];
-
-        } else if (exerciseType === 'mixed') {
-
-          // Mixed exercises use cardio-style intensity
-          return cardioIntensityMultipliers[intensityKey] || cardioIntensityMultipliers['moderate'];
-
-        }
-
-        // Default fallback
-        return strengthIntensityMultipliers['2RepsFromFailure'];
-
-      }
-
-      // Helper function to get default duration (in seconds) based on exercise type
-      function getDefaultDuration(exerciseType) {
-
-        if (exerciseType === 'strength') {
-
-          return 120; // 2 minutes of active work (multiple sets)
-
-        } else if (exerciseType === 'cardio') {
-
-          return 300; // 5 minutes of continuous work
-
-        } else if (exerciseType === 'isometric') {
-
-          return 90; // 1.5 minutes (1-2 minutes range)
-
-        } else if (exerciseType === 'mixed') {
-
-          return 210; // 3.5 minutes (3-4 minutes range)
-
-        }
-
-        return 120; // Default fallback
-
-      }
-
-      // Helper function to get default intensity based on exercise type
-      function getDefaultIntensity(exerciseType) {
-
-        if (exerciseType === 'strength') {
-
-          return '2RepsFromFailure';
-
-        } else if (exerciseType === 'cardio') {
-
-          return 'moderate';
-
-        } else if (exerciseType === 'isometric') {
-
-          return 'challengingHold';
-
-        } else if (exerciseType === 'mixed') {
-
-          return 'moderate';
-
-        }
-
-        return '2RepsFromFailure'; // Default fallback
-
-      }
-
-
-
-      // Internal state for active workout
-
-      let activeWorkoutData = [];
-
-      let workoutIntervalId = null;
-
-      let hrPhase = 0;
-
-      let accPhase = 0;
-
-      let elapsedTime = 0;
-
-
-
-      const BASE_INTERVAL_MS = 1000;
-
-      // Cache for exercise lookups to improve performance
-      const exerciseCache = new Map();
-      function getExerciseById(exerciseId) {
-        if (exerciseCache.has(exerciseId)) {
-          return exerciseCache.get(exerciseId);
-        }
-        const exercise = Object.values(exercises)
-          .flatMap(group => Object.entries(group.exercises))
-          .find(([id]) => id === exerciseId)?.[1];
-        if (exercise) {
-          exerciseCache.set(exerciseId, exercise);
-        }
-        return exercise;
-      }
-
-      // Pre-populate cache on initialization
-      Object.values(exercises).forEach(group => {
-        Object.entries(group.exercises).forEach(([id, exercise]) => {
-          exerciseCache.set(id, exercise);
-        });
-      });
-
-      // Data generation for active workout
-
-      function generateExerciseData(exerciseId, intensity) {
-
-        const exercise = getExerciseById(exerciseId);
-
-        
-
-        if (!exercise) return { hr: 0, acc: 0 };
-
-        
-
-        const multiplier = getIntensityMultiplier(exercise.type, intensity);
-
-        let baseHr = exercise.baseHR * multiplier.hr;
-
-        let baseAcc = exercise.baseAcc * multiplier.acc;
-
-        
-
-        // Add realistic variation
-
-        baseHr += (Math.random() - 0.5) * 15;
-
-        baseAcc += (Math.random() - 0.5) * 0.3;
-
-        
-
-        // Add some phase-based variation for realism
-
-        baseHr += 10 * Math.sin(hrPhase);
-
-        baseAcc += 0.2 * Math.sin(accPhase);
-
-        
-
-        hrPhase += 0.1;
-
-        accPhase += 0.15;
-
-        
-
-        return {
-
-          hr: clamp(baseHr, 60, 190),
-
-          acc: clamp(baseAcc, 0, 4)
-
-        };
-
-      }
-
-
-
-      function processWorkoutTick() {
-
-        if (!state.currentSession) return;
-
-        
-
-        elapsedTime++;
-
-        
-
-        // Determine current exercise based on cumulative exercise durations
-        // Exercises have different durations: strength ~2 min, cardio ~5 min, isometric ~1.5 min, mixed ~3.5 min
-
-        let exerciseStartTime = 0;
-
-        let exerciseIndex = 0;
-
-        let currentExercise = null;
-
-        
-
-        for (let i = 0; i < state.currentSession.exercises.length; i++) {
-
-          const exercise = state.currentSession.exercises[i];
-
-          const exerciseDuration = (exercise.durationSeconds || getDefaultDuration(exercise.type));
-
-          if (elapsedTime < exerciseStartTime + exerciseDuration) {
-
-            exerciseIndex = i;
-
-            currentExercise = exercise;
-
-            break;
-
-          }
-
-          exerciseStartTime += exerciseDuration;
-
-        }
-
-        
-
-        // If we've completed all exercises, use the last one
-
-        if (!currentExercise) {
-
-          exerciseIndex = state.currentSession.exercises.length - 1;
-
-          currentExercise = state.currentSession.exercises[exerciseIndex];
-
-        }
-
-        
-        // Store current exercise info for display
-        state.currentSession.currentExerciseIndex = exerciseIndex;
-        state.currentSession.currentExerciseName = currentExercise.name;
-
-        const { hr, acc } = generateExerciseData(currentExercise.id, currentExercise.intensity);
-
-        
-
-        const effortInstant = computeEffort(hr, acc, currentExercise.type);
-
-        
-
-        const newPoint = {
-
-          timestamp: new Date(),
-
-          hr,
-
-          acc,
-
-          exercise: currentExercise.name,
-
-          effortInstant,
-
-          effortEma: effortInstant // Simplified for demo
-
-        };
-
-        
-
-        activeWorkoutData.push(newPoint);
-
-        
-
-        // Update session metrics
-
-        state.currentSession.currentHeartRate = hr;
-
-        state.currentSession.currentMovement = acc;
-
-        state.currentSession.currentEffort = effortInstant;
-
-        state.currentSession.elapsedTime = elapsedTime;
-
-        state.currentSession.calories += (0.06 * hr + 0.5 * acc) / 60;
-
-        
-
-        // Accumulate total effort (effort integrated over time)
-
-        state.currentSession.totalEffort += effortInstant / 60;
-
-        
-
-        // Track hard seconds (effort >= 60)
-
-        if (effortInstant >= 60) {
-
-          state.currentSession.hardSeconds = (state.currentSession.hardSeconds || 0) + 1;
-
-        }
-
-        
-
-        // Throttle rendering during active workout to improve performance
-        // Only render once per animation frame (max 60fps)
-        if (!state.currentSession._renderPending) {
-          state.currentSession._renderPending = true;
-          requestAnimationFrame(() => {
-            renderApp();
-            state.currentSession._renderPending = false;
-          });
-        }
-
-      }
-
-
-
-      // Workout management functions
-
-      function startNewWorkout() {
-
-        state.currentView = 'logWorkout';
-
-        state.selectedExercises = [];
-
-        renderApp();
-
-      }
-
-
-
-      function selectExercise(category, exerciseId) {
-
-        const exercise = exercises[category].exercises[exerciseId];
-
-        const existingIndex = state.selectedExercises.findIndex(e => e.id === exerciseId);
-
-        
-
-        if (existingIndex >= 0) {
-
-          state.selectedExercises.splice(existingIndex, 1);
+          return calculateCardioEffort(hrData, state.workoutData.cardio.duration);
 
         } else {
 
-          state.selectedExercises.push({
+          const sets = Array(state.workoutData.strength.sets).fill(1);
 
-            id: exerciseId,
+          const rpeValues = Array(state.workoutData.strength.sets).fill(state.workoutData.strength.avgRPE);
 
-            name: exercise.name,
-
-            category: category,
-
-            type: exercise.type,
-
-            intensity: getDefaultIntensity(exercise.type),
-
-            duration: getDefaultDuration(exercise.type) / 60 // Convert seconds to minutes for display
-
-          });
+          return calculateStrengthEffort(sets, rpeValues);
 
         }
-
-        renderApp();
 
       }
 
 
 
-      function setExerciseIntensity(exerciseId, intensity) {
+      function getScientificExplanation(type, score) {
 
-        const exercise = state.selectedExercises.find(e => e.id === exerciseId);
+        const explanations = {
 
-        if (exercise) {
+          cardio: {
 
-          exercise.intensity = intensity;
+            low: "Light cardio stress. Good for recovery and base building. TRIMP score reflects minimal cardiovascular adaptation stimulus.",
 
-        }
+            medium: "Moderate cardio load. Effective for improving VO2 max and endurance. TRIMP model shows good training impulse for aerobic development.",
 
-        renderApp();
+            high: "High cardio stress. Significant stimulus for cardiovascular adaptation. May require longer recovery for optimal adaptation."
 
-      }
+          },
 
+          strength: {
 
+            low: "Minimal mechanical tension. Suitable for technical practice or active recovery. Research shows hypertrophy requires greater effort.",
 
-      function startWorkoutSession() {
+            medium: "Good training volume. Schoenfeld et al. (2017) show this level supports muscle growth when sustained weekly.",
 
-        if (state.selectedExercises.length === 0) {
+            high: "High mechanical stress. Significant stimulus for hypertrophy and strength gains. Monitor recovery to avoid overtraining."
 
-          alert("Please add at least one exercise to your workout!");
-
-          return;
-
-        }
-
-        
-
-        // Convert duration from minutes to seconds and store for each exercise
-
-        const exercisesWithDurations = state.selectedExercises.map(ex => ({
-
-          ...ex,
-
-          durationSeconds: (ex.duration || getDefaultDuration(ex.type) / 60) * 60
-
-        }));
-
-        
-
-        state.currentSession = {
-
-          id: Date.now(),
-
-          date: new Date(),
-
-          exercises: exercisesWithDurations,
-
-          totalEffort: 0,
-
-          totalCalories: 0,
-
-          totalTime: 0,
-
-          hardSeconds: 0,
-
-          hardMinutes: 0,
-
-          currentHeartRate: 0,
-
-          currentMovement: 0,
-
-          currentEffort: 0,
-
-          elapsedTime: 0,
-
-          calories: 0
+          }
 
         };
 
         
 
-        activeWorkoutData = [];
+        let level = 'medium';
 
-        elapsedTime = 0;
+        if (score < 40) level = 'low';
 
-        state.currentView = 'activeWorkout';
-
-        
-
-        workoutIntervalId = setInterval(processWorkoutTick, BASE_INTERVAL_MS);
-
-        renderApp();
-
-      }
-
-
-
-      function completeWorkout() {
-
-        if (state.currentSession) {
-
-          // Calculate final metrics
-          // totalEffort is already accumulated (effort integrated over time)
-
-          state.currentSession.totalCalories = state.currentSession.calories;
-
-          state.currentSession.totalTime = elapsedTime;
-
-          // Calculate hard minutes from hard seconds
-
-          state.currentSession.hardMinutes = (state.currentSession.hardSeconds || 0) / 60;
-
-          
-
-          state.workoutSessions.unshift(state.currentSession);
-
-          state.currentSession = null;
-
-        }
+        if (score > 70) level = 'high';
 
         
 
-        if (workoutIntervalId) {
-
-          clearInterval(workoutIntervalId);
-
-          workoutIntervalId = null;
-
-        }
-
-        
-
-        state.currentView = 'dashboard';
-
-        renderApp();
-
-      }
-
-
-
-      function loadWorkoutTemplate(templateId) {
-
-        const template = workoutTemplates[templateId];
-
-        state.selectedExercises = template.exercises.map(exerciseId => {
-
-          // Find exercise details using cached lookup
-
-          const exercise = getExerciseById(exerciseId);
-
-          
-
-          if (!exercise) return null;
-          
-          // Find category efficiently
-          let category = null;
-          for (const cat of Object.keys(exercises)) {
-            if (exercises[cat].exercises[exerciseId]) {
-              category = cat;
-              break;
-            }
-          }
-          
-          return {
-            id: exerciseId,
-            name: exercise.name,
-            category: category,
-            type: exercise.type,
-            intensity: getDefaultIntensity(exercise.type),
-            duration: getDefaultDuration(exercise.type) / 60
-          };
-
-        }).filter(Boolean);
-
-        
-
-        renderApp();
+        return explanations[type][level];
 
       }
 
@@ -1531,25 +856,17 @@
 
         
 
-        switch (state.currentView) {
+        if (state.currentView === 'science') {
 
-          case 'dashboard':
+          renderScienceView(root);
 
-            renderDashboard(root);
+        } else if (state.currentView === 'demo') {
 
-            break;
+          renderDemoView(root);
 
-          case 'logWorkout':
+        } else if (state.currentView === 'results') {
 
-            renderLogWorkout(root);
-
-            break;
-
-          case 'activeWorkout':
-
-            renderActiveWorkout(root);
-
-            break;
+          renderResultsView(root);
 
         }
 
@@ -1557,18 +874,7 @@
 
 
 
-      function renderDashboard(root) {
-
-        const recentSessions = state.workoutSessions.slice(0, 5);
-
-        // Calculate average total effort across all sessions
-        const totalEffort = state.workoutSessions.length > 0 
-          ? state.workoutSessions.reduce((sum, session) => sum + (session.totalEffort || 0), 0) / state.workoutSessions.length 
-          : 0;
-
-        const effortLevel = getEffortLevel(totalEffort);
-
-        
+      function renderScienceView(root) {
 
         root.innerHTML = `
 
@@ -1576,67 +882,27 @@
 
             <header class="text-center mb-8">
 
-              <h1 class="text-3xl font-bold text-white mb-2">Smart Workout Tracker</h1>
+              <h1 class="text-3xl font-bold text-white mb-4">Science-Based Effort Tracking</h1>
 
-              <p class="text-slate-400">Track your effort, not just your reps</p>
+              <p class="text-slate-400 text-lg">Backed by decades of sports science research</p>
 
             </header>
 
             
 
-            <!-- Health Notice -->
+            <!-- Science Explanation -->
 
-            <div class="glass rounded-3xl p-4 mb-6 bg-purple-500-20 border border-purple-500">
+            <div class="science-card glass rounded-3xl p-6 mb-6">
 
-              <p class="text-sm text-purple-400 text-center">
+              <h2 class="text-xl font-semibold text-white mb-4">🎯 Why Effort Matters More Than Numbers</h2>
 
-                💡 Remember: Every effort level is an achievement. Listen to your body and celebrate all activity!
+              <div class="space-y-4 text-slate-300">
 
-              </p>
+                <p><strong>Cardio:</strong> Your body adapts based on <strong>intensity × duration</strong> (TRIMP model). More minutes at higher heart rate zones = greater cardiovascular stimulus.</p>
 
-            </div>
+                <p><strong>Strength:</strong> Muscle growth responds to <strong>weekly hard sets × proximity to failure</strong> (RPE). Not just total weight lifted.</p>
 
-            
-
-            <!-- Rest Period Notice -->
-
-            <div class="glass rounded-3xl p-4 mb-6 bg-sky-500-20 border border-sky-500">
-
-              <p class="text-sm text-sky-400 text-center">
-
-                ⏱️ Rest periods are implied between exercises but are not tracked. Only active work time is counted for effort scoring.
-
-              </p>
-
-            </div>
-
-            
-
-            <!-- Overview Stats -->
-
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-
-              <div class="glass rounded-3xl p-4 text-center">
-
-                <div class="text-2xl font-bold text-white">${state.workoutSessions.length}</div>
-
-                <div class="text-slate-400 text-sm">Workouts</div>
-
-              </div>
-
-              <div class="glass rounded-3xl p-4 text-center">
-
-                <div class="text-2xl font-bold text-emerald-400">${totalEffort.toFixed(1)}</div>
-
-                <div class="text-slate-400 text-sm">Avg Effort</div>
-
-              </div>
-
-              <div class="glass rounded-3xl p-4 text-center">
-
-                <div class="text-2xl font-bold text-orange-400">${effortLevel.level}</div>
-
-                <div class="text-slate-400 text-sm">Level</div>
+                <p class="text-sm text-purple-400">Based on Banister (1991) TRIMP and Schoenfeld et al. (2017) hypertrophy research</p>
 
               </div>
 
@@ -1644,141 +910,53 @@
 
             
 
-            <!-- Quick Start -->
+            <!-- Key Research Points -->
 
             <div class="glass rounded-3xl p-6 mb-6">
 
-              <h2 class="text-xl font-semibold text-white mb-4">Quick Start</h2>
+              <h2 class="text-xl font-semibold text-white mb-4">📚 Scientific Foundation</h2>
 
-              <button class="primary w-full py-4 mb-4" onclick="app.startNewWorkout()">
+              <div class="space-y-4">
 
-                🏋️ Start New Workout
+                <div>
+
+                  <h3 class="font-semibold text-sky-400 mb-2">TRIMP (Training Impulse)</h3>
+
+                  <p class="text-slate-400 text-sm">Heart rate zones × duration quantifies cardio training load. Validated in endurance athletes.</p>
+
+                </div>
+
+                <div>
+
+                  <h3 class="font-semibold text-orange-400 mb-2">Session RPE</h3>
+
+                  <p class="text-slate-400 text-sm">Perceived exertion × duration correlates with physiological markers of training stress.</p>
+
+                </div>
+
+                <div>
+
+                  <h3 class="font-semibold text-emerald-400 mb-2">Hypertrophy Research</h3>
+
+                  <p class="text-slate-400 text-sm">Muscle growth occurs across load ranges when sets are taken close to failure (Schoenfeld et al., 2017).</p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Start Demo -->
+
+            <div class="text-center">
+
+              <button class="primary w-full max-w-md py-4 text-lg" onclick="app.setState({ currentView: 'demo' })">
+
+                Try Science-Based Demo
 
               </button>
-
-              
-
-              <div class="grid grid-cols-2 gap-3">
-
-                ${Object.entries(workoutTemplates).map(([id, template]) => `
-
-                  <button class="py-3 text-sm" onclick="app.loadWorkoutTemplate('${id}')">
-
-                    ${template.name}
-
-                  </button>
-
-                `).join('')}
-
-              </div>
-
-            </div>
-
-            
-
-            <!-- Recent Workouts -->
-
-            <div class="glass rounded-3xl p-6">
-
-              <h2 class="text-xl font-semibold text-white mb-4">Recent Workouts</h2>
-
-              ${recentSessions.length > 0 ? `
-
-                <div class="space-y-3">
-
-                  ${recentSessions.map(session => {
-
-                    const effort = getEffortLevel(session.totalEffort || 0);
-
-                    return `
-
-                      <div class="workout-session">
-
-                        <div class="flex justify-between items-start mb-2">
-
-                          <div>
-
-                            <div class="font-semibold text-white">${session.exercises.map(e => e.name).join(', ')}</div>
-
-                            <div class="text-slate-400 text-sm">${session.date.toLocaleDateString()} • ${formatDuration(session.totalTime || 0)}</div>
-
-                          </div>
-
-                          <span class="effort-badge ${effort.color}">${(session.totalEffort || 0).toFixed(1)}</span>
-
-                        </div>
-
-                        <div class="text-sm text-slate-400">${(session.totalCalories || 0).toFixed(0)} calories • ${effort.level} Effort${session.hardMinutes ? ` • ${session.hardMinutes.toFixed(1)} min hard` : ''}</div>
-
-                      </div>
-
-                    `;
-
-                  }).join('')}
-
-                </div>
-
-              ` : `
-
-                <p class="text-slate-400 text-center py-4">No workouts yet. Start your first one!</p>
-
-              `}
-
-            </div>
-
-            
-
-            <!-- Effort Guide -->
-
-            <div class="glass rounded-3xl p-6 mt-6">
-
-              <h2 class="text-xl font-semibold text-white mb-4">Understanding Effort Scores</h2>
-
-              <div class="space-y-3">
-
-                <div class="flex items-center gap-3">
-
-                  <span class="effort-badge effort-low">0-29</span>
-
-                  <div>
-
-                    <div class="text-white text-sm">Low Effort</div>
-
-                    <div class="text-slate-400 text-xs">Perfect for recovery, beginners, or active rest days</div>
-
-                  </div>
-
-                </div>
-
-                <div class="flex items-center gap-3">
-
-                  <span class="effort-badge effort-medium">30-59</span>
-
-                  <div>
-
-                    <div class="text-white text-sm">Medium Effort</div>
-
-                    <div class="text-slate-400 text-xs">Ideal for consistent training and fitness maintenance</div>
-
-                  </div>
-
-                </div>
-
-                <div class="flex items-center gap-3">
-
-                  <span class="effort-badge effort-high">60-100</span>
-
-                  <div>
-
-                    <div class="text-white text-sm">High Effort</div>
-
-                    <div class="text-slate-400 text-xs">Great for pushing limits - listen to your body's signals</div>
-
-                  </div>
-
-                </div>
-
-              </div>
 
             </div>
 
@@ -1790,7 +968,13 @@
 
 
 
-      function renderLogWorkout(root) {
+      function renderDemoView(root) {
+
+        const currentEffort = calculateCurrentEffort();
+
+        const effortLevel = currentEffort < 40 ? 'low' : currentEffort < 70 ? 'medium' : 'high';
+
+        
 
         root.innerHTML = `
 
@@ -1800,13 +984,13 @@
 
               <div>
 
-                <h1 class="text-2xl font-bold text-white">Log Workout</h1>
+                <h1 class="text-2xl font-bold text-white">Effort Tracker Demo</h1>
 
-                <p class="text-slate-400">Select exercises and set intensity by proximity to failure</p>
+                <p class="text-slate-400">See science-based effort calculation in action</p>
 
               </div>
 
-              <button onclick="app.setState({ currentView: 'dashboard' })" class="px-4 py-2">
+              <button onclick="app.setState({ currentView: 'science' })" class="px-4 py-2">
 
                 ← Back
 
@@ -1816,143 +1000,243 @@
 
             
 
-            <!-- Rest Period Notice -->
+            <!-- Workout Type Selection -->
 
-            <div class="glass rounded-3xl p-4 mb-6 bg-sky-500-20 border border-sky-500">
+            <div class="glass rounded-3xl p-6 mb-6">
 
-              <p class="text-sm text-sky-400 text-center">
+              <h2 class="text-xl font-semibold text-white mb-4">Select Workout Type</h2>
 
-                ⏱️ Rest periods between exercises are implied but not tracked. Only active work time is counted for effort scoring.
+              <div class="grid grid-cols-2 gap-4">
 
-              </p>
+                <div class="workout-type-btn ${state.workoutType === 'cardio' ? 'selected' : ''}" 
+
+                     onclick="app.setWorkoutType('cardio')">
+
+                  <div class="text-2xl mb-2">🏃</div>
+
+                  <div class="font-semibold text-white">Cardio</div>
+
+                  <div class="text-slate-400 text-sm">TRIMP-based effort</div>
+
+                </div>
+
+                <div class="workout-type-btn ${state.workoutType === 'strength' ? 'selected' : ''}" 
+
+                     onclick="app.setWorkoutType('strength')">
+
+                  <div class="text-2xl mb-2">🏋️</div>
+
+                  <div class="font-semibold text-white">Strength</div>
+
+                  <div class="text-slate-400 text-sm">RPE-based effort</div>
+
+                </div>
+
+              </div>
 
             </div>
 
             
 
-            <!-- Selected Exercises -->
+            ${state.workoutType ? `
 
-            ${state.selectedExercises.length > 0 ? `
+              <!-- Workout Parameters -->
 
               <div class="glass rounded-3xl p-6 mb-6">
 
-                <h2 class="text-xl font-semibold text-white mb-4">Selected Exercises (${state.selectedExercises.length})</h2>
+                <h2 class="text-xl font-semibold text-white mb-4">Workout Parameters</h2>
 
-                <div class="space-y-3">
+                ${state.workoutType === 'cardio' ? `
 
-                  ${state.selectedExercises.map(exercise => `
+                  <div class="space-y-4">
 
-                    <div class="flex items-center justify-between p-3 bg-slate-800-50 rounded-2xl">
+                    <div>
 
-                      <div>
+                      <label class="text-slate-400 block mb-2">Duration: ${state.workoutData.cardio.duration} minutes</label>
 
-                        <div class="font-semibold text-white">${exercise.name}</div>
+                      <input type="range" min="10" max="120" value="${state.workoutData.cardio.duration}" 
 
-                        <div class="text-slate-400 text-sm">${exercise.duration.toFixed(1)} min work • ${getIntensityMultiplier(exercise.type, exercise.intensity).label}</div>
-
-                      </div>
-
-                      <div class="flex gap-2">
-
-                        <select onchange="app.setExerciseIntensity('${exercise.id}', this.value)" 
-
-                                class="bg-slate-700 rounded-lg px-2 py-1 text-sm">
-
-                          ${exercise.type === 'strength' ? `
-                            <option value="4RepsFromFailure" ${exercise.intensity === '4RepsFromFailure' ? 'selected' : ''}>4 Reps From Failure</option>
-                            <option value="2RepsFromFailure" ${exercise.intensity === '2RepsFromFailure' ? 'selected' : ''}>2 Reps From Failure</option>
-                            <option value="toFailure" ${exercise.intensity === 'toFailure' ? 'selected' : ''}>To Failure</option>
-                          ` : exercise.type === 'isometric' ? `
-                            <option value="steadyHold" ${exercise.intensity === 'steadyHold' ? 'selected' : ''}>Steady Hold</option>
-                            <option value="challengingHold" ${exercise.intensity === 'challengingHold' ? 'selected' : ''}>Challenging Hold</option>
-                            <option value="maxEffortHold" ${exercise.intensity === 'maxEffortHold' ? 'selected' : ''}>Max Effort Hold</option>
-                          ` : `
-                            <option value="easy" ${exercise.intensity === 'easy' ? 'selected' : ''}>Easy</option>
-                            <option value="moderate" ${exercise.intensity === 'moderate' ? 'selected' : ''}>Moderate</option>
-                            <option value="hard" ${exercise.intensity === 'hard' ? 'selected' : ''}>Hard</option>
-                          `}
-
-                        </select>
-
-                        <button onclick="app.selectExercise('${exercise.category}', '${exercise.id}')" 
-
-                                class="px-3 py-1 bg-slate-700 rounded-lg text-sm">
-
-                          Remove
-
-                        </button>
-
-                      </div>
+                             oninput="app.updateCardioParam('duration', this.value)" class="w-full">
 
                     </div>
 
-                  `).join('')}
+                    <div>
 
-                </div>
+                      <label class="text-slate-400 block mb-2">Average Heart Rate: ${state.workoutData.cardio.avgHR} bpm</label>
 
-                <button class="primary w-full mt-4 py-4" onclick="app.startWorkoutSession()">
+                      <input type="range" min="100" max="190" value="${state.workoutData.cardio.avgHR}" 
 
-                  Start Workout
-
-                </button>
-
-              </div>
-
-            ` : ''}
-
-            
-
-            <!-- Exercise Library -->
-
-            <div class="glass rounded-3xl p-6">
-
-              <h2 class="text-xl font-semibold text-white mb-4">Exercise Library</h2>
-
-              <div class="space-y-6">
-
-                ${Object.entries(exercises).map(([category, group]) => `
-
-                  <div>
-
-                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-
-                      <span>${group.icon}</span>
-
-                      ${group.name}
-
-                    </h3>
-
-                    <div class="exercise-group">
-
-                      ${Object.entries(group.exercises).map(([id, exercise]) => {
-
-                        const isSelected = state.selectedExercises.some(e => e.id === id);
-
-                        return `
-
-                          <div class="exercise-item ${isSelected ? 'selected' : ''}" 
-
-                               onclick="app.selectExercise('${category}', '${id}')">
-
-                            <div class="font-medium text-white">${exercise.name}</div>
-
-                            <div class="text-slate-400 text-sm">${exercise.type} • Base HR: ${exercise.baseHR}</div>
-
-                          </div>
-
-                        `;
-
-                      }).join('')}
+                             oninput="app.updateCardioParam('avgHR', this.value)" class="w-full">
 
                     </div>
 
                   </div>
 
-                `).join('')}
+                ` : `
+
+                  <div class="space-y-4">
+
+                    <div>
+
+                      <label class="text-slate-400 block mb-2">Total Sets: ${state.workoutData.strength.sets}</label>
+
+                      <input type="range" min="5" max="25" value="${state.workoutData.strength.sets}" 
+
+                             oninput="app.updateStrengthParam('sets', this.value)" class="w-full">
+
+                    </div>
+
+                    <div>
+
+                      <label class="text-slate-400 block mb-2">Average RPE: ${state.workoutData.strength.avgRPE}/10</label>
+
+                      <input type="range" min="6" max="10" value="${state.workoutData.strength.avgRPE}" 
+
+                             oninput="app.updateStrengthParam('avgRPE', this.value)" class="w-full">
+
+                      <div class="text-xs text-slate-400 mt-2">
+
+                        RPE Scale: 6=Easy, 8=Hard, 10=Maximum
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                `}
 
               </div>
 
-            </div>
+              
+
+              <!-- Live Effort Calculation -->
+
+              <div class="glass rounded-3xl p-6 mb-6">
+
+                <h2 class="text-xl font-semibold text-white mb-4">Live Effort Calculation</h2>
+
+                <div class="text-center">
+
+                  <div class="text-4xl font-bold text-emerald-400 mb-2">${currentEffort.toFixed(1)}</div>
+
+                  <div class="effort-badge ${effortLevel}">${effortLevel.toUpperCase()} EFFORT</div>
+
+                  <div class="text-slate-400 mt-4 text-sm">
+
+                    ${getScientificExplanation(state.workoutType, currentEffort)}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              
+
+              <!-- Algorithm Details -->
+
+              <div class="glass rounded-3xl p-6">
+
+                <h2 class="text-xl font-semibold text-white mb-4">Science Behind the Score</h2>
+
+                ${state.workoutType === 'cardio' ? `
+
+                  <div class="space-y-3 text-sm">
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Zone 1 (Very Light):</span>
+
+                      <span class="text-white">${state.workoutData.cardio.hrZones.zone1} min × 1 = ${state.workoutData.cardio.hrZones.zone1}</span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Zone 2 (Light):</span>
+
+                      <span class="text-white">${state.workoutData.cardio.hrZones.zone2} min × 2 = ${state.workoutData.cardio.hrZones.zone2 * 2}</span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Zone 3 (Moderate):</span>
+
+                      <span class="text-white">${state.workoutData.cardio.hrZones.zone3} min × 3 = ${state.workoutData.cardio.hrZones.zone3 * 3}</span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Zone 4 (Hard):</span>
+
+                      <span class="text-white">${state.workoutData.cardio.hrZones.zone4} min × 4 = ${state.workoutData.cardio.hrZones.zone4 * 4}</span>
+
+                    </div>
+
+                    <div class="flex justify-between border-t border-slate-700 pt-2">
+
+                      <span class="text-slate-400">Total TRIMP Score:</span>
+
+                      <span class="text-white font-semibold">${currentEffort.toFixed(1)}</span>
+
+                    </div>
+
+                  </div>
+
+                ` : `
+
+                  <div class="space-y-3 text-sm">
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Total Sets:</span>
+
+                      <span class="text-white">${state.workoutData.strength.sets}</span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Average RPE:</span>
+
+                      <span class="text-white">${state.workoutData.strength.avgRPE}/10</span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                      <span class="text-slate-400">Effort Multiplier:</span>
+
+                      <span class="text-white">${(state.workoutData.strength.avgRPE * 0.1).toFixed(2)}</span>
+
+                    </div>
+
+                    <div class="flex justify-between border-t border-slate-700 pt-2">
+
+                      <span class="text-slate-400">Strength Effort Score:</span>
+
+                      <span class="text-white font-semibold">${currentEffort.toFixed(1)}</span>
+
+                    </div>
+
+                  </div>
+
+                `}
+
+              </div>
+
+              
+
+              <button class="primary w-full mt-6 py-4" onclick="app.setState({ currentView: 'results' })">
+
+                View Training Progress
+
+              </button>
+
+            ` : ''}
 
           </div>
 
@@ -1962,42 +1246,45 @@
 
 
 
-      function renderActiveWorkout(root) {
+      function renderResultsView(root) {
 
-        if (!state.currentSession) return;
+        const recentCardio = state.trainingHistory.cardio[state.trainingHistory.cardio.length - 1];
 
-        
+        const recentStrength = state.trainingHistory.strength[state.trainingHistory.strength.length - 1];
 
-        const currentEffortLevel = getEffortLevel(state.currentSession.currentEffort);
+        const avgCardio = state.trainingHistory.cardio.reduce((a, b) => a + b, 0) / state.trainingHistory.cardio.length;
 
-        // Calculate progress based on cumulative exercise durations
-        const totalDuration = state.currentSession.exercises.reduce((sum, ex) => 
-          sum + (ex.durationSeconds || getDefaultDuration(ex.type)), 0);
-        const progress = Math.min((state.currentSession.elapsedTime / totalDuration) * 100, 100);
-
-        const currentExercise = state.currentSession.exercises[state.currentSession.currentExerciseIndex || 0];
-
-        const intensityLabel = currentExercise ? getIntensityMultiplier(currentExercise.type, currentExercise.intensity).label : 'Moderate';
+        const avgStrength = state.trainingHistory.strength.reduce((a, b) => a + b, 0) / state.trainingHistory.strength.length;
 
         
+
+        const cardioACWR = calculateACWR(recentCardio, avgCardio);
+
+        const strengthACWR = calculateACWR(recentStrength, avgStrength);
+
+        const cardioACWRInfo = getACWRRecommendation(cardioACWR);
+
+        const strengthACWRInfo = getACWRRecommendation(strengthACWR);
+
+
 
         root.innerHTML = `
 
           <div class="min-h-screen p-4 md:p-6">
 
-            <header class="flex justify-between items-center mb-6">
+            <header class="flex items-center justify-between mb-6">
 
               <div>
 
-                <h1 class="text-2xl font-bold text-white">Active Workout</h1>
+                <h1 class="text-2xl font-bold text-white">Training Progress</h1>
 
-                <p class="text-slate-400">${formatDuration(state.currentSession.elapsedTime)} work time (rest periods not tracked)</p>
+                <p class="text-slate-400">7-week training load analysis</p>
 
               </div>
 
-              <button onclick="app.completeWorkout()" class="px-4 py-2 bg-emerald-500 text-white">
+              <button onclick="app.setState({ currentView: 'demo' })" class="px-4 py-2">
 
-                Complete
+                ← Back
 
               </button>
 
@@ -2005,95 +1292,39 @@
 
             
 
-            <!-- Current Exercise -->
-
-            <div class="glass rounded-3xl p-6 mb-6 bg-sky-500-20 border border-sky-500">
-
-              <div class="text-center">
-
-                <div class="text-sm text-slate-400 mb-2">Current Exercise</div>
-
-                <div class="text-3xl font-bold text-white mb-2">${currentExercise?.name || 'Preparing...'}</div>
-
-                <div class="text-slate-300">${intensityLabel}</div>
-
-              </div>
-
-            </div>
-
-            
-
-            <!-- Progress -->
+            <!-- ACWR Analysis -->
 
             <div class="glass rounded-3xl p-6 mb-6">
 
-              <div class="flex justify-between items-center mb-3">
+              <h2 class="text-xl font-semibold text-white mb-4">Training Load Management</h2>
 
-                <span class="text-slate-400">Work Progress (Active Work Only)</span>
+              <div class="space-y-4">
 
-                <span class="text-white font-semibold">${Math.round(progress)}%</span>
+                <div>
 
-              </div>
+                  <div class="flex justify-between items-center mb-2">
 
-              <div class="progress-bar">
+                    <span class="text-slate-400">Cardio ACWR:</span>
 
-                <div class="progress-fill" style="width: ${progress}%"></div>
+                    <span class="${cardioACWRInfo.color} font-semibold">${cardioACWR.toFixed(2)} (${cardioACWRInfo.level})</span>
 
-              </div>
+                  </div>
 
-              <div class="text-xs text-slate-500 mt-2 text-center">Rest periods are implied but not included in tracking</div>
-
-            </div>
-
-            
-
-            <!-- Live Metrics -->
-
-            <div class="grid grid-cols-2 gap-4 mb-6">
-
-              <div class="glass rounded-3xl p-6 text-center">
-
-                <div class="text-3xl font-bold text-emerald-400 mb-2">${state.currentSession.currentEffort.toFixed(1)}</div>
-
-                <div class="text-slate-400">Effort Score</div>
-
-                <div class="text-sm mt-1 ${currentEffortLevel.color}">${currentEffortLevel.level}</div>
-
-              </div>
-
-              <div class="glass rounded-3xl p-6 text-center">
-
-                <div class="text-3xl font-bold text-orange-400 mb-2">${state.currentSession.calories.toFixed(0)}</div>
-
-                <div class="text-slate-400">Calories</div>
-
-              </div>
-
-            </div>
-
-            
-
-            <!-- Current Stats -->
-
-            <div class="glass rounded-3xl p-6 mb-6">
-
-              <h2 class="text-xl font-semibold text-white mb-4">Live Data</h2>
-
-              <div class="grid grid-cols-2 gap-4">
-
-                <div class="text-center">
-
-                  <div class="text-2xl font-bold text-sky-400">${state.currentSession.currentHeartRate.toFixed(0)}</div>
-
-                  <div class="text-slate-400 text-sm">Heart Rate</div>
+                  <div class="text-sm text-slate-400">${cardioACWRInfo.message}</div>
 
                 </div>
 
-                <div class="text-center">
+                <div>
 
-                  <div class="text-2xl font-bold text-orange-400">${state.currentSession.currentMovement.toFixed(2)}</div>
+                  <div class="flex justify-between items-center mb-2">
 
-                  <div class="text-slate-400 text-sm">Movement</div>
+                    <span class="text-slate-400">Strength ACWR:</span>
+
+                    <span class="${strengthACWRInfo.color} font-semibold">${strengthACWR.toFixed(2)} (${strengthACWRInfo.level})</span>
+
+                  </div>
+
+                  <div class="text-sm text-slate-400">${strengthACWRInfo.message}</div>
 
                 </div>
 
@@ -2103,45 +1334,89 @@
 
             
 
-            <!-- Exercise List -->
+            <!-- Progress Charts -->
 
             <div class="glass rounded-3xl p-6">
 
-              <h2 class="text-xl font-semibold text-white mb-4">Workout Plan</h2>
+              <h2 class="text-xl font-semibold text-white mb-4">Weekly Effort Trends</h2>
 
-              <div class="space-y-3">
+              <div class="space-y-6">
 
-                ${state.currentSession.exercises.map((exercise, index) => {
+                <div>
 
-                  const currentIndex = state.currentSession.currentExerciseIndex ?? 0;
+                  <h3 class="text-sky-400 font-semibold mb-3">Cardio Effort (TRIMP-based)</h3>
 
-                  const intensityLabel = getIntensityMultiplier(exercise.type, exercise.intensity).label;
+                  ${state.trainingHistory.cardio.map((score, index) => `
 
-                  return `
+                    <div class="flex items-center justify-between mb-2">
 
-                    <div class="flex items-center justify-between p-3 bg-slate-800-50 rounded-2xl ${index === currentIndex ? 'border border-emerald-500' : ''}">
+                      <span class="text-slate-400 text-sm">${state.trainingHistory.dates[index]}</span>
 
                       <div class="flex items-center gap-3">
 
-                        <div class="w-3 h-3 rounded-full ${index === currentIndex ? 'bg-emerald-500 kpi-pulse' : 'bg-slate-600'}"></div>
+                        <div class="progress-bar" style="width: 100px">
 
-                        <div>
-
-                          <div class="font-semibold text-white ${index === currentIndex ? 'text-emerald-400' : ''}">${exercise.name}</div>
-
-                          <div class="text-slate-400 text-sm">${intensityLabel}</div>
+                          <div class="progress-fill" style="width: ${score}%"></div>
 
                         </div>
 
-                      </div>
+                        <span class="text-white text-sm w-8">${score}</span>
 
-                      <span class="text-slate-400">${(exercise.durationSeconds || getDefaultDuration(exercise.type)) / 60} min work</span>
+                      </div>
 
                     </div>
 
-                  `;
+                  `).join('')}
 
-                }).join('')}
+                </div>
+
+                <div>
+
+                  <h3 class="text-orange-400 font-semibold mb-3">Strength Effort (RPE-based)</h3>
+
+                  ${state.trainingHistory.strength.map((score, index) => `
+
+                    <div class="flex items-center justify-between mb-2">
+
+                      <span class="text-slate-400 text-sm">${state.trainingHistory.dates[index]}</span>
+
+                      <div class="flex items-center gap-3">
+
+                        <div class="progress-bar" style="width: 100px">
+
+                          <div class="progress-fill" style="width: ${score}%"></div>
+
+                        </div>
+
+                        <span class="text-white text-sm w-8">${score}</span>
+
+                      </div>
+
+                    </div>
+
+                  `).join('')}
+
+                </div>
+
+              </div>
+
+            </div>
+
+            
+
+            <!-- Research Summary -->
+
+            <div class="glass rounded-3xl p-6 mt-6">
+
+              <h2 class="text-xl font-semibold text-white mb-4">Evidence-Based Training</h2>
+
+              <div class="space-y-3 text-sm text-slate-400">
+
+                <p>• <strong>TRIMP scores</strong> quantify cardio training load based on heart rate zones × duration (Banister, 1991)</p>
+
+                <p>• <strong>RPE-based effort</strong> tracks strength training quality using proximity to failure (Schoenfeld et al., 2017)</p>
+
+                <p>• <strong>ACWR (1.0-1.3)</strong> represents optimal training load range for adaptation (Gabbett, 2016)</p>
 
               </div>
 
@@ -2159,19 +1434,37 @@
 
       window.app = {
 
-        startNewWorkout,
+        setState: (newState) => {
 
-        selectExercise,
+          Object.assign(state, newState);
 
-        setExerciseIntensity,
+          renderApp();
 
-        startWorkoutSession,
+        },
 
-        completeWorkout,
+        setWorkoutType: (type) => {
 
-        loadWorkoutTemplate,
+          state.workoutType = type;
 
-        setState: (newState) => Object.assign(state, newState)
+          renderApp();
+
+        },
+
+        updateCardioParam: (param, value) => {
+
+          state.workoutData.cardio[param] = parseInt(value);
+
+          renderApp();
+
+        },
+
+        updateStrengthParam: (param, value) => {
+
+          state.workoutData.strength[param] = parseInt(value);
+
+          renderApp();
+
+        }
 
       };
 
@@ -2185,14 +1478,9 @@
 
 
 
-    // Start the application immediately
-    // Use DOMContentLoaded or immediate execution for faster loading
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeApp);
-    } else {
-      // DOM already loaded, execute immediately
-      initializeApp();
-    }
+    // Start the application
+
+    setTimeout(initializeApp, 100);
 
   </script>
 
