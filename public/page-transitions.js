@@ -1,6 +1,4 @@
 // Smooth Page Transitions
-// Demonstrates animation control and event handling skills
-
 class PageTransitions {
     constructor() {
         this.transitioning = false;

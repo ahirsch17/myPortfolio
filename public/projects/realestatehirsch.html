@@ -39,7 +39,7 @@
                                 <span>Visit live site</span>
                                 <span class="btn-glow"></span>
                             </a>
-                            <a href="https://github.com/ahirsch17/hirsch-properties" class="btn btn-ghost" target="_blank" rel="noopener">Browse source</a>
+                            <a href="https://github.com/ahirsch17/hirsch-properties" class="btn btn-ghost" target="_blank" rel="noopener">View repo</a>
                         </div>
                     </div>
                     <aside class="project-facts">
@@ -51,11 +51,11 @@
                             </div>
                             <div>
                                 <dt>Role</dt>
-                                <dd>Product designer · Frontend developer</dd>
+                                <dd>Product designer · Full stack developer</dd>
                             </div>
                             <div>
                                 <dt>Stack</dt>
-                                <dd>HTML · CSS · JavaScript · Express.js · MySQL · Nodemailer</dd>
+                                <dd>Node.js · Express.js · PostgreSQL · Neon · Nodemailer · Render</dd>
                             </div>
                             <div>
                                 <dt>Status</dt>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="project-card">
                         <h3>Interactive scheduling</h3>
-                        <p>Flatpickr calendar, live availability, and server-side validation prevent double bookings and confirm visits instantly.</p>
+                        <p>Flatpickr calendar with client-side restrictions, real-time availability checks via API, and server-side validation prevent double bookings and confirm visits instantly.</p>
                     </div>
                     <div class="project-card">
                         <h3>Easy updates</h3>
@@ -104,17 +104,25 @@
                 </div>
                 <div class="project-detail-grid">
                     <div class="project-detail">
-                        <h3>Express API</h3>
-                        <p>Validates requests, stores reservations in MySQL, and protects against overlapping date/time combinations.</p>
+                        <h3>RESTful API</h3>
+                        <p>Express.js endpoints with parameterized queries prevent SQL injection. Connection pooling optimizes PostgreSQL performance on Neon's serverless platform.</p>
+                    </div>
+                    <div class="project-detail">
+                        <h3>Database optimization</h3>
+                        <p>Strategic indexes on date, property, and email columns enable fast conflict detection and availability checks. Automatic cleanup maintains performance.</p>
                     </div>
                     <div class="project-detail">
                         <h3>Email automation</h3>
-                        <p>Nodemailer templates send confirmations to both visitors and the leasing inbox with reschedule/cancel links.</p>
+                        <p>Nodemailer with Gmail SMTP sends HTML confirmations to customers and business. UUID-based cancellation links enable self-service booking management.</p>
                     </div>
-                    <div class="project-detail">
-                        <h3>Self-service portal</h3>
-                        <p>Unique cancel IDs let guests manage their reservation directly from their confirmation email.</p>
-                    </div>
+                </div>
+                <div class="project-gallery">
+                    <figure>
+                        <a href="../Images/HirschLeasing/EnvironmentVariables.jpg" target="_blank" rel="noopener">
+                            <img src="../Images/HirschLeasing/EnvironmentVariables.jpg" alt="Environment variables configuration showing secure credential management">
+                        </a>
+                        <figcaption>Environment variables keep sensitive credentials like database URLs and email passwords secure and out of version control.</figcaption>
+                    </figure>
                 </div>
             </div>
         </section>

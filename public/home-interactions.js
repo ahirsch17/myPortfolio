@@ -397,6 +397,11 @@
             tiltCards.forEach((card) => {
                 const bounds = () => card.getBoundingClientRect();
                 card.addEventListener('pointermove', (event) => {
+                    // Don't apply tilt effect if hovering over links
+                    if (event.target.closest('a')) {
+                        card.style.transform = '';
+                        return;
+                    }
                     const rect = bounds();
                     const x = event.clientX - rect.left;
                     const y = event.clientY - rect.top;
