@@ -114,8 +114,8 @@
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('is-visible');
-                        } else if (!prefersReducedMotion) {
-                            entry.target.classList.remove('is-visible');
+                            // Stop observing once visible to prevent re-triggering
+                            observer.unobserve(entry.target);
                         }
                     });
                 },

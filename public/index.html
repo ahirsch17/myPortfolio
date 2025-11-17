@@ -72,23 +72,26 @@
                         </div>
                     </div>
                     <div class="hero-profile-card">
-                        <div class="profile-header">
-                            <div class="profile-status">
-                                <span class="status-label">Currently</span>
-                                <span class="status-text">CS @ Virginia Tech · Fellow · Intern · Frontend / UI</span>
-                            </div>
+                        <!-- Header block -->
+                        <div class="profile-header-block">
+                            <span class="profile-header-label">Currently</span>
+                            <span class="profile-header-text">CS @ Virginia Tech · Fellow · Intern · Frontend / UI</span>
                         </div>
-                        <div class="profile-image-wrapper">
+                        
+                        <!-- Photo block -->
+                        <div class="profile-image-block">
                             <img src="Images/AlexPic.jpg" alt="Portrait of Alexis Hirsch" loading="lazy" class="profile-image">
                         </div>
-                        <div class="profile-stats">
+                        
+                        <!-- Stats row -->
+                        <div class="profile-stats-grid">
                             <span>4+ projects</span>
-                            <span>•</span>
                             <span>15+ months internship</span>
-                            <span>•</span>
                             <span>3rd year fellowship</span>
                         </div>
-                        <div class="profile-links">
+                        
+                        <!-- Link block -->
+                        <div class="profile-links-block">
                             <a href="Images/Resume.pdf" target="_blank" rel="noopener" class="profile-link profile-link-primary" aria-label="Resume">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                     <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -127,108 +130,116 @@
                     <h2>Project Stories</h2>
                     <p>Scroll through the chapters or jump straight to the work you want to explore.</p>
                 </header>
-                <nav class="chapter-nav" aria-label="Project chapters">
-                    <a href="#chapter-samepath">01 SamePath</a>
-                    <a href="#chapter-sportspredictor">02 SportsPredictor</a>
-                    <a href="#chapter-realestate">03 RealEstateHirsch</a>
-                </nav>
-                <div class="chapter-wrapper">
-                    <!-- Spotlight background -->
-                    <div class="chapter-spotlight"></div>
-                    <article class="chapter" id="chapter-samepath">
-                        <header class="chapter-header">
-                            <span class="chapter-number">Chapter 01</span>
-                            <h3>SamePath</h3>
-                        <p class="chapter-tagline">Mobile scheduling assistant that keeps classmates in sync.</p>
-                    </header>
-                    <div class="chapter-body">
-                        <div class="chapter-text">
-                            <ul>
-                                <li><strong>Role:</strong> Founder · Product Design · Full Stack Development</li>
-                                <li><strong>Stack:</strong> React Native · TypeScript · Flask · Azure Table Storage</li>
-                                <li><strong>Outcome:</strong> Private beta surfacing shared classes and free time for study crews.</li>
-                            </ul>
-                            <p>SamePath turns raw schedules into context-aware suggestions so planning a study session takes seconds. Privacy controls keep each student in charge of what’s shared.</p>
-                            <div class="chapter-cta">
-                                <a href="projects/samepath.html" class="btn btn-primary">Read case study</a>
-                            </div>
-                        </div>
-                        <div class="chapter-media">
-                            <figure>
-                                <video class="project-video project-video-portrait" controls playsinline preload="none">
-                                    <source src="Images/SamePath/screen-recording.mp4" type="video/mp4">
-                                    <source src="Images/SamePath/screen-recording.mov" type="video/quicktime">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <figcaption>Walkthrough of onboarding, schedule reveals, and meet-up planning. Download the MOV if playback stalls.</figcaption>
-                            </figure>
+                
+                <!-- Book page shell card -->
+                <div class="stories-book-card">
+                    <!-- Top bar with chapter navigation -->
+                    <div class="stories-nav-bar">
+                        <div class="stories-nav-label">Chapters</div>
+                        <nav class="chapter-nav" aria-label="Project chapters">
+                            <a href="#chapter-samepath">01 SamePath</a>
+                            <a href="#chapter-sportspredictor">02 SportsPredictor</a>
+                            <a href="#chapter-realestate">03 RealEstateHirsch</a>
+                        </nav>
+                    </div>
+                    
+                    <!-- Content area with spotlight -->
+                    <div class="stories-content-area">
+                        <div class="stories-spotlight"></div>
+                        <div class="stories-content-inner">
+                            <!-- Chapter 01 -->
+                            <article class="chapter chapter-simplified" id="chapter-samepath">
+                                <header class="chapter-header">
+                                    <span class="chapter-number">Chapter 01</span>
+                                    <h3>SamePath</h3>
+                                    <p class="chapter-tagline">Mobile scheduling assistant that keeps classmates in sync.</p>
+                                </header>
+                                <div class="chapter-body">
+                                    <div class="chapter-text">
+                                        <ul>
+                                            <li><strong>Role:</strong> Founder · Product Design · Full Stack Development</li>
+                                            <li><strong>Stack:</strong> React Native · TypeScript · Flask · Azure Table Storage</li>
+                                            <li><strong>Outcome:</strong> Private beta surfacing shared classes and free time for study crews.</li>
+                                        </ul>
+                                        <p>SamePath turns raw schedules into context-aware suggestions so planning a study session takes seconds. Privacy controls keep each student in charge of what's shared.</p>
+                                        <div class="chapter-cta">
+                                            <a href="projects/samepath.html" class="btn btn-primary">Read case study</a>
+                                        </div>
+                                    </div>
+                                    <div class="chapter-media">
+                                        <figure>
+                                            <video class="project-video project-video-portrait" controls playsinline preload="none">
+                                                <source src="Images/SamePath/screen-recording.mp4" type="video/mp4">
+                                                <source src="Images/SamePath/screen-recording.mov" type="video/quicktime">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <figcaption>Walkthrough of onboarding, schedule reveals, and meet-up planning. Download the MOV if playback stalls.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </article>
+                            
+                            <!-- Chapter 02 -->
+                            <article class="chapter chapter-simplified" id="chapter-sportspredictor">
+                                <header class="chapter-header">
+                                    <span class="chapter-number">Chapter 02</span>
+                                    <h3>SportsPredictor</h3>
+                                    <p class="chapter-tagline">Weekly NFL pipeline with explainable matchup forecasts.</p>
+                                </header>
+                                <div class="chapter-body">
+                                    <div class="chapter-text">
+                                        <ul>
+                                            <li><strong>Role:</strong> Developer · Data Pipeline Engineer</li>
+                                            <li><strong>Stack:</strong> Python · Pandas · scikit-learn · BeautifulSoup</li>
+                                            <li><strong>Outcome:</strong> Nightly refresh with CLI tools for batch reports and single-game checks.</li>
+                                        </ul>
+                                        <p>The system normalizes league stats, injuries, weather, and odds to produce forecasts with confidence percentages and callouts that are easy to share with friends.</p>
+                                        <div class="chapter-cta">
+                                            <a href="projects/sportspredictor.html" class="btn btn-primary">Read case study</a>
+                                        </div>
+                                    </div>
+                                    <div class="chapter-media">
+                                        <figure>
+                                            <a href="Images/sportsPredictor/SportsPredictorSingleMatchup.jpg" target="_blank" rel="noopener">
+                                                <img src="Images/sportsPredictor/SportsPredictorSingleMatchup.jpg" alt="Single matchup summary for SportsPredictor">
+                                            </a>
+                                            <figcaption>Sample CLI output highlighting the drivers behind a pick.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </article>
+                            
+                            <!-- Chapter 03 -->
+                            <article class="chapter chapter-simplified" id="chapter-realestate">
+                                <header class="chapter-header">
+                                    <span class="chapter-number">Chapter 03</span>
+                                    <h3>RealEstateHirsch</h3>
+                                    <p class="chapter-tagline">Responsive leasing experience with guided tour scheduling.</p>
+                                </header>
+                                <div class="chapter-body">
+                                    <div class="chapter-text">
+                                        <ul>
+                                            <li><strong>Role:</strong> Product Designer · Frontend Developer</li>
+                                            <li><strong>Stack:</strong> HTML · CSS · JavaScript · Express.js · MySQL · Nodemailer</li>
+                                            <li><strong>Outcome:</strong> Deployed on Render with automated confirmations and booking tools.</li>
+                                        </ul>
+                                        <p>The site pairs property storytelling with an interactive scheduler that moves leads from discovery to confirmed tours without manual follow-up.</p>
+                                        <div class="chapter-cta">
+                                            <a href="projects/realestatehirsch.html" class="btn btn-primary">Read case study</a>
+                                        </div>
+                                    </div>
+                                    <div class="chapter-media">
+                                        <figure>
+                                            <a href="https://hirsch-leasing.onrender.com/" target="_blank" rel="noopener">
+                                                <img src="Images/HirschLeasing/HirschLeasingPreview.jpg" alt="Preview of the RealEstateHirsch website" class="project-preview-image">
+                                            </a>
+                                            <figcaption>Tap to explore property listings, the tour scheduler, and automated confirmations.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
                     </div>
-                    </article>
-                </div>
-                <div class="chapter-wrapper">
-                    <!-- Spotlight background -->
-                    <div class="chapter-spotlight"></div>
-                    <article class="chapter" id="chapter-sportspredictor">
-                        <header class="chapter-header">
-                            <span class="chapter-number">Chapter 02</span>
-                            <h3>SportsPredictor</h3>
-                        <p class="chapter-tagline">Weekly NFL pipeline with explainable matchup forecasts.</p>
-                    </header>
-                    <div class="chapter-body">
-                        <div class="chapter-text">
-                            <ul>
-                                <li><strong>Role:</strong> Developer · Data Pipeline Engineer</li>
-                                <li><strong>Stack:</strong> Python · Pandas · scikit-learn · BeautifulSoup</li>
-                                <li><strong>Outcome:</strong> Nightly refresh with CLI tools for batch reports and single-game checks.</li>
-                            </ul>
-                            <p>The system normalizes league stats, injuries, weather, and odds to produce forecasts with confidence percentages and callouts that are easy to share with friends.</p>
-                            <div class="chapter-cta">
-                                <a href="projects/sportspredictor.html" class="btn btn-primary">Read case study</a>
-                            </div>
-                        </div>
-                        <div class="chapter-media">
-                            <figure>
-                                <a href="Images/sportsPredictor/SportsPredictorSingleMatchup.jpg" target="_blank" rel="noopener">
-                                    <img src="Images/sportsPredictor/SportsPredictorSingleMatchup.jpg" alt="Single matchup summary for SportsPredictor">
-                                </a>
-                                <figcaption>Sample CLI output highlighting the drivers behind a pick.</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    </article>
-                </div>
-                <div class="chapter-wrapper">
-                    <!-- Spotlight background -->
-                    <div class="chapter-spotlight"></div>
-                    <article class="chapter" id="chapter-realestate">
-                        <header class="chapter-header">
-                            <span class="chapter-number">Chapter 03</span>
-                            <h3>RealEstateHirsch</h3>
-                        <p class="chapter-tagline">Responsive leasing experience with guided tour scheduling.</p>
-                    </header>
-                    <div class="chapter-body">
-                        <div class="chapter-text">
-                            <ul>
-                                <li><strong>Role:</strong> Product Designer · Frontend Developer</li>
-                                <li><strong>Stack:</strong> HTML · CSS · JavaScript · Express.js · MySQL · Nodemailer</li>
-                                <li><strong>Outcome:</strong> Deployed on Render with automated confirmations and booking tools.</li>
-                            </ul>
-                            <p>The site pairs property storytelling with an interactive scheduler that moves leads from discovery to confirmed tours without manual follow-up.</p>
-                            <div class="chapter-cta">
-                                <a href="projects/realestatehirsch.html" class="btn btn-primary">Read case study</a>
-                            </div>
-                        </div>
-                        <div class="chapter-media">
-                            <figure>
-                                <a href="https://hirsch-leasing.onrender.com/" target="_blank" rel="noopener">
-                                    <img src="Images/HirschLeasing/HirschLeasingPreview.jpg" alt="Preview of the RealEstateHirsch website" class="project-preview-image">
-                                </a>
-                                <figcaption>Tap to explore property listings, the tour scheduler, and automated confirmations.</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    </article>
                 </div>
             </div>
         </section>
