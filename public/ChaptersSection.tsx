@@ -75,9 +75,43 @@ const chapters: Chapter[] = [
 
 export default function ChaptersSection() {
   return (
-    <section className="relative py-20 motion-section" id="stories" data-section="stories">
+    <section className="relative py-20 motion-section overflow-hidden" id="stories" data-section="stories">
+      {/* Creative background layers */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        {/* Base gradient mesh */}
+        <div 
+          className="absolute inset-0 opacity-40"
+          style={{
+            background: `
+              radial-gradient(circle at 10% 20%, rgba(109, 123, 255, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%),
+              radial-gradient(circle at 20% 80%, rgba(109, 123, 255, 0.1) 0%, transparent 60%),
+              radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 60%)
+            `
+          }}
+        />
+        
+        {/* Subtle grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(109, 123, 255, 0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(236, 72, 153, 0.5) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px'
+          }}
+        />
+        
+        {/* Accent glow spots */}
+        <div className="absolute top-1/4 left-[15%] w-96 h-96 rounded-full bg-purple-400/5 blur-3xl" />
+        <div className="absolute bottom-1/4 right-[15%] w-96 h-96 rounded-full bg-pink-400/5 blur-3xl" />
+        <div className="absolute top-1/2 right-[10%] w-72 h-72 rounded-full bg-blue-400/5 blur-3xl" />
+      </div>
+
       {/* Spine background */}
-      <div className="pointer-events-none absolute inset-x-0 top-8 bottom-0 flex justify-center">
+      <div className="pointer-events-none absolute inset-x-0 top-8 bottom-0 flex justify-center z-[1]">
         <div className="w-full max-w-6xl rounded-[32px] bg-slate-100/70 shadow-[0_0_80px_rgba(15,23,42,0.08)]" />
       </div>
 
@@ -192,5 +226,6 @@ export default function ChaptersSection() {
     </section>
   );
 }
+
 
 
