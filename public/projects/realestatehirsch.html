@@ -59,7 +59,7 @@
                             </div>
                             <div>
                                 <dt>Status</dt>
-                                <dd>Live on Render with automated confirmations</dd>
+                                <dd>Live on Render · Booking system functional</dd>
                             </div>
                         </dl>
                     </aside>
@@ -68,7 +68,7 @@
                     <a href="https://hirsch-leasing.onrender.com/" target="_blank" rel="noopener">
                         <img class="project-preview-image" src="../Images/HirschLeasing/HirschLeasingPreview.jpg" alt="Preview of the RealEstateHirsch leasing site">
                     </a>
-                    <figcaption>Tap to explore listings, the tour scheduler, and automated confirmations.</figcaption>
+                    <figcaption>Tap to explore listings and the interactive tour scheduler with real-time availability.</figcaption>
                 </figure>
             </div>
         </section>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="project-card">
                         <h3>Interactive scheduling</h3>
-                        <p>Flatpickr calendar with client-side restrictions, real-time availability checks via API, and server-side validation prevent double bookings and confirm visits instantly.</p>
+                        <p>Flatpickr calendar with client-side restrictions, real-time availability checks via API, and server-side validation prevent double bookings. All bookings are saved to the database and duplicate prevention works as expected.</p>
                     </div>
                     <div class="project-card">
                         <h3>Easy updates</h3>
@@ -113,7 +113,8 @@
                     </div>
                     <div class="project-detail">
                         <h3>Email automation</h3>
-                        <p>Nodemailer with Gmail SMTP sends HTML confirmations to customers and business. UUID-based cancellation links enable self-service booking management.</p>
+                        <p><strong>Current limitation:</strong> Render's free tier blocks outbound SMTP ports (25, 587, 465), so confirmation emails cannot be sent. However, the booking system fully functions—all bookings are saved to the database, duplicate bookings are prevented, and cancellation links work via HTTP endpoints (not email-dependent).</p>
+                        <p><strong>To enable emails:</strong> Upgrade Render to paid tier (enables SMTP) or migrate to an API-based email service like SendGrid or Mailgun that uses HTTPS instead of SMTP.</p>
                     </div>
                 </div>
                 <div class="project-gallery">
