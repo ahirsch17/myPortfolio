@@ -846,6 +846,61 @@ body.page-transitioning {
 /* Project Stories */
 .project-stories {
     position: relative;
+    padding: clamp(5rem, 8vw, 7rem) 0;
+}
+
+/* Spine background */
+.chapter-spine {
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 2rem;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 0;
+}
+
+.chapter-spine::before {
+    content: '';
+    width: 100%;
+    max-width: 72rem;
+    border-radius: 32px;
+    background: rgba(241, 245, 249, 0.7);
+    box-shadow: 0 0 80px rgba(15, 23, 42, 0.08);
+}
+
+.chapter-content-wrapper {
+    position: relative;
+    z-index: 10;
+}
+
+/* Ghost chapter numbers */
+.chapter {
+    position: relative;
+}
+
+.chapter-ghost-number {
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    top: -2.5rem;
+    left: -1rem;
+    font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 900;
+    color: rgba(226, 232, 240, 0.7);
+    line-height: 1;
+    z-index: 0;
+}
+
+@media (max-width: 768px) {
+    .chapter-ghost-number {
+        top: -1.5rem;
+        left: -0.5rem;
+        font-size: clamp(3rem, 12vw, 6rem);
+        color: rgba(226, 232, 240, 0.6);
+    }
 }
 
 .chapter-nav {
@@ -889,6 +944,13 @@ body.page-transitioning {
 .chapter-header {
     display: grid;
     gap: 0.4rem;
+    position: relative;
+    z-index: 1;
+}
+
+.chapter-body {
+    position: relative;
+    z-index: 1;
 }
 
 .chapter-number {
