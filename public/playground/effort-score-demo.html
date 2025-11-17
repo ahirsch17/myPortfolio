@@ -1176,11 +1176,11 @@
 
               <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
-                ${workouts.map(workout => `
+                ${workouts.map((workout, index) => `
 
                   <div class="workout-card ${state.selectedWorkout?.id === workout.id ? 'selected' : ''}" 
 
-                       onclick="app.selectWorkout(${JSON.stringify(workout).replace(/"/g, '&quot;')})">
+                       onclick="app.selectWorkoutById('${workout.id}')">
 
                     <div class="text-4xl mb-3 ${workout.color}">${workout.icon}</div>
 
@@ -1192,9 +1192,9 @@
 
                 `).join('')}
 
-                    </div>
+              </div>
 
-                  </div>
+            </div>
 
 
 
@@ -1630,21 +1630,27 @@
 
         
 
-        selectWorkout: (workout) => {
+        selectWorkoutById: (workoutId) => {
 
-          state.selectedWorkout = {
+          const workout = workouts.find(w => w.id === workoutId);
 
-            ...workout,
+          if (workout) {
 
-            duration: workout.defaultDuration,
+            state.selectedWorkout = {
 
-            sets: workout.defaultSets,
+              ...workout,
 
-            intensity: 'medium'
+              duration: workout.defaultDuration,
 
-          };
+              sets: workout.defaultSets,
 
-          renderApp();
+              intensity: 'medium'
+
+            };
+
+            renderApp();
+
+          }
 
         },
 
