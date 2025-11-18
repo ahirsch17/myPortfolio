@@ -849,7 +849,34 @@ body.page-transitioning {
 .project-stories {
     position: relative;
     padding: clamp(5rem, 8vw, 7rem) 0;
-    background: #f8fafc;
+    background: linear-gradient(135deg, rgba(109, 123, 255, 0.08) 0%, rgba(236, 72, 153, 0.06) 50%, rgba(168, 85, 247, 0.05) 100%), #f8fafc;
+    overflow: hidden;
+}
+
+.project-stories::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 33.333%;
+    height: 33.333%;
+    background: radial-gradient(circle at top left, rgba(109, 123, 255, 0.12), transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.project-stories::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 33.333%;
+    height: 33.333%;
+    background: radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.12), transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* Book page shell card */
@@ -861,6 +888,8 @@ body.page-transitioning {
     border: 1px solid rgba(241, 245, 249, 1);
     box-shadow: 0 20px 60px rgba(15, 23, 42, 0.05);
     overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
 
 /* Navigation bar */

@@ -76,38 +76,29 @@ const chapters: Chapter[] = [
 export default function ChaptersSection() {
   return (
     <section className="relative py-20 motion-section overflow-hidden" id="stories" data-section="stories">
-      {/* Creative background layers */}
+      {/* Creative background layers - simplified for performance */}
       <div className="pointer-events-none absolute inset-0 z-0">
-        {/* Base gradient mesh */}
+        {/* Simple gradient overlay */}
         <div 
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0"
           style={{
-            background: `
-              radial-gradient(circle at 10% 20%, rgba(109, 123, 255, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12) 0%, transparent 50%),
-              radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 70%),
-              radial-gradient(circle at 20% 80%, rgba(109, 123, 255, 0.1) 0%, transparent 60%),
-              radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 60%)
-            `
+            background: `linear-gradient(135deg, rgba(109, 123, 255, 0.08) 0%, rgba(236, 72, 153, 0.06) 50%, rgba(168, 85, 247, 0.05) 100%)`
           }}
         />
         
-        {/* Subtle grid pattern */}
+        {/* Subtle corner accents */}
         <div 
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute top-0 left-0 w-1/3 h-1/3 opacity-30"
           style={{
-            backgroundImage: `
-              linear-gradient(rgba(109, 123, 255, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(236, 72, 153, 0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
+            background: `radial-gradient(circle at top left, rgba(109, 123, 255, 0.12), transparent 70%)`
           }}
         />
-        
-        {/* Accent glow spots */}
-        <div className="absolute top-1/4 left-[15%] w-96 h-96 rounded-full bg-purple-400/5 blur-3xl" />
-        <div className="absolute bottom-1/4 right-[15%] w-96 h-96 rounded-full bg-pink-400/5 blur-3xl" />
-        <div className="absolute top-1/2 right-[10%] w-72 h-72 rounded-full bg-blue-400/5 blur-3xl" />
+        <div 
+          className="absolute bottom-0 right-0 w-1/3 h-1/3 opacity-30"
+          style={{
+            background: `radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.12), transparent 70%)`
+          }}
+        />
       </div>
 
       {/* Spine background */}
