@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Effort Track</title>
+  <title>Effort Track - Simplified</title>
 
   <style>
 
@@ -28,37 +28,35 @@
 
       color-scheme: dark;
 
-      --sky-400: #38bdf8;
+      --primary: #3b82f6;
 
-      --sky-500: #0ea5e9;
+      --primary-light: #60a5fa;
 
-      --emerald-400: #34d399;
+      --primary-dark: #1d4ed8;
 
-      --emerald-500: #10b981;
+      --success: #10b981;
 
-      --orange-400: #fb923c;
+      --warning: #f59e0b;
 
-      --orange-500: #f97316;
+      --danger: #ef4444;
 
-      --purple-400: #a78bfa;
+      --gray-100: #f3f4f6;
 
-      --purple-500: #8b5cf6;
+      --gray-200: #e5e7eb;
 
-      --red-400: #f87171;
+      --gray-300: #d1d5db;
 
-      --red-500: #ef4444;
+      --gray-400: #9ca3af;
 
-      --slate-300: #cbd5e1;
+      --gray-500: #6b7280;
 
-      --slate-400: #94a3b8;
+      --gray-600: #4b5563;
 
-      --slate-500: #64748b;
+      --gray-700: #374151;
 
-      --slate-700: #334155;
+      --gray-800: #1f2937;
 
-      --slate-800: #1e293b;
-
-      --slate-900: #0f172a;
+      --gray-900: #111827;
 
       --white: #ffffff;
 
@@ -68,13 +66,13 @@
 
     body {
 
-      background: radial-gradient(circle at 50% -20%, rgba(37,99,235,0.35), rgba(15,23,42,0.92));
+      background: linear-gradient(135deg, #1e293b, #0f172a);
 
       min-height: 100vh;
 
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-      color: var(--slate-300);
+      color: var(--gray-300);
 
       line-height: 1.5;
 
@@ -82,279 +80,119 @@
 
 
 
-    .glass {
+    .container {
 
-      background: rgba(15, 23, 42, 0.75);
+      max-width: 400px;
 
-      backdrop-filter: blur(18px);
+      margin: 0 auto;
 
-      border: 1px solid rgba(148, 163, 184, 0.22);
+      padding: 1rem;
 
     }
 
 
 
-    .rounded-2xl { border-radius: 1rem; }
+    .card {
 
-    .rounded-3xl { border-radius: 1.5rem; }
+      background: rgba(30, 41, 59, 0.8);
 
-    .rounded-full { border-radius: 9999px; }
+      backdrop-filter: blur(10px);
 
+      border-radius: 1.5rem;
 
+      padding: 1.5rem;
 
-    .text-xs { font-size: 0.75rem; }
+      margin-bottom: 1rem;
 
-    .text-sm { font-size: 0.875rem; }
-
-    .text-lg { font-size: 1.125rem; }
-
-    .text-xl { font-size: 1.25rem; }
-
-    .text-2xl { font-size: 1.5rem; }
-
-    .text-3xl { font-size: 1.875rem; }
-
-    .text-4xl { font-size: 2.25rem; }
-
-
-
-    .font-medium { font-weight: 500; }
-
-    .font-semibold { font-weight: 600; }
-
-    .font-bold { font-weight: 700; }
-
-
-
-    .flex { display: flex; }
-
-    .grid { display: grid; }
-
-    .hidden { display: none; }
-
-    .items-center { align-items: center; }
-
-    .items-start { align-items: flex-start; }
-
-    .justify-center { justify-content: center; }
-
-    .justify-between { justify-content: space-between; }
-
-    .justify-start { justify-content: flex-start; }
-
-
-
-    .gap-2 { gap: 0.5rem; }
-
-    .gap-3 { gap: 0.75rem; }
-
-    .gap-4 { gap: 1rem; }
-
-    .gap-6 { gap: 1.5rem; }
-
-
-
-    .space-y-2 > * + * { margin-top: 0.5rem; }
-
-    .space-y-3 > * + * { margin-top: 0.75rem; }
-
-    .space-y-4 > * + * { margin-top: 1rem; }
-
-    .space-y-6 > * + * { margin-top: 1.5rem; }
-
-
-
-    .p-3 { padding: 0.75rem; }
-
-    .p-4 { padding: 1rem; }
-
-    .p-5 { padding: 1.25rem; }
-
-    .p-6 { padding: 1.5rem; }
-
-    .px-4 { padding-left: 1rem; padding-right: 1rem; }
-
-    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-
-    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-
-    .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
-
-
-
-    .mb-2 { margin-bottom: 0.5rem; }
-
-    .mb-3 { margin-bottom: 0.75rem; }
-
-    .mb-4 { margin-bottom: 1rem; }
-
-    .mb-6 { margin-bottom: 1.5rem; }
-
-    .mt-2 { margin-top: 0.5rem; }
-
-    .mt-4 { margin-top: 1rem; }
-
-    .mt-6 { margin-top: 1.5rem; }
-
-
-
-    .w-full { width: 100%; }
-
-    .w-16 { width: 4rem; }
-
-    .w-20 { width: 5rem; }
-
-    .h-16 { height: 4rem; }
-
-    .h-20 { height: 5rem; }
-
-    .min-h-screen { min-height: 100vh; }
-
-
-
-    .text-center { text-align: center; }
-
-    .text-white { color: var(--white); }
-
-    .text-sky-400 { color: var(--sky-400); }
-
-    .text-orange-400 { color: var(--orange-400); }
-
-    .text-emerald-400 { color: var(--emerald-400); }
-
-    .text-purple-400 { color: var(--purple-400); }
-
-    .text-red-400 { color: var(--red-400); }
-
-    .text-slate-300 { color: var(--slate-300); }
-
-    .text-slate-400 { color: var(--slate-400); }
-
-
-
-    .bg-sky-500 { background-color: var(--sky-500); }
-
-    .bg-emerald-500 { background-color: var(--emerald-500); }
-
-    .bg-orange-500 { background-color: var(--orange-500); }
-
-    .bg-purple-500 { background-color: var(--purple-500); }
-
-    .bg-red-500 { background-color: var(--red-500); }
-
-    .bg-slate-700 { background-color: var(--slate-700); }
-
-    .bg-slate-800 { background-color: var(--slate-800); }
-
-    .bg-slate-800\\/50 { background-color: rgba(30, 41, 59, 0.5); }
-
-
-
-    .border { border-width: 1px; }
-
-    .border-slate-700 { border-color: var(--slate-700); }
-
-
-
-    .cursor-pointer { cursor: pointer; }
-
-    .transition-all { transition: all 0.3s ease; }
-
-
-
-    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-
-    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-
-
-    .col-span-2 { grid-column: span 2 / span 2; }
-
-
-
-    .relative { position: relative; }
-
-    .absolute { position: absolute; }
-
-    .fixed { position: fixed; }
-
-    .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-
-    .z-50 { z-index: 50; }
-
-
-
-    .max-w-md { max-width: 28rem; }
-
-    .max-w-2xl { max-width: 42rem; }
-
-    .max-h-\[90vh\] { max-height: 90vh; }
-
-
-
-    .overflow-y-auto { overflow-y: auto; }
-
-
-
-    .loading-spinner {
-
-      border: 3px solid rgba(148, 163, 184, 0.3);
-
-      border-radius: 50%;
-
-      border-top: 3px solid var(--sky-400);
-
-      width: 40px;
-
-      height: 40px;
-
-      animation: spin 1s linear infinite;
+      border: 1px solid rgba(255, 255, 255, 0.1);
 
     }
 
 
 
-    @keyframes spin {
+    .header {
 
-      0% { transform: rotate(0deg); }
+      text-align: center;
 
-      100% { transform: rotate(360deg); }
+      margin-bottom: 2rem;
 
     }
 
 
 
-    button {
+    .logo {
 
-      background: rgba(15, 23, 42, 0.75);
+      font-size: 2.5rem;
 
-      border: 1px solid rgba(148, 163, 184, 0.22);
+      margin-bottom: 0.5rem;
+
+    }
+
+
+
+    h1 {
+
+      font-size: 1.75rem;
+
+      font-weight: 700;
+
+      color: var(--white);
+
+      margin-bottom: 0.5rem;
+
+    }
+
+
+
+    .subtitle {
+
+      color: var(--gray-400);
+
+      font-size: 1rem;
+
+    }
+
+
+
+    .btn {
+
+      display: block;
+
+      width: 100%;
+
+      padding: 1rem;
 
       border-radius: 1rem;
 
-      color: var(--slate-300);
-
-      padding: 1rem 1.5rem;
-
-      cursor: pointer;
-
-      outline: none;
-
-      transition: all 0.3s ease;
+      border: none;
 
       font-size: 1rem;
 
       font-weight: 600;
 
+      cursor: pointer;
+
+      transition: all 0.2s ease;
+
+      text-align: center;
+
     }
 
 
 
-    button:hover {
+    .btn-primary {
 
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--primary);
+
+      color: white;
+
+    }
+
+
+
+    .btn-primary:hover {
+
+      background: var(--primary-light);
 
       transform: translateY(-2px);
 
@@ -362,21 +200,35 @@
 
 
 
-    button.primary {
+    .btn-secondary {
 
-      background: var(--sky-500);
+      background: rgba(255, 255, 255, 0.1);
 
-      color: white;
+      color: var(--gray-300);
 
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
 
     }
 
 
 
-    button.primary:hover {
+    .btn-secondary:hover {
 
-      background: var(--sky-400);
+      background: rgba(255, 255, 255, 0.15);
+
+    }
+
+
+
+    .workout-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 1rem;
+
+      margin-bottom: 1.5rem;
 
     }
 
@@ -384,19 +236,19 @@
 
     .workout-card {
 
-      padding: 2rem;
+      background: rgba(30, 41, 59, 0.6);
 
-      border-radius: 2rem;
+      border-radius: 1rem;
 
-      border: 2px solid var(--slate-700);
-
-      background: rgba(15, 23, 42, 0.9);
-
-      transition: all 0.3s ease;
+      padding: 1.5rem 1rem;
 
       text-align: center;
 
       cursor: pointer;
+
+      transition: all 0.2s ease;
+
+      border: 1px solid rgba(255, 255, 255, 0.05);
 
     }
 
@@ -404,9 +256,11 @@
 
     .workout-card:hover {
 
-      border-color: var(--sky-400);
+      transform: translateY(-4px);
 
-      transform: translateY(-4px) scale(1.02);
+      background: rgba(30, 41, 59, 0.8);
+
+      border-color: var(--primary);
 
     }
 
@@ -414,555 +268,53 @@
 
     .workout-card.selected {
 
-      border-color: var(--emerald-500);
+      background: rgba(59, 130, 246, 0.2);
 
-      background: rgba(16, 185, 129, 0.1);
-
-    }
-
-
-
-    .intensity-dot {
-
-      width: 12px;
-
-      height: 12px;
-
-      border-radius: 50%;
-
-      background: var(--slate-700);
-
-      transition: all 0.3s ease;
+      border-color: var(--primary);
 
     }
 
 
 
-    .intensity-dot.active {
+    .workout-icon {
 
-      transform: scale(1.2);
+      font-size: 2.5rem;
+
+      margin-bottom: 0.5rem;
 
     }
 
 
 
-    .intensity-dot.low.active { background: var(--emerald-500); }
+    .workout-name {
 
-    .intensity-dot.medium.active { background: var(--orange-500); }
+      font-weight: 600;
 
-    .intensity-dot.high.active { background: var(--red-500); }
+      color: var(--white);
+
+      margin-bottom: 0.25rem;
+
+    }
 
 
 
-    .effort-ring {
+    .workout-desc {
 
-      width: 200px;
+      font-size: 0.75rem;
 
-      height: 200px;
+      color: var(--gray-400);
 
-      border-radius: 50%;
+    }
 
-      background: conic-gradient(var(--emerald-500) 0%, var(--slate-700) 0%);
+
+
+    .intensity-selector {
 
       display: flex;
 
-      align-items: center;
+      justify-content: space-between;
 
-      justify-content: center;
-
-      position: relative;
-
-      transition: all 0.5s ease;
-
-    }
-
-
-
-    .effort-ring::before {
-
-      content: '';
-
-      position: absolute;
-
-      width: 160px;
-
-      height: 160px;
-
-      background: var(--slate-900);
-
-      border-radius: 50%;
-
-    }
-
-
-
-    .effort-score {
-
-      position: relative;
-
-      z-index: 2;
-
-      text-align: center;
-
-    }
-
-
-
-    .science-tip {
-
-      border-left: 4px solid var(--purple-500);
-
-      background: rgba(139, 92, 246, 0.1);
-
-      padding: 1rem;
-
-      border-radius: 0.5rem;
-
-      font-size: 0.875rem;
-
-    }
-
-
-
-    .pulse-glow {
-
-      animation: pulse-glow 2s infinite;
-
-    }
-
-
-
-    @keyframes pulse-glow {
-
-      0%, 100% { 
-
-        box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-
-      }
-
-      50% { 
-
-        box-shadow: 0 0 40px rgba(16, 185, 129, 0.8);
-
-      }
-
-    }
-
-
-
-    .slide-in {
-
-      animation: slideIn 0.5s ease-out;
-
-    }
-
-
-
-    @keyframes slideIn {
-
-      from {
-
-        opacity: 0;
-
-        transform: translateY(20px);
-
-      }
-
-      to {
-
-        opacity: 1;
-
-        transform: translateY(0);
-
-      }
-
-    }
-
-
-
-    /* Apple Watch Styling */
-
-    .apple-watch {
-
-      width: 180px;
-
-      height: 220px;
-
-      background: #000;
-
-      border-radius: 50px;
-
-      border: 8px solid #1e293b;
-
-      position: relative;
-
-      overflow: hidden;
-
-    }
-
-
-
-    .watch-screen {
-
-      width: 100%;
-
-      height: 100%;
-
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-
-      border-radius: 40px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-
-      position: relative;
-
-    }
-
-
-
-    .watch-crown {
-
-      position: absolute;
-
-      right: -12px;
-
-      top: 50%;
-
-      transform: translateY(-50%);
-
-      width: 8px;
-
-      height: 40px;
-
-      background: #334155;
-
-      border-radius: 4px;
-
-    }
-
-
-
-    .heart-rate {
-
-      font-size: 2rem;
-
-      font-weight: 700;
-
-      color: var(--red-400);
-
-      margin-bottom: 8px;
-
-    }
-
-
-
-    .heart-beat {
-
-      animation: heartbeat 1.5s ease-in-out infinite;
-
-    }
-
-
-
-    @keyframes heartbeat {
-
-      0%, 100% { transform: scale(1); }
-
-      50% { transform: scale(1.1); }
-
-    }
-
-
-
-    .watch-metric {
-
-      font-size: 0.875rem;
-
-      color: var(--slate-400);
-
-    }
-
-
-
-    /* Muscle Visualization */
-
-    .body-visualization {
-
-      width: 160px;
-
-      height: 280px;
-
-      position: relative;
-
-      margin: 0 auto;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-    }
-
-    
-
-    /* Base body silhouette using SVG */
-
-    .body-visualization::before {
-
-      content: '';
-
-      position: absolute;
-
-      width: 100%;
-
-      height: 100%;
-
-      background-image: url("data:image/svg+xml,%3Csvg width='160' height='280' viewBox='0 0 160 280' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 80 20 Q 100 20 110 35 Q 115 45 115 60 Q 115 75 110 85 L 110 95 Q 115 105 115 120 Q 115 135 110 145 L 110 155 Q 115 165 115 180 Q 115 195 110 205 L 110 220 Q 115 230 115 245 Q 115 260 110 270 L 50 270 Q 45 260 45 245 Q 45 230 50 220 L 50 205 Q 45 195 45 180 Q 45 165 50 155 L 50 145 Q 45 135 45 120 Q 45 105 50 95 L 50 85 Q 45 75 45 60 Q 45 45 50 35 Q 60 20 80 20 Z' fill='rgba(148,163,184,0.15)' stroke='rgba(148,163,184,0.25)' stroke-width='1.5'/%3E%3C/svg%3E");
-
-      background-size: contain;
-
-      background-repeat: no-repeat;
-
-      background-position: center;
-
-      opacity: 0.6;
-
-      z-index: 0;
-
-    }
-
-
-
-    .muscle-group {
-
-      position: absolute;
-
-      background: rgba(148, 163, 184, 0.15);
-
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-      border: 2px solid rgba(148, 163, 184, 0.25);
-
-      opacity: 0.5;
-
-      z-index: 1;
-
-    }
-
-
-
-    .muscle-group.active {
-
-      background: rgba(34, 197, 94, 0.35);
-
-      border-color: rgba(34, 197, 94, 0.9);
-
-      box-shadow: 
-
-        0 0 20px rgba(34, 197, 94, 0.6),
-
-        inset 0 0 25px rgba(34, 197, 94, 0.25);
-
-      opacity: 1;
-
-      animation: musclePulse 2s ease-in-out infinite;
-
-    }
-
-
-
-    @keyframes musclePulse {
-
-      0%, 100% { 
-
-        transform: scale(1);
-
-        box-shadow: 
-
-          0 0 20px rgba(34, 197, 94, 0.6),
-
-          inset 0 0 25px rgba(34, 197, 94, 0.25);
-
-      }
-
-      50% { 
-
-        transform: scale(1.1);
-
-        box-shadow: 
-
-          0 0 30px rgba(34, 197, 94, 0.8),
-
-          inset 0 0 35px rgba(34, 197, 94, 0.35);
-
-      }
-
-    }
-
-
-
-    /* Chest - wider, more natural upper torso */
-
-    .chest-muscles { 
-
-      width: 70px; 
-
-      height: 45px; 
-
-      top: 40px; 
-
-      left: 45px; 
-
-      border-radius: 35px 35px 20px 20px;
-
-      background: radial-gradient(ellipse at center, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.1));
-
-    }
-
-    .chest-muscles.active {
-
-      background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.2));
-
-    }
-
-    
-
-    /* Arms - more natural, slightly curved */
-
-    .arms-muscles { 
-
-      width: 24px; 
-
-      height: 80px; 
-
-      top: 50px; 
-
-      border-radius: 12px;
-
-      background: linear-gradient(to bottom, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.15));
-
-    }
-
-    .arms-muscles.active {
-
-      background: linear-gradient(to bottom, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.3));
-
-    }
-
-    .left-arm { 
-
-      left: 20px; 
-
-      transform: rotate(-8deg);
-
-    }
-
-    .right-arm { 
-
-      right: 20px; 
-
-      transform: rotate(8deg);
-
-    }
-
-    .left-arm.active, .right-arm.active {
-
-      transform: rotate(0deg) scale(1.1);
-
-    }
-
-    
-
-    /* Legs - more natural, slightly tapered */
-
-    .legs-muscles { 
-
-      width: 28px; 
-
-      height: 90px; 
-
-      bottom: 20px; 
-
-      border-radius: 14px 14px 8px 8px;
-
-      background: linear-gradient(to bottom, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.15));
-
-    }
-
-    .legs-muscles.active {
-
-      background: linear-gradient(to bottom, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.3));
-
-    }
-
-    .left-leg { 
-
-      left: 50px; 
-
-      transform: rotate(-3deg);
-
-    }
-
-    .right-leg { 
-
-      right: 50px; 
-
-      transform: rotate(3deg);
-
-    }
-
-    .left-leg.active, .right-leg.active {
-
-      transform: rotate(0deg) scale(1.1);
-
-    }
-
-    
-
-    /* Core - more defined abdominal area */
-
-    .core-muscles { 
-
-      width: 45px; 
-
-      height: 65px; 
-
-      top: 90px; 
-
-      left: 57.5px; 
-
-      border-radius: 22px 22px 18px 18px;
-
-      background: linear-gradient(to bottom, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.15));
-
-    }
-
-    .core-muscles.active {
-
-      background: linear-gradient(to bottom, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.3));
-
-    }
-
-
-
-    /* Interactive Controls */
-
-    .intensity-control {
-
-      display: flex;
-
-      gap: 1rem;
-
-      justify-content: center;
+      margin: 1.5rem 0;
 
     }
 
@@ -970,33 +322,21 @@
 
     .intensity-option {
 
-      padding: 1rem 1.5rem;
-
-      border-radius: 1rem;
-
-      border: 2px solid var(--slate-700);
-
-      background: transparent;
-
-      color: var(--slate-400);
-
-      cursor: pointer;
-
-      transition: all 0.3s ease;
+      flex: 1;
 
       text-align: center;
 
-      min-width: 80px;
+      padding: 0.75rem 0.5rem;
 
-    }
+      border-radius: 0.75rem;
 
+      cursor: pointer;
 
+      transition: all 0.2s ease;
 
-    .intensity-option:hover {
+      margin: 0 0.25rem;
 
-      border-color: var(--sky-400);
-
-      transform: translateY(-2px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
 
     }
 
@@ -1004,31 +344,67 @@
 
     .intensity-option.selected {
 
-      border-color: var(--emerald-500);
+      background: rgba(59, 130, 246, 0.2);
 
-      background: var(--emerald-500);
-
-      color: white;
+      border-color: var(--primary);
 
     }
 
 
 
-    .intensity-option.low.selected { background: var(--emerald-500); border-color: var(--emerald-500); }
+    .intensity-low.selected {
 
-    .intensity-option.medium.selected { background: var(--orange-500); border-color: var(--orange-500); }
+      background: rgba(16, 185, 129, 0.2);
 
-    .intensity-option.high.selected { background: var(--red-500); border-color: var(--red-500); }
+      border-color: var(--success);
+
+    }
+
+
+
+    .intensity-medium.selected {
+
+      background: rgba(245, 158, 11, 0.2);
+
+      border-color: var(--warning);
+
+    }
+
+
+
+    .intensity-high.selected {
+
+      background: rgba(239, 68, 68, 0.2);
+
+      border-color: var(--danger);
+
+    }
+
+
+
+    .intensity-label {
+
+      font-size: 0.75rem;
+
+      font-weight: 600;
+
+      margin-bottom: 0.25rem;
+
+    }
+
+
+
+    .intensity-desc {
+
+      font-size: 0.7rem;
+
+      color: var(--gray-400);
+
+    }
 
 
 
     .duration-control {
-
-      background: rgba(30, 41, 59, 0.5);
-
-      border-radius: 2rem;
-
-      padding: 1rem;
 
       display: flex;
 
@@ -1036,45 +412,41 @@
 
       justify-content: space-between;
 
+      background: rgba(30, 41, 59, 0.6);
+
+      border-radius: 1rem;
+
+      padding: 1rem;
+
+      margin: 1.5rem 0;
+
     }
 
 
 
     .duration-btn {
 
-      width: 40px;
+      width: 2.5rem;
 
-      height: 40px;
+      height: 2.5rem;
 
       border-radius: 50%;
 
-      background: var(--slate-700);
+      background: var(--gray-700);
 
       border: none;
 
-      color: var(--slate-300);
+      color: var(--gray-300);
 
       font-size: 1.25rem;
 
       cursor: pointer;
-
-      transition: all 0.3s ease;
 
       display: flex;
 
       align-items: center;
 
       justify-content: center;
-
-    }
-
-
-
-    .duration-btn:hover {
-
-      background: var(--slate-600);
-
-      transform: scale(1.1);
 
     }
 
@@ -1088,7 +460,7 @@
 
       color: var(--white);
 
-      min-width: 60px;
+      min-width: 4rem;
 
       text-align: center;
 
@@ -1096,23 +468,289 @@
 
 
 
-    @media (min-width: 768px) {
+    .results-container {
 
-      .md\\:p-6 { padding: 1.5rem; }
-
-      .md\\:text-3xl { font-size: 1.875rem; }
-
-      .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-      .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      text-align: center;
 
     }
 
 
 
-    @media (min-width: 1024px) {
+    .effort-score {
 
-      .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      font-size: 4rem;
+
+      font-weight: 800;
+
+      color: var(--success);
+
+      margin: 1rem 0;
+
+    }
+
+
+
+    .effort-label {
+
+      font-size: 1.25rem;
+
+      color: var(--gray-400);
+
+      margin-bottom: 2rem;
+
+    }
+
+
+
+    .result-details {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 1rem;
+
+      margin: 2rem 0;
+
+    }
+
+
+
+    .result-item {
+
+      background: rgba(30, 41, 59, 0.6);
+
+      border-radius: 1rem;
+
+      padding: 1rem;
+
+    }
+
+
+
+    .result-label {
+
+      font-size: 0.75rem;
+
+      color: var(--gray-400);
+
+      margin-bottom: 0.25rem;
+
+    }
+
+
+
+    .result-value {
+
+      font-size: 1.25rem;
+
+      font-weight: 700;
+
+      color: var(--white);
+
+    }
+
+
+
+    .hidden {
+
+      display: none;
+
+    }
+
+
+
+    .fade-in {
+
+      animation: fadeIn 0.5s ease;
+
+    }
+
+
+
+    @keyframes fadeIn {
+
+      from { opacity: 0; transform: translateY(10px); }
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+
+
+    .slide-in {
+
+      animation: slideIn 0.5s ease;
+
+    }
+
+
+
+    @keyframes slideIn {
+
+      from { opacity: 0; transform: translateX(-20px); }
+
+      to { opacity: 1; transform: translateX(0); }
+
+    }
+
+
+
+    .body-visualization {
+
+      width: 200px;
+
+      height: 300px;
+
+      margin: 0 auto;
+
+      position: relative;
+
+    }
+
+
+
+    .body-silhouette {
+
+      width: 100%;
+
+      height: 100%;
+
+      background-image: url("data:image/svg+xml,%3Csvg width='200' height='300' viewBox='0 0 200 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100,30 C120,30 140,40 150,60 C160,80 160,100 155,120 L155,140 C160,160 160,180 155,200 L155,220 C160,240 160,260 150,280 C140,300 120,300 100,300 C80,300 60,300 50,280 C40,260 40,240 45,220 L45,200 C40,180 40,160 45,140 L45,120 C40,100 40,80 50,60 C60,40 80,30 100,30 Z' fill='rgba(255,255,255,0.05)' stroke='rgba(255,255,255,0.1)' stroke-width='2'/%3E%3C/svg%3E");
+
+      background-size: contain;
+
+      background-repeat: no-repeat;
+
+      background-position: center;
+
+    }
+
+
+
+    .muscle-highlight {
+
+      position: absolute;
+
+      border-radius: 50%;
+
+      background: rgba(16, 185, 129, 0.3);
+
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+
+      opacity: 0;
+
+      transition: opacity 0.3s ease;
+
+    }
+
+
+
+    .muscle-highlight.active {
+
+      opacity: 1;
+
+      animation: pulse 2s infinite;
+
+    }
+
+
+
+    @keyframes pulse {
+
+      0% { transform: scale(1); opacity: 0.7; }
+
+      50% { transform: scale(1.1); opacity: 0.9; }
+
+      100% { transform: scale(1); opacity: 0.7; }
+
+    }
+
+
+
+    .chest-highlight {
+
+      width: 80px;
+
+      height: 40px;
+
+      top: 70px;
+
+      left: 60px;
+
+    }
+
+
+
+    .arms-highlight {
+
+      width: 25px;
+
+      height: 80px;
+
+    }
+
+
+
+    .left-arm {
+
+      top: 80px;
+
+      left: 30px;
+
+    }
+
+
+
+    .right-arm {
+
+      top: 80px;
+
+      right: 30px;
+
+    }
+
+
+
+    .legs-highlight {
+
+      width: 30px;
+
+      height: 100px;
+
+    }
+
+
+
+    .left-leg {
+
+      top: 170px;
+
+      left: 65px;
+
+    }
+
+
+
+    .right-leg {
+
+      top: 170px;
+
+      right: 65px;
+
+    }
+
+
+
+    .core-highlight {
+
+      width: 50px;
+
+      height: 70px;
+
+      top: 110px;
+
+      left: 75px;
 
     }
 
@@ -1122,17 +760,319 @@
 
 <body>
 
-  <div id="root">
+  <div class="container">
 
-    <div class="flex flex-col items-center justify-center min-h-screen">
+    <!-- Welcome Screen -->
 
-      <div class="glass rounded-3xl p-8 max-w-md text-center">
+    <div id="welcome-screen" class="fade-in">
 
-        <div class="loading-spinner mx-auto mb-4"></div>
+      <div class="header">
 
-        <h2 class="text-xl font-bold text-white mb-2">Starting Effort Track</h2>
+        <div class="logo">💪</div>
 
-        <p class="text-slate-400">Connecting to your fitness journey...</p>
+        <h1>Effort Track</h1>
+
+        <p class="subtitle">Track your workouts with smart effort scoring</p>
+
+      </div>
+
+      
+
+      <div class="card">
+
+        <p style="text-align: center; margin-bottom: 1.5rem;">
+
+          Get personalized effort scores based on your workout intensity and duration.
+
+        </p>
+
+        <button class="btn btn-primary" onclick="showWorkoutSelection()">
+
+          Start Workout
+
+        </button>
+
+      </div>
+
+      
+
+      <div class="card">
+
+        <h3 style="margin-bottom: 0.5rem;">How It Works</h3>
+
+        <ul style="padding-left: 1.25rem; color: var(--gray-400);">
+
+          <li>Select your workout type</li>
+
+          <li>Set intensity and duration</li>
+
+          <li>Get your effort score</li>
+
+          <li>Track progress over time</li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Workout Selection -->
+
+    <div id="workout-selection" class="hidden">
+
+      <div class="header">
+
+        <h1>Choose Workout</h1>
+
+        <p class="subtitle">What are you doing today?</p>
+
+      </div>
+
+      
+
+      <div class="workout-grid">
+
+        <div class="workout-card" onclick="selectWorkout('running')">
+
+          <div class="workout-icon">🏃</div>
+
+          <div class="workout-name">Running</div>
+
+          <div class="workout-desc">Cardio</div>
+
+        </div>
+
+        
+
+        <div class="workout-card" onclick="selectWorkout('cycling')">
+
+          <div class="workout-icon">🚴</div>
+
+          <div class="workout-name">Cycling</div>
+
+          <div class="workout-desc">Endurance</div>
+
+        </div>
+
+        
+
+        <div class="workout-card" onclick="selectWorkout('weights')">
+
+          <div class="workout-icon">🏋️</div>
+
+          <div class="workout-name">Weights</div>
+
+          <div class="workout-desc">Strength</div>
+
+        </div>
+
+        
+
+        <div class="workout-card" onclick="selectWorkout('hiit')">
+
+          <div class="workout-icon">⚡</div>
+
+          <div class="workout-name">HIIT</div>
+
+          <div class="workout-desc">High Intensity</div>
+
+        </div>
+
+      </div>
+
+      
+
+      <button class="btn btn-secondary" onclick="showScreen('welcome-screen')">
+
+        Back
+
+      </button>
+
+    </div>
+
+
+
+    <!-- Workout Customization -->
+
+    <div id="workout-customization" class="hidden">
+
+      <div class="header">
+
+        <h1 id="workout-title">Customize Workout</h1>
+
+        <p class="subtitle">Adjust intensity and duration</p>
+
+      </div>
+
+      
+
+      <div class="card">
+
+        <h3 style="margin-bottom: 1rem;">Intensity Level</h3>
+
+        <div class="intensity-selector">
+
+          <div class="intensity-option intensity-low" onclick="selectIntensity('low')">
+
+            <div class="intensity-label">Low</div>
+
+            <div class="intensity-desc">Recovery</div>
+
+          </div>
+
+          <div class="intensity-option intensity-medium selected" onclick="selectIntensity('medium')">
+
+            <div class="intensity-label">Medium</div>
+
+            <div class="intensity-desc">Training</div>
+
+          </div>
+
+          <div class="intensity-option intensity-high" onclick="selectIntensity('high')">
+
+            <div class="intensity-label">High</div>
+
+            <div class="intensity-desc">Peak</div>
+
+          </div>
+
+        </div>
+
+        
+
+        <h3 style="margin-bottom: 1rem; margin-top: 1.5rem;">Duration</h3>
+
+        <div class="duration-control">
+
+          <button class="duration-btn" onclick="adjustDuration(-5)">-</button>
+
+          <div class="duration-value" id="duration-value">30m</div>
+
+          <button class="duration-btn" onclick="adjustDuration(5)">+</button>
+
+        </div>
+
+      </div>
+
+      
+
+      <div class="card">
+
+        <h3 style="margin-bottom: 1rem;">Muscles Worked</h3>
+
+        <div class="body-visualization">
+
+          <div class="body-silhouette"></div>
+
+          <div class="muscle-highlight chest-highlight"></div>
+
+          <div class="muscle-highlight arms-highlight left-arm"></div>
+
+          <div class="muscle-highlight arms-highlight right-arm"></div>
+
+          <div class="muscle-highlight legs-highlight left-leg"></div>
+
+          <div class="muscle-highlight legs-highlight right-leg"></div>
+
+          <div class="muscle-highlight core-highlight"></div>
+
+        </div>
+
+      </div>
+
+      
+
+      <div style="display: flex; gap: 1rem;">
+
+        <button class="btn btn-secondary" style="flex: 1;" onclick="showScreen('workout-selection')">
+
+          Back
+
+        </button>
+
+        <button class="btn btn-primary" style="flex: 1;" onclick="completeWorkout()">
+
+          Start Workout
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Results Screen -->
+
+    <div id="results-screen" class="hidden">
+
+      <div class="header">
+
+        <h1>Workout Complete!</h1>
+
+        <p class="subtitle">Great job on your workout</p>
+
+      </div>
+
+      
+
+      <div class="card results-container">
+
+        <div class="effort-score" id="effort-score">72</div>
+
+        <div class="effort-label">Effort Score</div>
+
+        
+
+        <div class="result-details">
+
+          <div class="result-item">
+
+            <div class="result-label">Workout</div>
+
+            <div class="result-value" id="result-workout">Running</div>
+
+          </div>
+
+          <div class="result-item">
+
+            <div class="result-label">Duration</div>
+
+            <div class="result-value" id="result-duration">30m</div>
+
+          </div>
+
+          <div class="result-item">
+
+            <div class="result-label">Intensity</div>
+
+            <div class="result-value" id="result-intensity">Medium</div>
+
+          </div>
+
+          <div class="result-item">
+
+            <div class="result-label">Heart Rate</div>
+
+            <div class="result-value" id="result-heartrate">142</div>
+
+          </div>
+
+        </div>
+
+        
+
+        <div style="margin-top: 1.5rem;">
+
+          <button class="btn btn-primary" onclick="showScreen('welcome-screen')">
+
+            Done
+
+          </button>
+
+        </div>
 
       </div>
 
@@ -1144,817 +1084,269 @@
 
   <script>
 
-    function initializeApp() {
+    // App state
 
-      // Muscle activation data for different exercises
+    const state = {
 
-      const muscleActivations = {
+      currentWorkout: null,
 
-        running: ['legs'],
+      intensity: 'medium',
 
-        cycling: ['legs', 'core'],
+      duration: 30,
 
-        weights: ['chest', 'arms', 'core'],
+      workoutHistory: []
 
-        hiit: ['chest', 'arms', 'legs', 'core'],
+    };
 
-        yoga: ['core']
 
-      };
 
+    // Muscle activation data
 
+    const muscleActivations = {
 
-      // Science-based calculations
+      running: ['legs'],
 
-      function calculateEffort(workout) {
+      cycling: ['legs', 'core'],
 
-        let baseScore = 0;
+      weights: ['chest', 'arms', 'core'],
 
-        const intensityMap = { low: 1, medium: 2, high: 3 };
+      hiit: ['chest', 'arms', 'legs', 'core']
 
-        
+    };
 
-        if (workout.type === 'cardio') {
 
-          baseScore = workout.duration * intensityMap[workout.intensity];
 
-        } else {
+    // Show a specific screen
 
-          baseScore = workout.sets * intensityMap[workout.intensity] * 2;
+    function showScreen(screenId) {
 
-        }
+      document.querySelectorAll('div[id$="screen"], div[id$="selection"], div[id$="customization"]').forEach(el => {
 
-        
+        el.classList.add('hidden');
 
-        return Math.min(baseScore, 100);
+      });
 
-      }
+      document.getElementById(screenId).classList.remove('hidden');
 
-
-
-      function calculateHeartRate(workout) {
-
-        const baseHR = 70;
-
-        const intensityBonus = { low: 20, medium: 40, high: 60 };
-
-        return baseHR + intensityBonus[workout.intensity] + Math.floor(Math.random() * 10);
-
-      }
-
-
-
-      // Application state
-
-      const state = {
-
-        currentView: 'start',
-
-        selectedWorkout: null,
-
-        workoutHistory: []
-
-      };
-
-
-
-      // Workout options
-
-      const workouts = [
-
-        {
-
-          id: 'running',
-
-          name: 'Running',
-
-          type: 'cardio',
-
-          icon: '🏃',
-
-          color: 'text-sky-400',
-
-          description: 'Improve cardiovascular health',
-
-          defaultDuration: 30
-
-        },
-
-        {
-
-          id: 'cycling',
-
-          name: 'Cycling', 
-
-          type: 'cardio',
-
-          icon: '🚴',
-
-          color: 'text-orange-400',
-
-          description: 'Build endurance and leg strength',
-
-          defaultDuration: 45
-
-        },
-
-        {
-
-          id: 'weights',
-
-          name: 'Weight Training',
-
-          type: 'strength', 
-
-          icon: '🏋️',
-
-          color: 'text-emerald-400',
-
-          description: 'Build muscle and strength',
-
-          defaultSets: 12
-
-        },
-
-        {
-
-          id: 'hiit',
-
-          name: 'HIIT',
-
-          type: 'cardio',
-
-          icon: '⚡',
-
-          color: 'text-purple-400',
-
-          description: 'High intensity intervals',
-
-          defaultDuration: 20
-
-        },
-
-        {
-
-          id: 'yoga',
-
-          name: 'Yoga',
-
-          type: 'flexibility',
-
-          icon: '🧘',
-
-          color: 'text-slate-300',
-
-          description: 'Improve flexibility and mindfulness',
-
-          defaultDuration: 40
-
-        }
-
-      ];
-
-
-
-      function renderApp() {
-
-        const root = document.getElementById('root');
-
-        
-
-        if (state.currentView === 'start') {
-
-          renderStartView(root);
-
-        } else if (state.currentView === 'customize') {
-
-          renderCustomizeView(root);
-
-        } else if (state.currentView === 'results') {
-
-          renderResultsView(root);
-
-        }
-
-      }
-
-
-
-      function renderStartView(root) {
-
-        root.innerHTML = `
-
-          <div class="min-h-screen p-4 md:p-6">
-
-            <!-- Header -->
-
-            <div class="text-center mb-8 slide-in">
-
-              <h1 class="text-4xl font-bold text-white mb-4">Effort Track</h1>
-
-              <p class="text-slate-400 text-lg">Connect your watch. Track real effort.</p>
-
-            </div>
-
-            
-
-            <!-- Workout Selection -->
-
-            <div class="glass rounded-3xl p-6 mb-6 slide-in">
-
-              <h2 class="text-xl font-semibold text-white mb-6 text-center">Choose Your Workout</h2>
-
-
-
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-
-                ${workouts.map((workout, index) => `
-
-                  <div class="workout-card ${state.selectedWorkout?.id === workout.id ? 'selected' : ''}" 
-
-                       onclick="app.selectWorkoutById('${workout.id}')">
-
-                    <div class="text-4xl mb-3 ${workout.color}">${workout.icon}</div>
-
-                    <div class="font-semibold text-white mb-2">${workout.name}</div>
-
-                    <div class="text-slate-400 text-sm">${workout.description}</div>
-
-                  </div>
-
-                `).join('')}
-
-              </div>
-
-            </div>
-
-
-
-            <!-- Science Tip -->
-
-            <div class="science-tip slide-in">
-
-              <p class="text-purple-400 font-medium mb-1">🔬 Science-Based Tracking</p>
-
-              <p class="text-slate-300 text-sm">Effort Track uses heart rate data and muscle activation patterns to calculate your true training load.</p>
-
-                    </div>
-
-
-
-            ${state.selectedWorkout ? `
-
-              <div class="text-center mt-6 slide-in">
-
-                <button class="primary w-full max-w-md py-4 text-lg pulse-glow" onclick="app.setState({ currentView: 'customize' })">
-
-                  Start ${state.selectedWorkout.name}
-
-                </button>
-
-                      </div>
-
-            ` : ''}
-
-                    </div>
-
-        `;
-
-      }
-
-
-
-      function renderCustomizeView(root) {
-
-        const workout = state.selectedWorkout;
-
-        const isCardio = workout.type === 'cardio';
-
-        const heartRate = calculateHeartRate(workout);
-
-        const activeMuscles = muscleActivations[workout.id] || [];
-
-        
-
-        root.innerHTML = `
-
-          <div class="min-h-screen p-4 md:p-6">
-
-            <!-- Header -->
-
-            <div class="flex items-center justify-between mb-6">
-
-              <button onclick="app.setState({ currentView: 'start' })" class="px-4 py-2">
-
-                ← Back
-
-              </button>
-
-              <div class="text-center">
-
-                <h1 class="text-2xl font-bold text-white">${workout.name}</h1>
-
-                <p class="text-slate-400">Adjust your workout intensity</p>
-
-                  </div>
-
-              <div class="w-16"></div>
-
-              </div>
-
-              
-
-            <!-- Visual Dashboard -->
-
-            <div class="grid grid-cols-2 gap-6 mb-8">
-
-              <!-- Apple Watch -->
-
-              <div class="flex justify-center">
-
-                <div class="apple-watch">
-
-                  <div class="watch-screen">
-
-                    <div class="heart-rate heart-beat">${heartRate}</div>
-
-                    <div class="watch-metric">BPM</div>
-
-                    <div class="watch-metric mt-2">${workout.intensity || 'medium'} intensity</div>
-
-                  </div>
-
-                  <div class="watch-crown"></div>
-
-                </div>
-
-              </div>
-
-              
-
-              <!-- Muscle Activation -->
-
-              <div class="flex justify-center">
-
-                <div class="body-visualization">
-
-                  <div class="muscle-group chest-muscles ${activeMuscles.includes('chest') ? 'active' : ''}"></div>
-
-                  <div class="muscle-group arms-muscles left-arm ${activeMuscles.includes('arms') ? 'active' : ''}"></div>
-
-                  <div class="muscle-group arms-muscles right-arm ${activeMuscles.includes('arms') ? 'active' : ''}"></div>
-
-                  <div class="muscle-group legs-muscles left-leg ${activeMuscles.includes('legs') ? 'active' : ''}"></div>
-
-                  <div class="muscle-group legs-muscles right-leg ${activeMuscles.includes('legs') ? 'active' : ''}"></div>
-
-                  <div class="muscle-group core-muscles ${activeMuscles.includes('core') ? 'active' : ''}"></div>
-
-                    </div>
-
-              </div>
-
-            </div>
-
-
-
-            <!-- Effort Score -->
-
-            <div class="glass rounded-3xl p-6 mb-6 text-center">
-
-              <div class="text-3xl font-bold text-emerald-400 mb-2">${calculateEffort(workout)}</div>
-
-              <div class="text-slate-400">Current Effort Score</div>
-
-                    </div>
-
-
-
-            <!-- Interactive Controls -->
-
-            <div class="glass rounded-3xl p-6 mb-6">
-
-              <h3 class="text-white font-semibold mb-4 text-center">Workout Intensity</h3>
-
-              
-
-              <div class="intensity-control mb-6">
-
-                ${['low', 'medium', 'high'].map(intensity => `
-
-                  <div class="intensity-option ${intensity} ${workout.intensity === intensity ? 'selected' : ''}" 
-
-                       onclick="app.updateWorkoutParam('intensity', '${intensity}')">
-
-                    <div class="font-semibold capitalize">${intensity}</div>
-
-                    <div class="text-xs mt-1">
-
-                      ${intensity === 'low' ? 'Recovery' : intensity === 'medium' ? 'Training' : 'Peak'}
-
-                    </div>
-
-                  </div>
-
-                `).join('')}
-
-              </div>
-
-
-
-              ${isCardio ? `
-
-                <div>
-
-                  <h3 class="text-white font-semibold mb-4 text-center">Duration</h3>
-
-                  <div class="duration-control">
-
-                    <button class="duration-btn" onclick="app.adjustDuration(-5)">-</button>
-
-                    <div class="duration-value">${workout.duration || workout.defaultDuration}m</div>
-
-                    <button class="duration-btn" onclick="app.adjustDuration(5)">+</button>
-
-                    </div>
-
-                </div>
-
-              ` : `
-
-                <div>
-
-                  <h3 class="text-white font-semibold mb-4 text-center">Sets</h3>
-
-                  <div class="duration-control">
-
-                    <button class="duration-btn" onclick="app.adjustSets(-1)">-</button>
-
-                    <div class="duration-value">${workout.sets || workout.defaultSets}</div>
-
-                    <button class="duration-btn" onclick="app.adjustSets(1)">+</button>
-
-                    </div>
-
-                  </div>
-
-                `}
-
-              </div>
-
-              
-
-            <!-- Science Insight -->
-
-            <div class="science-tip mb-6">
-
-              <p class="text-purple-400 font-medium mb-1">💡 Real-time Analysis</p>
-
-              <p class="text-slate-300 text-sm">
-
-                ${isCardio ? 
-
-                  'Heart rate zones × duration = training load (TRIMP method)' :
-
-                  'Sets × intensity = muscle stimulus (RPE research)'
-
-      }
-
-              </p>
-
-            </div>
-
-
-
-            <!-- Action Button -->
-
-            <button class="primary w-full py-4 text-lg pulse-glow" onclick="app.completeWorkout()">
-
-              Complete Workout
-
-            </button>
-
-          </div>
-
-        `;
-
-      }
-
-
-
-      function renderResultsView(root) {
-
-        const latestWorkout = state.workoutHistory[0];
-
-        const effortScore = latestWorkout.effortScore;
-
-        const effortLevel = effortScore < 40 ? 'low' : effortScore < 70 ? 'medium' : 'high';
-
-
-
-        root.innerHTML = `
-
-          <div class="min-h-screen p-4 md:p-6">
-
-            <!-- Header -->
-
-            <div class="text-center mb-8">
-
-              <h1 class="text-3xl font-bold text-white mb-2">Workout Complete! 🎉</h1>
-
-              <p class="text-slate-400">Great effort on your ${latestWorkout.name} session</p>
-
-              </div>
-
-
-
-            <!-- Results Display -->
-
-            <div class="glass rounded-3xl p-8 mb-6 text-center">
-
-              <div class="text-5xl font-bold text-emerald-400 mb-2">${effortScore}</div>
-            
-              <div class="text-xl text-white font-semibold mb-4">Effort Score</div>
-
-
-
-              <div class="flex justify-center mb-4">
-
-                <div class="px-4 py-2 rounded-full ${
-
-                  effortLevel === 'low' ? 'bg-emerald-500' : 
-
-                  effortLevel === 'medium' ? 'bg-orange-500' : 'bg-red-500'
-
-                } text-white text-sm font-semibold">
-
-                  ${effortLevel.toUpperCase()} EFFORT
-
-                  </div>
-
-                </div>
-
-
-
-              <div class="text-slate-400 text-sm">
-
-                ${effortLevel === 'low' ? 'Perfect for active recovery days' :
-
-                  effortLevel === 'medium' ? 'Ideal for consistent training' :
-
-                  'Excellent high-intensity session!'}
-
-                </div>
-
-              </div>
-
-
-            
-            <!-- Workout Summary -->
-
-            <div class="glass rounded-3xl p-6 mb-6">
-
-              <h3 class="text-white font-semibold mb-4">Session Details</h3>
-
-              <div class="space-y-3">
-
-                <div class="flex justify-between">
-
-                  <span class="text-slate-400">Activity</span>
-
-                  <span class="text-white">${latestWorkout.icon} ${latestWorkout.name}</span>
-
-                </div>
-
-                ${latestWorkout.type === 'cardio' ? `
-
-                  <div class="flex justify-between">
-
-                    <span class="text-slate-400">Duration</span>
-
-                    <span class="text-white">${latestWorkout.duration} minutes</span>
-
-                        </div>
-
-                ` : `
-
-                  <div class="flex justify-between">
-
-                    <span class="text-slate-400">Sets</span>
-
-                    <span class="text-white">${latestWorkout.sets}</span>
-
-                </div>
-
-                `}
-
-                <div class="flex justify-between">
-
-                  <span class="text-slate-400">Intensity</span>
-
-                  <span class="text-white capitalize">${latestWorkout.intensity}</span>
-
-                </div>
-
-                <div class="flex justify-between">
-
-                  <span class="text-slate-400">Avg Heart Rate</span>
-
-                  <span class="text-red-400">${calculateHeartRate(latestWorkout)} BPM</span>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-
-            <!-- Future Integration -->
-
-            <div class="science-tip">
-
-              <p class="text-purple-400 font-medium mb-1">📱 Coming Soon</p>
-
-              <p class="text-slate-300 text-sm">Connect your Apple Watch or Fitbit for real-time heart rate tracking and automatic workout detection!</p>
-
-            </div>
-
-            
-
-            <!-- Action Buttons -->
-
-            <div class="grid grid-cols-2 gap-4 mt-6">
-
-              <button onclick="app.setState({ currentView: 'start' })" class="py-4">
-
-                New Workout
-
-              </button>
-
-              <button class="primary py-4" onclick="app.viewHistory()">
-
-                View History
-
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      }
-
-
-
-      // Expose functions globally
-
-      window.app = {
-
-        setState: (newState) => {
-
-          Object.assign(state, newState);
-
-          renderApp();
-
-        },
-
-        
-
-        selectWorkoutById: (workoutId) => {
-
-          const workout = workouts.find(w => w.id === workoutId);
-
-          if (workout) {
-
-            state.selectedWorkout = {
-
-              ...workout,
-
-              duration: workout.defaultDuration,
-
-              sets: workout.defaultSets,
-
-              intensity: 'medium'
-
-            };
-
-            renderApp();
-
-          }
-
-        },
-
-        
-
-        updateWorkoutParam: (param, value) => {
-
-          if (state.selectedWorkout) {
-
-            state.selectedWorkout[param] = value;
-
-          renderApp();
-
-          }
-
-        },
-
-        
-
-        adjustDuration: (change) => {
-
-          if (state.selectedWorkout) {
-
-            const newDuration = (state.selectedWorkout.duration || state.selectedWorkout.defaultDuration) + change;
-
-            state.selectedWorkout.duration = Math.max(10, Math.min(120, newDuration));
-
-          renderApp();
-
-          }
-
-        },
-
-        
-
-        adjustSets: (change) => {
-
-          if (state.selectedWorkout) {
-
-            const newSets = (state.selectedWorkout.sets || state.selectedWorkout.defaultSets) + change;
-
-            state.selectedWorkout.sets = Math.max(3, Math.min(20, newSets));
-
-            renderApp();
-
-          }
-
-        },
-
-        
-
-        completeWorkout: () => {
-
-          if (state.selectedWorkout) {
-
-            const effortScore = calculateEffort(state.selectedWorkout);
-
-            const workoutRecord = {
-
-              ...state.selectedWorkout,
-
-              effortScore: effortScore,
-
-              date: new Date().toLocaleDateString(),
-
-              timestamp: Date.now()
-
-            };
-
-            
-
-            state.workoutHistory.unshift(workoutRecord);
-
-            state.currentView = 'results';
-
-            renderApp();
-
-          }
-
-        },
-
-        
-
-        viewHistory: () => {
-
-          alert(`Workout History:\n\n${
-
-            state.workoutHistory.slice(0, 5).map((w, i) => 
-
-              `${i + 1}. ${w.icon} ${w.name}: ${w.effortScore} effort (${w.date})`
-
-            ).join('\n')
-
-          }`);
-
-        }
-
-      };
-
-
-
-      // Initial render
-
-      renderApp();
+      document.getElementById(screenId).classList.add('fade-in');
 
     }
 
 
 
-    // Start the application
+    // Show workout selection
 
-    setTimeout(initializeApp, 100);
+    function showWorkoutSelection() {
+
+      showScreen('workout-selection');
+
+    }
+
+
+
+    // Select a workout
+
+    function selectWorkout(workoutType) {
+
+      state.currentWorkout = workoutType;
+
+      
+
+      // Update workout title
+
+      const titles = {
+
+        running: 'Running',
+
+        cycling: 'Cycling',
+
+        weights: 'Weight Training',
+
+        hiit: 'HIIT'
+
+      };
+
+      document.getElementById('workout-title').textContent = titles[workoutType];
+
+      
+
+      // Update muscle highlights
+
+      updateMuscleHighlights(workoutType);
+
+      
+
+      showScreen('workout-customization');
+
+    }
+
+
+
+    // Update muscle highlights based on workout
+
+    function updateMuscleHighlights(workoutType) {
+
+      // Reset all highlights
+
+      document.querySelectorAll('.muscle-highlight').forEach(el => {
+
+        el.classList.remove('active');
+
+      });
+
+      
+
+      // Activate relevant muscles
+
+      const muscles = muscleActivations[workoutType] || [];
+
+      muscles.forEach(muscle => {
+
+        if (muscle === 'chest') {
+
+          document.querySelector('.chest-highlight').classList.add('active');
+
+        } else if (muscle === 'arms') {
+
+          document.querySelectorAll('.arms-highlight').forEach(el => {
+
+            el.classList.add('active');
+
+          });
+
+        } else if (muscle === 'legs') {
+
+          document.querySelectorAll('.legs-highlight').forEach(el => {
+
+            el.classList.add('active');
+
+          });
+
+        } else if (muscle === 'core') {
+
+          document.querySelector('.core-highlight').classList.add('active');
+
+        }
+
+      });
+
+    }
+
+
+
+    // Select intensity
+
+    function selectIntensity(level) {
+
+      state.intensity = level;
+
+      
+
+      // Update UI
+
+      document.querySelectorAll('.intensity-option').forEach(el => {
+
+        el.classList.remove('selected');
+
+      });
+
+      document.querySelector(`.intensity-${level}`).classList.add('selected');
+
+    }
+
+
+
+    // Adjust duration
+
+    function adjustDuration(change) {
+
+      state.duration = Math.max(5, Math.min(120, state.duration + change));
+
+      document.getElementById('duration-value').textContent = `${state.duration}m`;
+
+    }
+
+
+
+    // Complete workout
+
+    function completeWorkout() {
+
+      // Calculate effort score
+
+      const intensityMap = { low: 1, medium: 2, high: 3 };
+
+      const baseScore = state.duration * intensityMap[state.intensity];
+
+      const effortScore = Math.min(Math.round(baseScore * 0.8), 100);
+
+      
+
+      // Calculate heart rate
+
+      const baseHR = 70;
+
+      const intensityBonus = { low: 20, medium: 40, high: 60 };
+
+      const heartRate = baseHR + intensityBonus[state.intensity] + Math.floor(Math.random() * 10);
+
+      
+
+      // Update results screen
+
+      document.getElementById('effort-score').textContent = effortScore;
+
+      document.getElementById('result-workout').textContent = 
+
+        state.currentWorkout === 'running' ? 'Running' :
+
+        state.currentWorkout === 'cycling' ? 'Cycling' :
+
+        state.currentWorkout === 'weights' ? 'Weight Training' : 'HIIT';
+
+      document.getElementById('result-duration').textContent = `${state.duration}m`;
+
+      document.getElementById('result-intensity').textContent = 
+
+        state.intensity.charAt(0).toUpperCase() + state.intensity.slice(1);
+
+      document.getElementById('result-heartrate').textContent = heartRate;
+
+      
+
+      // Add to history
+
+      state.workoutHistory.push({
+
+        type: state.currentWorkout,
+
+        intensity: state.intensity,
+
+        duration: state.duration,
+
+        effortScore: effortScore,
+
+        date: new Date().toLocaleDateString()
+
+      });
+
+      
+
+      showScreen('results-screen');
+
+    }
+
+
+
+    // Initialize the app
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Set initial intensity
+
+      selectIntensity('medium');
+
+    });
 
   </script>
 
