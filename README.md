@@ -81,8 +81,9 @@ myPortfolio/
 ## Try SportsPredictor Locally
 
 1. [Download the zipped project](./public/downloads/sportsPredictor.zip) from this repository.
-2. Extract the archive and open a terminal in the `sportsPredictor` folder.
-3. Follow the instructions in `readme.md` to launch the API with Uvicorn or open `web/index.html` to explore the UI.
+2. Extract the archive and open the `sportsPredictor` folder.
+3. **Windows**: double-click `start.bat` to start the server and open the site automatically.
+4. (Optional) Manual route: launch the API with Uvicorn from a terminal, then open `http://127.0.0.1:8001`.
 
 ## Future Enhancements
 

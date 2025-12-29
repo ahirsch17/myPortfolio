@@ -84,11 +84,13 @@
                         <a href="../downloads/sportsPredictor.zip" class="btn btn-ghost btn-compact" download>Get sportsPredictor.zip</a>
                     </li>
                     <li>
-                        Open a terminal in the unzipped folder and run:<br>
-                        <code class="code-light">cd sportsPredictor && python -m uvicorn api.server:app --reload --port 8001</code>
+                        In the unzipped folder, <strong>double-click</strong> <code class="code-light">start.bat</code> to start the server and open the site automatically.
                     </li>
                     <li>
-                        In your file explorer, open <code class="code-light">sportsPredictor/web/index.html</code> to view the UI.
+                        If you prefer the manual route, you can still run:<br>
+                        <code class="code-light">cd sportsPredictor && python -m uvicorn api.server:app --reload --port 8001</code>
+                        <br>
+                        Then open <code class="code-light">http://127.0.0.1:8001</code> in your browser.
                     </li>
                 </ol>
             </div>
