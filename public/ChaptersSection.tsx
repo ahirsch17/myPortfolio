@@ -28,7 +28,7 @@ const chapters: Chapter[] = [
     role: 'Founder · Product Design · Full Stack Development',
     stack: 'React Native · TypeScript · Flask · Azure Table Storage',
     outcome: 'Private beta surfacing shared classes and free time for study crews.',
-    description: 'SamePath turns raw schedules into context-aware suggestions so planning a study session takes seconds. Privacy controls keep each student in charge of what's shared.',
+    description: 'SamePath turns raw schedules into context-aware suggestions so planning a study session takes seconds. Privacy controls keep each student in charge of what\'s shared.',
     caseStudyUrl: 'projects/samepath.html',
     media: {
       type: 'video',
@@ -38,8 +38,24 @@ const chapters: Chapter[] = [
     },
   },
   {
-    id: 'chapter-sportspredictor',
+    id: 'chapter-blufflocation',
     number: '02',
+    title: 'BluffLocation',
+    tagline: 'Realtime social deduction game powered by a room websocket.',
+    role: 'Product Design · Mobile Development · Realtime Systems',
+    stack: 'Expo (React Native) · JavaScript · Socket.IO',
+    outcome: 'Playable prototype with room codes, timers, voting, and state sync.',
+    description: 'BluffLocation runs fast party-game rounds where one player is the spy. A Socket.IO websocket keeps the room state authoritative, broadcasts timer + votes, and resyncs players after reconnects.',
+    caseStudyUrl: 'projects/blufflocation.html',
+    media: {
+      type: 'video',
+      src: 'Images/BluffLocation/BluffLocation.mov',
+      caption: 'Multiplayer demo: create/join a room, start a round, vote, and reveal. Download if inline playback fails.',
+    },
+  },
+  {
+    id: 'chapter-sportspredictor',
+    number: '03',
     title: 'SportsPredictor',
     tagline: 'Weekly NFL pipeline with explainable matchup forecasts.',
     role: 'Developer · Data Pipeline Engineer',
@@ -56,7 +72,7 @@ const chapters: Chapter[] = [
   },
   {
     id: 'chapter-realestate',
-    number: '03',
+    number: '04',
     title: 'RealEstateHirsch',
     tagline: 'Responsive leasing experience with guided tour scheduling.',
     role: 'Product Designer · Frontend Developer',

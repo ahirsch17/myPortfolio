@@ -138,8 +138,9 @@
                         <div class="stories-nav-label">Chapters</div>
                         <nav class="chapter-nav" aria-label="Project chapters">
                             <a href="#chapter-samepath">01 SamePath</a>
-                            <a href="#chapter-sportspredictor">02 SportsPredictor</a>
-                            <a href="#chapter-realestate">03 RealEstateHirsch</a>
+                            <a href="#chapter-blufflocation">02 BluffLocation</a>
+                            <a href="#chapter-sportspredictor">03 SportsPredictor</a>
+                            <a href="#chapter-realestate">04 RealEstateHirsch</a>
                         </nav>
                     </div>
                     
@@ -180,9 +181,40 @@
                             </article>
                             
                             <!-- Chapter 02 -->
-                            <article class="chapter chapter-simplified" id="chapter-sportspredictor">
+                            <article class="chapter chapter-simplified" id="chapter-blufflocation">
                                 <header class="chapter-header">
                                     <span class="chapter-number">Chapter 02</span>
+                                    <h3>BluffLocation</h3>
+                                    <p class="chapter-tagline">Realtime social deduction game powered by a room websocket.</p>
+                                </header>
+                                <div class="chapter-body">
+                                    <div class="chapter-text">
+                                        <ul>
+                                            <li><strong>Role:</strong> Product Design · Mobile Development · Realtime Systems</li>
+                                            <li><strong>Stack:</strong> Expo (React Native) · JavaScript · Socket.IO</li>
+                                            <li><strong>Outcome:</strong> Playable prototype with room codes, timers, voting, and state sync.</li>
+                                        </ul>
+                                        <p>BluffLocation runs fast party-game rounds where one player is the spy. A Socket.IO websocket keeps room state authoritative, broadcasts timer + votes, and resyncs players after reconnects.</p>
+                                        <div class="chapter-cta">
+                                            <a href="projects/blufflocation.html" class="btn btn-primary">Read case study</a>
+                                        </div>
+                                    </div>
+                                    <div class="chapter-media">
+                                        <figure>
+                                            <video class="project-video project-video-portrait" controls playsinline preload="none">
+                                                <source src="Images/BluffLocation/BluffLocation.mov" type="video/quicktime">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <figcaption>Multiplayer demo: create/join a room, start a round, vote, and reveal. Download if inline playback fails.</figcaption>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Chapter 02 -->
+                            <article class="chapter chapter-simplified" id="chapter-sportspredictor">
+                                <header class="chapter-header">
+                                    <span class="chapter-number">Chapter 03</span>
                                     <h3>SportsPredictor</h3>
                                     <p class="chapter-tagline">Weekly NFL pipeline with explainable matchup forecasts.</p>
                                 </header>
@@ -212,7 +244,7 @@
                             <!-- Chapter 03 -->
                             <article class="chapter chapter-simplified" id="chapter-realestate">
                                 <header class="chapter-header">
-                                    <span class="chapter-number">Chapter 03</span>
+                                    <span class="chapter-number">Chapter 04</span>
                                     <h3>RealEstateHirsch</h3>
                                     <p class="chapter-tagline">Responsive leasing experience with guided tour scheduling.</p>
                                 </header>

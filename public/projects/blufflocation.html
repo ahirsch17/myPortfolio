@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BluffLocation Case Study · Alexis Hirsch</title>
+    <link rel="icon" type="image/png" href="../Images/Logo.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../page-transitions.js" defer></script>
+    <script src="../home-interactions.js" defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">
+                <img src="../Images/Logo.png" alt="Alexis Hirsch" class="logo-img">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#stories">Stories</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="project-case">
+        <section class="project-hero motion-section" data-section="hero">
+            <div class="container">
+                <a class="project-breadcrumb" href="../index.html#stories">← Back to project stories</a>
+                <div class="project-hero-inner">
+                    <div class="project-hero-copy">
+                        <span class="project-pill">Realtime Party Game</span>
+                        <h1>BluffLocation</h1>
+                        <p class="project-tagline">A mobile social-deduction game where one player bluffs and everyone else hunts for the spy.</p>
+                        <p class="project-summary">
+                            Everyone gets the same location prompt except the spy. Players talk it out, vote, and the spy gets a last-chance guess to steal the round.
+                            The whole flow stays in sync through a Socket.IO websocket so every phone sees the same room state, timer, and vote outcomes.
+                        </p>
+                        <div class="project-hero-actions">
+                            <a href="../Images/BluffLocation/BluffLocation.mov" class="btn btn-primary" target="_blank" rel="noopener">
+                                <span>Play demo (MOV)</span>
+                                <span class="btn-glow"></span>
+                            </a>
+                            <a href="../Images/BluffLocation/BluffLocation.mov" class="btn btn-ghost" download>Download MOV</a>
+                        </div>
+                    </div>
+                    <aside class="project-facts">
+                        <h2>Quick facts</h2>
+                        <dl>
+                            <div>
+                                <dt>Timeline</dt>
+                                <dd>2025</dd>
+                            </div>
+                            <div>
+                                <dt>Role</dt>
+                                <dd>Product design · Mobile dev · Realtime systems</dd>
+                            </div>
+                            <div>
+                                <dt>Stack</dt>
+                                <dd>Expo (React Native) · JavaScript · Socket.IO</dd>
+                            </div>
+                            <div>
+                                <dt>Status</dt>
+                                <dd>Playable prototype</dd>
+                            </div>
+                        </dl>
+                    </aside>
+                </div>
+                <figure class="project-featured-media">
+                    <video class="project-video project-video-portrait" controls playsinline preload="none">
+                        <source src="../Images/BluffLocation/BluffLocation.mov" type="video/quicktime">
+                        Your browser does not support the video tag.
+                    </video>
+                    <figcaption>End-to-end demo: create a room, join on multiple devices, start a round, vote, and reveal. If your browser can’t play MOV inline, download the file.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
+                    <h2>What the app does</h2>
+                    <p>Designed for quick, in-person rounds that don’t require setup or a moderator.</p>
+                </div>
+                <div class="project-bullet-grid">
+                    <div class="project-card">
+                        <h3>Room-based play</h3>
+                        <p>Hosts create a room code, friends join instantly, and the lobby stays updated as players arrive or leave.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Guided round flow</h3>
+                        <p>The host starts the round, a server timer runs, and the UI moves players from discussion → voting → reveal without confusion.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Votes + last-chance guess</h3>
+                        <p>Votes are recorded server-side and revealed as soon as everyone has submitted. If the spy survives, they get one final guess.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
+                    <h2>How the websocket keeps it fair</h2>
+                    <p>The server is the source of truth so no device can “get ahead” or disagree about outcomes.</p>
+                </div>
+                <div class="project-detail-grid">
+                    <div class="project-detail">
+                        <h3>Room lifecycle</h3>
+                        <p>Clients emit events to create and join rooms, while the server broadcasts room updates (like players joining/leaving) to everyone watching that room.</p>
+                    </div>
+                    <div class="project-detail">
+                        <h3>Authoritative game state</h3>
+                        <p>The server assigns roles, starts the round, and pushes state updates (timer, locations, votes, results) so every client renders the same truth at the same time.</p>
+                    </div>
+                    <div class="project-detail">
+                        <h3>Reconnect + resync</h3>
+                        <p>If a player drops, the client reconnects, re-joins the room, and requests a full <strong>state sync</strong> snapshot so they can resume without breaking the round.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section motion-section">
+            <div class="container project-section-inner">
+                <div class="project-section-header">
+                    <h2>Next steps</h2>
+                    <p>Easy wins to turn the prototype into a “game night staple.”</p>
+                </div>
+                <ul class="project-checklist">
+                    <li>More location packs + custom packs for groups.</li>
+                    <li>Host controls (kick/lock room) and lightweight moderation.</li>
+                    <li>Better reconnection UX (toast + quick resync indicator).</li>
+                </ul>
+                <nav class="project-nav">
+                    <a href="samepath.html">← SamePath</a>
+                    <a href="sportspredictor.html">SportsPredictor →</a>
+                </nav>
+            </div>
+        </section>
+        <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alexis Hirsch. Built with passion for UI/UX.</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+
